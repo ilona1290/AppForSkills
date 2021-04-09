@@ -30,7 +30,11 @@ namespace AppForSkills.Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AppForSkills.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "AppForSkills.Api", 
+                    Version = "v1",
+                    Description = "A web application for users, which want to share theirs skills with others users.",
+                });
             });
         }
 
