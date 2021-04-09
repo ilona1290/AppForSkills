@@ -27,7 +27,12 @@ namespace AppForSkills.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors(options =>
+            options.AddPolicy(name: "MyAllowSpecificOrigins",
+            builder =>
+            {
+                builder.WithOrigins("https://localhost:44390");
+            }));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -64,11 +69,16 @@ namespace AppForSkills.Api
             }
 
             app.UseSwagger();
+
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppForSkills.Api v1"));
+
             app.UseHealthChecks("/hc");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
