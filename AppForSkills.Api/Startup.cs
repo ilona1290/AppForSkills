@@ -64,11 +64,16 @@ namespace AppForSkills.Api
             }
 
             app.UseSwagger();
+
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppForSkills.Api v1"));
+
             app.UseHealthChecks("/hc");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
