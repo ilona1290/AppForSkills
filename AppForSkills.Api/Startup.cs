@@ -33,7 +33,7 @@ namespace AppForSkills.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { 
                     Title = "AppForSkills.Api", 
                     Version = "v1",
-                    Description = "A web application for users, which want to share theirs skills with others users.",
+                    Description = "A web application for users, who want to share theirs skills with others users.",
                     TermsOfService = new Uri("https://example.com/terms"),
                     Contact = new OpenApiContact
                     {
@@ -56,10 +56,11 @@ namespace AppForSkills.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppForSkills.Api v1"));
+                
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppForSkills.Api v1"));
             app.UseHttpsRedirection();
 
             app.UseRouting();
