@@ -35,12 +35,17 @@ namespace AppForSkills.Api
                     Version = "v1",
                     Description = "A web application for users, which want to share theirs skills with others users.",
                     TermsOfService = new Uri("https://example.com/terms"),
-                    Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                    Contact = new OpenApiContact
                     {
                         Name = "Ilona",
                         Email = "ilona2000123@wp.pl",
                         Url = new Uri("https://example.com/myWebsite"),
                     },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Used License",
+                        Url = new Uri("https://example.com/license")
+                    }
                 });
             });
         }
