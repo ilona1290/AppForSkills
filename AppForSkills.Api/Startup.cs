@@ -31,7 +31,7 @@ namespace AppForSkills.Api
             options.AddPolicy(name: "MyAllowSpecificOrigins",
             builder =>
             {
-                builder.WithOrigins("https://example.com/frontend");
+                builder.WithOrigins("https://localhost:44390");
             }));
             services.AddControllers();
             services.AddSwaggerGen(c =>
