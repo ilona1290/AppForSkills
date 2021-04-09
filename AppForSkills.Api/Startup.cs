@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,6 +48,8 @@ namespace AppForSkills.Api
                         Url = new Uri("https://example.com/license")
                     }
                 });
+                var filePath = Path.Combine(AppContext.BaseDirectory, "AppForSkills.Api.xml");
+                c.IncludeXmlComments(filePath);
             });
         }
 

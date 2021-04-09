@@ -27,3 +27,4 @@ C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\obj\Debug\net5.
 C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\obj\Debug\net5.0\ref\AppForSkills.Api.dll
 C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\obj\Debug\net5.0\AppForSkills.Api.pdb
 C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\obj\Debug\net5.0\AppForSkills.Api.genruntimeconfig.cache
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\bin\Debug\net5.0\AppForSkills.Api.xml

@@ -24,6 +24,10 @@ namespace AppForSkills.Api.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Get weather forecasts
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
