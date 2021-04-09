@@ -34,6 +34,7 @@ namespace AppForSkills.Api
                     Title = "AppForSkills.Api", 
                     Version = "v1",
                     Description = "A web application for users, which want to share theirs skills with others users.",
+                    TermsOfService = new Uri("https://example.com/terms"),
                 });
             });
         }
