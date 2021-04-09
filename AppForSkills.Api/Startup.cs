@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,7 +31,25 @@ namespace AppForSkills.Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AppForSkills.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo {
+                    Title = "AppForSkills.Api",
+                    Version = "v1",
+                    Description = "A web application for users, who want to share theirs skills with others users.",
+                    TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Ilona",
+                        Email = "ilona2000123@wp.pl",
+                        Url = new Uri("https://example.com/myWebsite"),
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Used License",
+                        Url = new Uri("https://example.com/license")
+                    }
+                });
+                var filePath = Path.Combine(AppContext.BaseDirectory, "AppForSkills.Api.xml");
+                c.IncludeXmlComments(filePath);
             });
         }
 
@@ -40,10 +59,11 @@ namespace AppForSkills.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppForSkills.Api v1"));
+                
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppForSkills.Api v1"));
             app.UseHttpsRedirection();
 
             app.UseRouting();
