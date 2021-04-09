@@ -31,8 +31,8 @@ namespace AppForSkills.Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { 
-                    Title = "AppForSkills.Api", 
+                c.SwaggerDoc("v1", new OpenApiInfo {
+                    Title = "AppForSkills.Api",
                     Version = "v1",
                     Description = "A web application for users, who want to share theirs skills with others users.",
                     TermsOfService = new Uri("https://example.com/terms"),
