@@ -51,6 +51,7 @@ namespace AppForSkills.Api
                 var filePath = Path.Combine(AppContext.BaseDirectory, "AppForSkills.Api.xml");
                 c.IncludeXmlComments(filePath);
             });
+            services.AddHealthChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +65,7 @@ namespace AppForSkills.Api
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppForSkills.Api v1"));
+            app.UseHealthChecks("/hc");
             app.UseHttpsRedirection();
 
             app.UseRouting();
