@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,6 +11,7 @@ namespace AppForSkills.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [EnableCors("MyAllowSpecificOrigins")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
