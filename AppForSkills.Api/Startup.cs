@@ -1,3 +1,7 @@
+using AppForSkills.Application;
+using AppForSkills.Common;
+using AppForSkills.Infrastructure;
+using AppForSkills.Persistance;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +37,10 @@ namespace AppForSkills.Api
             {
                 builder.WithOrigins("https://localhost:44390");
             }));
+            services.AddInfrastructure(Configuration);
+            services.AddApplication(Configuration);
+            services.AddPersistance(Configuration);
+            services.AddCommon(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

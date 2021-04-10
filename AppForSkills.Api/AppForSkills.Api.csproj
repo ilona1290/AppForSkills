@@ -13,7 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AppForSkills.Application\AppForSkills.Application.csproj" />
+    <ProjectReference Include="..\AppForSkills.Common\AppForSkills.Common.csproj" />
     <ProjectReference Include="..\AppForSkills.Infrastructure\AppForSkills.Infrastructure.csproj" />
+    <ProjectReference Include="..\AppForSkills.Persistance\AppForSkills.Persistance.csproj" />
   </ItemGroup>
 
 </Project>
