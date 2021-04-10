@@ -106,6 +106,20 @@
           "Microsoft.AspNetCore.App"
         ]
       },
+      "AppForSkills.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "5.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "5.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AppForSkills.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AppForSkills.Application.dll": {}
+        }
+      },
       "AppForSkills.Infrastructure/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -118,6 +132,20 @@
         },
         "runtime": {
           "bin/placeholder/AppForSkills.Infrastructure.dll": {}
+        }
+      },
+      "AppForSkills.Persistance/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "5.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "5.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AppForSkills.Persistance.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AppForSkills.Persistance.dll": {}
         }
       }
     }
@@ -292,15 +320,27 @@
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
     },
+    "AppForSkills.Application/1.0.0": {
+      "type": "project",
+      "path": "../AppForSkills.Application/AppForSkills.Application.csproj",
+      "msbuildProject": "../AppForSkills.Application/AppForSkills.Application.csproj"
+    },
     "AppForSkills.Infrastructure/1.0.0": {
       "type": "project",
       "path": "../AppForSkills.Infrastructure/AppForSkills.Infrastructure.csproj",
       "msbuildProject": "../AppForSkills.Infrastructure/AppForSkills.Infrastructure.csproj"
+    },
+    "AppForSkills.Persistance/1.0.0": {
+      "type": "project",
+      "path": "../AppForSkills.Persistance/AppForSkills.Persistance.csproj",
+      "msbuildProject": "../AppForSkills.Persistance/AppForSkills.Persistance.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "AppForSkills.Application >= 1.0.0",
       "AppForSkills.Infrastructure >= 1.0.0",
+      "AppForSkills.Persistance >= 1.0.0",
       "Swashbuckle.AspNetCore >= 5.6.3"
     ]
   },
@@ -336,8 +376,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
+            "C:\\Users\\HP\\Desktop\\WebAPI Masters\\AppForSkills\\AppForSkills.Application\\AppForSkills.Application.csproj": {
+              "projectPath": "C:\\Users\\HP\\Desktop\\WebAPI Masters\\AppForSkills\\AppForSkills.Application\\AppForSkills.Application.csproj"
+            },
             "C:\\Users\\HP\\Desktop\\WebAPI Masters\\AppForSkills\\AppForSkills.Infrastructure\\AppForSkills.Infrastructure.csproj": {
               "projectPath": "C:\\Users\\HP\\Desktop\\WebAPI Masters\\AppForSkills\\AppForSkills.Infrastructure\\AppForSkills.Infrastructure.csproj"
+            },
+            "C:\\Users\\HP\\Desktop\\WebAPI Masters\\AppForSkills\\AppForSkills.Persistance\\AppForSkills.Persistance.csproj": {
+              "projectPath": "C:\\Users\\HP\\Desktop\\WebAPI Masters\\AppForSkills\\AppForSkills.Persistance\\AppForSkills.Persistance.csproj"
             }
           }
         }
