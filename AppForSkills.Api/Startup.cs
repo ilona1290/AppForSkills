@@ -1,4 +1,5 @@
 using AppForSkills.Application;
+using AppForSkills.Common;
 using AppForSkills.Infrastructure;
 using AppForSkills.Persistance;
 using Microsoft.AspNetCore.Builder;
@@ -39,6 +40,7 @@ namespace AppForSkills.Api
             services.AddInfrastructure(Configuration);
             services.AddApplication(Configuration);
             services.AddPersistance(Configuration);
+            services.AddCommon(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
