@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "OIOBJkm4RUlSQ3zCoz5Oj/XE6r0VEEics72f+3oJgeNlMBWyoSdJcfhi4hxR5vK1XVXTzauPWvh0xyKX+fkznQ==",
+  "dgSpecHash": "EaE8OFcovGCOqBAL3D5lvjYeAjwE5rsJdo9MUEfmocJrKbVADYxTmh8TYvem1xKbEFqEUUaZrBhjckheIYmS1w==",
   "success": true,
   "projectFilePath": "C:\\Users\\HP\\Desktop\\WebAPI Masters\\AppForSkills\\AppForSkills.Application\\AppForSkills.Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
