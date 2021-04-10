@@ -75,6 +75,16 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "AppForSkills.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/AppForSkills.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AppForSkills.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -185,10 +195,16 @@
         "swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
+    },
+    "AppForSkills.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../AppForSkills.Infrastructure/AppForSkills.Infrastructure.csproj",
+      "msbuildProject": "../AppForSkills.Infrastructure/AppForSkills.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "AppForSkills.Infrastructure >= 1.0.0",
       "Swashbuckle.AspNetCore >= 5.6.3"
     ]
   },
@@ -223,7 +239,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\HP\\Desktop\\WebAPI Masters\\AppForSkills\\AppForSkills.Infrastructure\\AppForSkills.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\HP\\Desktop\\WebAPI Masters\\AppForSkills\\AppForSkills.Infrastructure\\AppForSkills.Infrastructure.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
