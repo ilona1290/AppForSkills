@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "V/qyl5aOA7kACr/Q/MoWBq+A6o3vQV1rz00R6YPEidMh5dhCWJtbJkxHKnAtbiJBK2NEkyFCp3im/jaCvf3HDQ==",
+  "dgSpecHash": "LhoRlBLVmpVIEMdu9M9mNrD8UpUAwpWyt6CF0dnTBpfdswOeh94jKT0bd2QEbWL6nuG6kQLGvFWwhlrzbpXmzg==",
   "success": true,
   "projectFilePath": "C:\\Users\\HP\\Desktop\\WebAPI Masters\\AppForSkills\\AppForSkills.Api\\AppForSkills.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
