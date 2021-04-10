@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AppForSkills.Api</name>
+    </assembly>
+    <members>
+        <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">
+            <summary>
+            Get weather forecasts
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

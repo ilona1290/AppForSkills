@@ -1,0 +1,99 @@
+using AppForSkills.Application;
+using AppForSkills.Common;
+using AppForSkills.Infrastructure;
+using AppForSkills.Persistance;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace AppForSkills.Api
+{
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddCors(options =>
+            options.AddPolicy(name: "MyAllowSpecificOrigins",
+            builder =>
+            {
+                builder.WithOrigins("https://localhost:44390");
+            }));
+            services.AddInfrastructure(Configuration);
+            services.AddApplication(Configuration);
+            services.AddPersistance(Configuration);
+            services.AddCommon(Configuration);
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo {
+                    Title = "AppForSkills.Api",
+                    Version = "v1",
+                    Description = "A web application for users, who want to share theirs skills with others users.",
+                    TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Ilona",
+                        Email = "ilona2000123@wp.pl",
+                        Url = new Uri("https://example.com/myWebsite"),
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Used License",
+                        Url = new Uri("https://example.com/license")
+                    }
+                });
+                var filePath = Path.Combine(AppContext.BaseDirectory, "AppForSkills.Api.xml");
+                c.IncludeXmlComments(filePath);
+            });
+            services.AddHealthChecks();
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                
+            }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppForSkills.Api v1"));
+
+            app.UseHealthChecks("/hc");
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseCors();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
+    }
+}
