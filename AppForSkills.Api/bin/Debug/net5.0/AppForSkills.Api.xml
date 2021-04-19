@@ -17,7 +17,12 @@
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.AddSkill">
             <summary>
-            Adds skill.
+            Adds a skill.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.AddRating">
+            <summary>
+            Adds a rating.
             </summary>
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.GetCommentsToUserSkill(System.Int32)">
@@ -32,6 +37,19 @@
             </summary>
             <param name="id">Post id</param>
             <param name="value">Post id</param>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.EditCommentToUserSkill(System.Int32,System.String)">
+            <summary>
+            Edit comment to user skill.
+            </summary>
+            <param name="idcomment">Comment id</param>
+            <param name="value">Post id</param>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.DeleteCommentToUserSkill(System.Int32)">
+            <summary>
+            Delete comment from user skill.
+            </summary>
+            <param name="idComment">Comment id</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">
             <summary>

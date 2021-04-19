@@ -24,6 +24,7 @@ namespace AppForSkills.Api.Controllers
         {
             return "value";
         }
+
         /// <summary>
         /// Returns photo or video with general information of user skill.
         /// </summary>
@@ -41,7 +42,7 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Adds skill.
+        /// Adds a skill.
         /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -52,6 +53,21 @@ namespace AppForSkills.Api.Controllers
         public void AddSkill()
         {
             
+        }
+
+        /// <summary>
+        /// Adds a rating.
+        /// </summary>
+        
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public void AddRating()
+        {
+
         }
 
         /// <summary>
@@ -83,6 +99,37 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public void AddCommentToUserSkill(int id, [FromBody] string value)
+        {
+        }
+
+        /// <summary>
+        /// Edit comment to user skill.
+        /// </summary>
+        /// <param name="idcomment">Comment id</param>
+        /// <param name="value">Post id</param>
+        [Route("{id}/comments")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public void EditCommentToUserSkill(int idcomment, [FromBody] string value)
+        {
+        }
+
+        /// <summary>
+        /// Delete comment from user skill.
+        /// </summary>
+        /// <param name="idComment">Comment id</param>
+        [Route("{id}/comments")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public void DeleteCommentToUserSkill(int idComment)
         {
         }
     }
