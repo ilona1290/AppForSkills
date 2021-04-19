@@ -12,8 +12,10 @@ namespace AppForSkills.Api.Controllers
     public class PostsController : ControllerBase
     {
         /// <summary>
-        /// Get photo or video of user skill
+        /// Get photo or video of user skill.
         /// </summary>
+        /// <param name="id">Post id</param>
+        /// <returns>Photo or video with skill, which user wants to share.</returns>
         [Route("photo-video")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -21,9 +23,25 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<IActionResult> GetPhotoOrVideo()
+        public string GetPhotoOrVideo(int id)
         {
-            throw new NotImplementedException();
+            return "value";
+        }
+
+        /// <summary>
+        /// Get description about photo or video, which has been posted by user.
+        /// </summary>
+        /// <param name="id">Id of post, which description we want to get.</param>
+        [Route("description")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public string GetDescriptionAboutUserPost(int id)
+        {
+            return "value";
         }
     }
 }
