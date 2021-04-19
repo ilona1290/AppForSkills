@@ -1,0 +1,12 @@
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Infrastructure\bin\Debug\net5.0\AppForSkills.Infrastructure.deps.json
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Infrastructure\bin\Debug\net5.0\AppForSkills.Infrastructure.dll
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Infrastructure\bin\Debug\net5.0\ref\AppForSkills.Infrastructure.dll
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Infrastructure\bin\Debug\net5.0\AppForSkills.Infrastructure.pdb
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Infrastructure\obj\Debug\net5.0\AppForSkills.Infrastructure.csprojAssemblyReference.cache
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Infrastructure\obj\Debug\net5.0\AppForSkills.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Infrastructure\obj\Debug\net5.0\AppForSkills.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Infrastructure\obj\Debug\net5.0\AppForSkills.Infrastructure.AssemblyInfo.cs
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Infrastructure\obj\Debug\net5.0\AppForSkills.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Infrastructure\obj\Debug\net5.0\AppForSkills.Infrastructure.dll
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Infrastructure\obj\Debug\net5.0\ref\AppForSkills.Infrastructure.dll
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Infrastructure\obj\Debug\net5.0\AppForSkills.Infrastructure.pdb

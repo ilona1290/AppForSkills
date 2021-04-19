@@ -28,3 +28,11 @@ C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\obj\Debug\net5.
 C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\obj\Debug\net5.0\AppForSkills.Api.pdb
 C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\obj\Debug\net5.0\AppForSkills.Api.genruntimeconfig.cache
 C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\bin\Debug\net5.0\AppForSkills.Api.xml
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\bin\Debug\net5.0\AppForSkills.Application.dll
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\bin\Debug\net5.0\AppForSkills.Common.dll
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\bin\Debug\net5.0\AppForSkills.Infrastructure.dll
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\bin\Debug\net5.0\AppForSkills.Persistance.dll
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\bin\Debug\net5.0\AppForSkills.Application.pdb
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\bin\Debug\net5.0\AppForSkills.Common.pdb
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\bin\Debug\net5.0\AppForSkills.Infrastructure.pdb
+C:\Users\HP\Desktop\WebAPI Masters\AppForSkills\AppForSkills.Api\bin\Debug\net5.0\AppForSkills.Persistance.pdb

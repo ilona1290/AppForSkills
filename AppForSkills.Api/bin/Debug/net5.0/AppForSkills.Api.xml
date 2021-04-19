@@ -4,6 +4,11 @@
         <name>AppForSkills.Api</name>
     </assembly>
     <members>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.GetPhotoOrVideo">
+            <summary>
+            Get photo or video of user skill
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">
             <summary>
             Get weather forecasts
