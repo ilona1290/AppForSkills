@@ -26,7 +26,7 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Returns photo or video with general information of user skill.
+        /// Returns a photo or a video with general information of user skill.
         /// </summary>
         /// <param name="id">Post id</param>
         [Route("{id}")]
@@ -49,16 +49,16 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
+        
         public void AddSkill()
         {
             
         }
 
         /// <summary>
-        /// Adds a rating.
+        /// Adds a rating to user skill.
         /// </summary>
-        
+        [Route("{id}")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -66,6 +66,38 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public void AddRating()
+        {
+
+        }
+
+        /// <summary>
+        /// Edits a rating.
+        /// </summary>
+        /// <param name="idRating">Id Of rating, which user wants to edit</param>
+        [Route("{id}")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public void EditRating(int idRating)
+        {
+
+        }
+
+        /// <summary>
+        /// Deletes a rating.
+        /// </summary>
+        /// <param name="idRating">Id of rating, which user wants to remove</param>
+        [Route("{id}")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public void DeleteRating(int idRating)
         {
 
         }
@@ -81,7 +113,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public List<string> GetCommentsToUserSkill(int id)
+        public List<string> GetCommentFromUserSkill(int id)
         {
             return new List<string> { "value1", "value2" };
         }
@@ -90,7 +122,7 @@ namespace AppForSkills.Api.Controllers
         /// Adds comment to user skill.
         /// </summary>
         /// <param name="id">Post id</param>
-        /// <param name="value">Post id</param>
+        /// <param name="commentText">Post id</param>
         [Route("{id}/comments")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -98,15 +130,15 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void AddCommentToUserSkill(int id, [FromBody] string value)
+        public void AddCommentToUserSkill(int id, [FromBody] string commentText)
         {
         }
 
         /// <summary>
-        /// Edit comment to user skill.
+        /// Edits comment to user skill.
         /// </summary>
-        /// <param name="idcomment">Comment id</param>
-        /// <param name="value">Post id</param>
+        /// <param name="idcomment">Id of comment, which user wants to edit</param>
+        /// <param name="commentText">New text of comment</param>
         [Route("{id}/comments")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -114,22 +146,22 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void EditCommentToUserSkill(int idcomment, [FromBody] string value)
+        public void EditCommentToUserSkill(int idcomment, [FromBody] string commentText)
         {
         }
 
         /// <summary>
-        /// Delete comment from user skill.
+        /// Deletes comment from user skill.
         /// </summary>
-        /// <param name="idComment">Comment id</param>
+        /// <param name="idComment">Id of comment, which user wants to remove</param>
         [Route("{id}/comments")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public void DeleteCommentToUserSkill(int idComment)
+        
+        public void DeleteCommentFromUserSkill(int idComment)
         {
         }
     }

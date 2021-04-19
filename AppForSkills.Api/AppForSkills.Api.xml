@@ -11,7 +11,7 @@
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.GetSkillWithGeneralInformation(System.Int32)">
             <summary>
-            Returns photo or video with general information of user skill.
+            Returns a photo or a video with general information of user skill.
             </summary>
             <param name="id">Post id</param>
         </member>
@@ -22,10 +22,22 @@
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.AddRating">
             <summary>
-            Adds a rating.
+            Adds a rating to user skill.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.GetCommentsToUserSkill(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.EditRating(System.Int32)">
+            <summary>
+            Edits a rating.
+            </summary>
+            <param name="idRating">Id Of rating, which user wants to edit</param>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.DeleteRating(System.Int32)">
+            <summary>
+            Deletes a rating.
+            </summary>
+            <param name="idRating">Id of rating, which user wants to remove</param>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.GetCommentFromUserSkill(System.Int32)">
             <summary>
             Returns comments, which user skill receive.
             </summary>
@@ -36,20 +48,20 @@
             Adds comment to user skill.
             </summary>
             <param name="id">Post id</param>
-            <param name="value">Post id</param>
+            <param name="commentText">Post id</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.EditCommentToUserSkill(System.Int32,System.String)">
             <summary>
-            Edit comment to user skill.
+            Edits comment to user skill.
             </summary>
-            <param name="idcomment">Comment id</param>
-            <param name="value">Post id</param>
+            <param name="idcomment">Id of comment, which user wants to edit</param>
+            <param name="commentText">New text of comment</param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.DeleteCommentToUserSkill(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.DeleteCommentFromUserSkill(System.Int32)">
             <summary>
-            Delete comment from user skill.
+            Deletes comment from user skill.
             </summary>
-            <param name="idComment">Comment id</param>
+            <param name="idComment">Id of comment, which user wants to remove</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">
             <summary>
