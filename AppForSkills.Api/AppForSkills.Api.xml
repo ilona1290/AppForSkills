@@ -4,17 +4,34 @@
         <name>AppForSkills.Api</name>
     </assembly>
     <members>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.GetPhotoOrVideo(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.GetAllSkills">
+            <summary>
+            Returns all user skills.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.GetSkillWithGeneralInformation(System.Int32)">
             <summary>
             Returns photo or video with general information of user skill.
             </summary>
             <param name="id">Post id</param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.GetCommentsToUserPost(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.AddSkill">
+            <summary>
+            Adds skill.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.GetCommentsToUserSkill(System.Int32)">
             <summary>
             Returns comments, which user skill receive.
             </summary>
             <param name="id">Post id</param>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.AddCommentToUserSkill(System.Int32,System.String)">
+            <summary>
+            Adds comment to user skill.
+            </summary>
+            <param name="id">Post id</param>
+            <param name="value">Post id</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">
             <summary>
