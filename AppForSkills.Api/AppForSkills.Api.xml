@@ -6,16 +6,21 @@
     <members>
         <member name="M:AppForSkills.Api.Controllers.PostsController.GetPhotoOrVideo(System.Int32)">
             <summary>
-            Get photo or video of user skill.
+            Return photo or video of user skill.
             </summary>
             <param name="id">Post id</param>
-            <returns>Photo or video with skill, which user wants to share.</returns>
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.GetDescriptionAboutUserPost(System.Int32)">
             <summary>
-            Get description about photo or video, which has been posted by user.
+            Return description about photo or video, which has been posted by user.
             </summary>
             <param name="id">Id of post, which description we want to get.</param>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.GetCommentsToUserPost(System.Int32)">
+            <summary>
+            Return comments to photo or video, which has been posted by user.
+            </summary>
+            <param name="id">Id of post, which comments we want to get.</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">
             <summary>

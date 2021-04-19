@@ -12,10 +12,9 @@ namespace AppForSkills.Api.Controllers
     public class PostsController : ControllerBase
     {
         /// <summary>
-        /// Get photo or video of user skill.
+        /// Return photo or video of user skill.
         /// </summary>
         /// <param name="id">Post id</param>
-        /// <returns>Photo or video with skill, which user wants to share.</returns>
         [Route("photo-video")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -29,7 +28,7 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Get description about photo or video, which has been posted by user.
+        /// Return description about photo or video, which has been posted by user.
         /// </summary>
         /// <param name="id">Id of post, which description we want to get.</param>
         [Route("description")]
@@ -42,6 +41,22 @@ namespace AppForSkills.Api.Controllers
         public string GetDescriptionAboutUserPost(int id)
         {
             return "value";
+        }
+
+        /// <summary>
+        /// Return comments to photo or video, which has been posted by user.
+        /// </summary>
+        /// <param name="id">Id of post, which comments we want to get.</param>
+        [Route("comments")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public List<string> GetCommentsToUserPost(int id)
+        {
+            return new List<string> { "value1", "value2" };
         }
     }
 }
