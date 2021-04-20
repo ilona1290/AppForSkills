@@ -63,14 +63,25 @@
             </summary>
             <param name="idComment">Id of comment, which user wants to remove</param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllInformation">
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllInformation(System.String)">
             <summary>
             Returns general information about user.
             </summary>
+            <param name="username"></param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllUserSkills">
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllUserSkills(System.String)">
             <summary>
             Returns all user posts. 
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetUserSkill(System.Int32)">
+            <summary>
+            Returns selected user posts. 
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllRatingsWhichUserGave">
+            <summary>
+            Returns all ratings, which user gave to other users. 
             </summary>
         </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">
