@@ -131,6 +131,21 @@ namespace AppForSkills.Api.Controllers
             return "value";
         }
 
+        /// <summary>
+        /// Returns all comments, which user gave to other users. 
+        /// </summary>
+        [Route("comments")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public string GetAllCommentsWhichUserGave(string username)
+        {
+            return "value";
+        }
+
 
     }
 }

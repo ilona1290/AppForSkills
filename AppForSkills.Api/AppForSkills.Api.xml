@@ -104,6 +104,11 @@
             Returns all ratings, which user gave to other users. 
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllCommentsWhichUserGave(System.String)">
+            <summary>
+            Returns all comments, which user gave to other users. 
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">
             <summary>
             Get weather forecasts
