@@ -24,12 +24,12 @@
             Adds post to discussion.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.EditUserPostInDiscussion(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.EditPostInDiscussion(System.Int32)">
             <summary>
             Edits post in discussion.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.DeleteUserPostInDiscussion(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.DeletePostInDiscussion(System.Int32)">
             <summary>
             Deletes post in discussion.
             </summary>

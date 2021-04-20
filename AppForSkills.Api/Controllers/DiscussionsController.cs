@@ -57,7 +57,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Adds post to discussion.
         /// </summary>
-        [Route("{id}")]
+        [Route("{id}/posts")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -79,7 +79,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void EditUserPostInDiscussion(int idPost)
+        public void EditPostInDiscussion(int idPost)
         {
 
         }
@@ -94,7 +94,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void DeleteUserPostInDiscussion(int idPost)
+        public void DeletePostInDiscussion(int idPost)
         {
 
         }
