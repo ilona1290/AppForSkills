@@ -24,5 +24,20 @@ namespace AppForSkills.Api.Controllers
         {
             return "value";
         }
+
+        /// <summary>
+        /// Returns all user posts. 
+        /// </summary>
+        [Route("skills")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public string GetAllUserSkills()
+        {
+            return "value";
+        }
     }
 }

@@ -68,6 +68,11 @@
             Returns general information about user.
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllUserSkills">
+            <summary>
+            Returns all user posts. 
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">
             <summary>
             Get weather forecasts
