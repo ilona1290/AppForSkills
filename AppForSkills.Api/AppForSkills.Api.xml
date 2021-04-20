@@ -79,7 +79,27 @@
             Returns selected user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllRatingsWhichUserGave">
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetCommentsFromUserSkill(System.Int32)">
+            <summary>
+            Returns comments of selected user posts. 
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.CreateCommentToUserSkill(System.Int32,System.String)">
+            <summary>
+            Adds comment of selected user posts. 
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.EditCommentToUserSkill(System.Int32,System.Int32,System.String)">
+            <summary>
+            Edits comment of selected user posts. 
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.DeleteCommentFromUserSkill(System.Int32,System.Int32)">
+            <summary>
+            Deletes comment of selected user posts. 
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllRatingsWhichUserGave(System.String)">
             <summary>
             Returns all ratings, which user gave to other users. 
             </summary>
