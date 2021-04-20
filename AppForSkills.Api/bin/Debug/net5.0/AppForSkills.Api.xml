@@ -34,6 +34,16 @@
             Deletes post in discussion.
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.GiveLikePostInDiscussion(System.Int32)">
+            <summary>
+            Gives like to post in discussion.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.ReportPostInDiscussion(System.Int32)">
+            <summary>
+            Reports post in discussion.
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.GetAllSkills">
             <summary>
             Returns all user skills.

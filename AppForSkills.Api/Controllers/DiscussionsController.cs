@@ -99,6 +99,34 @@ namespace AppForSkills.Api.Controllers
 
         }
 
+        /// <summary>
+        /// Gives like to post in discussion.
+        /// </summary>
+        [Route("{id}/posts/{idPost}")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
 
+        public void GiveLikePostInDiscussion(int idPost)
+        {
+
+        }
+
+        /// <summary>
+        /// Reports post in discussion.
+        /// </summary>
+        [Route("{id}/posts/{idPost}/report")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public void ReportPostInDiscussion(int idPost)
+        {
+
+        }
     }
 }
