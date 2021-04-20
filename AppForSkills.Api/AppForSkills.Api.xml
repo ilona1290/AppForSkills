@@ -103,73 +103,98 @@
             </summary>
             <param name="idComment">Id of comment, which user wants to remove</param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllInformation(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingOfTheMostPostingSkillsUsers">
+            <summary>
+            Returns user ranking sorted by the number of inserted skill posts .
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingOfTheBestAverageRatings">
+            <summary>
+            Returns user ranking sorted by best average ratings.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingOfTheMostCommentingUsers">
+            <summary>
+            Returns users ranking sorted by the number of comments to skill posts.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingOfTheMostEvaluativeUsers">
+            <summary>
+            Returns users ranking sorted by the number of ratings to skill posts.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingOfTheMostActiveUsersInDiscussions">
+            <summary>
+            Returns users ranking sorted by the most posts in discussions.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllInformation(System.String)">
             <summary>
             Returns general information about user.
             </summary>
             <param name="username"></param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllUserSkills(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllUserSkills(System.String)">
             <summary>
             Returns all user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetUserSkill(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetUserSkill(System.Int32)">
             <summary>
             Returns selected user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.EditUserSkill(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.EditUserSkill(System.Int32)">
             <summary>
             Edits selected user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.DeleteUserSkill(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.DeleteUserSkill(System.Int32)">
             <summary>
             Deletes selected user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetCommentsFromUserSkill(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetCommentsFromUserSkill(System.Int32)">
             <summary>
             Returns comments of selected user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.CreateCommentToUserSkill(System.Int32,System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.CreateCommentToUserSkill(System.Int32,System.String)">
             <summary>
             Adds comment of selected user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.EditCommentToUserSkill(System.Int32,System.Int32,System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.EditCommentToUserSkill(System.Int32,System.Int32,System.String)">
             <summary>
             Edits comment of selected user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.DeleteCommentFromUserSkill(System.Int32,System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.DeleteCommentFromUserSkill(System.Int32,System.Int32)">
             <summary>
             Deletes comment of selected user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllRatingsWhichUserGave(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllRatingsWhichUserGave(System.String)">
             <summary>
             Returns all ratings, which user gave to other users. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllCommentsWhichUserGave(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllCommentsWhichUserGave(System.String)">
             <summary>
             Returns all comments, which user gave to other users. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetUserAchievements(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetUserAchievements(System.String)">
             <summary>
             Returns all user achievements. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetDiscussionsWithUser(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetDiscussionsWithUser(System.String)">
             <summary>
             Returns discussions, in which user participated. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetSelectedDiscussionWithUser(System.String,System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetSelectedDiscussionWithUser(System.String,System.Int32)">
             <summary>
             Returns selected discussion, in which user participated. 
             </summary>
