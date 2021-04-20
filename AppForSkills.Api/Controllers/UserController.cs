@@ -192,31 +192,31 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Returns discusses, in which user participated. 
+        /// Returns discussions, in which user participated. 
         /// </summary>
-        [Route("discusses")]
+        [Route("discussions")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetDiscussesWithUser(string username)
+        public string GetDiscussionsWithUser(string username)
         {
             return "value";
         }
 
         /// <summary>
-        /// Returns selected discuss, in which user participated. 
+        /// Returns selected discussion, in which user participated. 
         /// </summary>
-        [Route("discusses/{id}")]
+        [Route("discussions/{id}")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetSelectedDiscussWithUser(string username, int id)
+        public string GetSelectedDiscussionWithUser(string username, int id)
         {
             return "value";
         }

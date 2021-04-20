@@ -4,6 +4,16 @@
         <name>AppForSkills.Api</name>
     </assembly>
     <members>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.GetAllDiscussions">
+            <summary>
+            Returns all discussions.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.GetDiscussion(System.Int32)">
+            <summary>
+            Returns single discussion.
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.GetAllSkills">
             <summary>
             Returns all user skills.
@@ -124,14 +134,14 @@
             Returns all user achievements. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetDiscussesWithUser(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetDiscussionsWithUser(System.String)">
             <summary>
-            Returns discusses, in which user participated. 
+            Returns discussions, in which user participated. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UserController.GetSelectedDiscussWithUser(System.String,System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetSelectedDiscussionWithUser(System.String,System.Int32)">
             <summary>
-            Returns selected discuss, in which user participated. 
+            Returns selected discussion, in which user participated. 
             </summary>
         </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">
