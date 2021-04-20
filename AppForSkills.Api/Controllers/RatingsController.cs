@@ -57,6 +57,21 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
+        /// Returns users ranking sorted by the number of ratings to skill posts.
+        /// </summary>
+        [Route("most-ratings-to-skills")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public string GetRankingOfTheMostEvaluativeUsers()
+        {
+            return "value";
+        }
+
+        /// <summary>
         /// Returns users ranking sorted by the most posts in discussions.
         /// </summary>
         [Route("most-posts-in-discussing")]

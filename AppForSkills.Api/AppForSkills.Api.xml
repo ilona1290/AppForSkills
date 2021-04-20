@@ -118,6 +118,11 @@
             Returns users ranking sorted by the number of comments to skill posts.
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingOfTheMostEvaluativeUsers">
+            <summary>
+            Returns users ranking sorted by the number of ratings to skill posts.
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingOfTheMostActiveUsersInDiscussions">
             <summary>
             Returns users ranking sorted by the most posts in discussions.
