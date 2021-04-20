@@ -57,6 +57,36 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
+        /// Edits selected user posts. 
+        /// </summary>
+        [Route("skills/{id}")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public void EditUserSkill(int id)
+        {
+            
+        }
+
+        /// <summary>
+        /// Deletes selected user posts. 
+        /// </summary>
+        [Route("skills/{id}")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public void DeleteUserSkill(int id)
+        {
+
+        }
+
+        /// <summary>
         /// Returns comments of selected user posts. 
         /// </summary>
         [Route("skills/{id}/comments")]

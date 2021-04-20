@@ -79,6 +79,16 @@
             Returns selected user posts. 
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.EditUserSkill(System.Int32)">
+            <summary>
+            Edits selected user posts. 
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.DeleteUserSkill(System.Int32)">
+            <summary>
+            Deletes selected user posts. 
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.UserController.GetCommentsFromUserSkill(System.Int32)">
             <summary>
             Returns comments of selected user posts. 
