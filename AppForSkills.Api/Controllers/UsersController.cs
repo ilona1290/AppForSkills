@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace AppForSkills.Api.Controllers
 {
-    [Route("api/user/{username}")]
+    [Route("api/users/{username}")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         /// <summary>
         /// Returns general information about user.
