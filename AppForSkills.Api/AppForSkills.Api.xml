@@ -63,6 +63,11 @@
             </summary>
             <param name="idComment">Id of comment, which user wants to remove</param>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetAllInformation">
+            <summary>
+            Returns general information about user.
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">
             <summary>
             Get weather forecasts
