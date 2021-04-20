@@ -191,5 +191,35 @@ namespace AppForSkills.Api.Controllers
             return "value";
         }
 
+        /// <summary>
+        /// Returns discusses, in which user participated. 
+        /// </summary>
+        [Route("discusses")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public string GetDiscussesWithUser(string username)
+        {
+            return "value";
+        }
+
+        /// <summary>
+        /// Returns selected discuss, in which user participated. 
+        /// </summary>
+        [Route("discusses/{id}")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public string GetSelectedDiscussWithUser(string username, int id)
+        {
+            return "value";
+        }
+
     }
 }

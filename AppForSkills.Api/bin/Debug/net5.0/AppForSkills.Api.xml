@@ -124,6 +124,16 @@
             Returns all user achievements. 
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetDiscussesWithUser(System.String)">
+            <summary>
+            Returns discusses, in which user participated. 
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.UserController.GetSelectedDiscussWithUser(System.String,System.Int32)">
+            <summary>
+            Returns selected discuss, in which user participated. 
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">
             <summary>
             Get weather forecasts
