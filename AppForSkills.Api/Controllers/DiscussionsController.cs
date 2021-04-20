@@ -28,7 +28,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Returns single discussion.
         /// </summary>
-        [Route("{id}")]
+        [Route("{id}/posts")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -39,5 +39,66 @@ namespace AppForSkills.Api.Controllers
         {
             return "value";
         }
+
+        /// <summary>
+        /// Begins single discussion.
+        /// </summary>
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public void BeginDiscussion()
+        {
+            
+        }
+
+        /// <summary>
+        /// Adds post to discussion.
+        /// </summary>
+        [Route("{id}")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public void AddPostToDiscussion()
+        {
+
+        }
+
+        /// <summary>
+        /// Edits post in discussion.
+        /// </summary>
+        [Route("{id}/posts/{idPost}")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public void EditUserPostInDiscussion(int idPost)
+        {
+
+        }
+
+        /// <summary>
+        /// Deletes post in discussion.
+        /// </summary>
+        [Route("{id}/posts/{idPost}")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public void DeleteUserPostInDiscussion(int idPost)
+        {
+
+        }
+
+
     }
 }
