@@ -119,7 +119,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Edits comment of selected user posts. 
         /// </summary>
-        [Route("skills/{id}/comments")]
+        [Route("skills/{id}/comments/{idComment}")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -134,7 +134,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Deletes comment of selected user posts. 
         /// </summary>
-        [Route("skills/{id}/comments")]
+        [Route("skills/{id}/comments/{idComment}")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -207,7 +207,7 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Returns selected discussion, in which user participated. 
+        /// Returns selected discussion, in which user has been participated. 
         /// </summary>
         [Route("discussions/{id}")]
         [HttpGet]

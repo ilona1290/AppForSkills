@@ -94,7 +94,7 @@
             <summary>
             Edits comment to user skill.
             </summary>
-            <param name="idcomment">Id of comment, which user wants to edit</param>
+            <param name="idComment">Id of comment, which user wants to edit</param>
             <param name="commentText">New text of comment</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.DeleteCommentFromUserSkill(System.Int32)">
@@ -196,7 +196,7 @@
         </member>
         <member name="M:AppForSkills.Api.Controllers.UsersController.GetSelectedDiscussionWithUser(System.String,System.Int32)">
             <summary>
-            Returns selected discussion, in which user participated. 
+            Returns selected discussion, in which user has been participated. 
             </summary>
         </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">

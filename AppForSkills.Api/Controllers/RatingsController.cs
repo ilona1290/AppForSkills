@@ -29,7 +29,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Returns user ranking sorted by best average ratings.
         /// </summary>
-        [Route("best-rating")]
+        [Route("best-ratings")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -74,7 +74,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Returns users ranking sorted by the most posts in discussions.
         /// </summary>
-        [Route("most-posts-in-discussing")]
+        [Route("most-posts-in-discussions")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

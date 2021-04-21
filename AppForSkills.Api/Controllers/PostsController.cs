@@ -137,16 +137,16 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Edits comment to user skill.
         /// </summary>
-        /// <param name="idcomment">Id of comment, which user wants to edit</param>
+        /// <param name="idComment">Id of comment, which user wants to edit</param>
         /// <param name="commentText">New text of comment</param>
-        [Route("{id}/comments")]
+        [Route("{id}/comments/{idComment}")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void EditCommentToUserSkill(int idcomment, [FromBody] string commentText)
+        public void EditCommentToUserSkill(int idComment, [FromBody] string commentText)
         {
         }
 
@@ -154,7 +154,7 @@ namespace AppForSkills.Api.Controllers
         /// Deletes comment from user skill.
         /// </summary>
         /// <param name="idComment">Id of comment, which user wants to remove</param>
-        [Route("{id}/comments")]
+        [Route("{id}/comments/{idComment}")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
