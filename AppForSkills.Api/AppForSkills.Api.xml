@@ -103,30 +103,11 @@
             </summary>
             <param name="idComment">Id of comment, which user wants to remove</param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingOfTheMostPostingSkillsUsers">
+        <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingAboutUser(System.String)">
             <summary>
-            Returns user ranking sorted by the number of inserted skill posts .
+            Returns user ranking sorted by chosen element.
             </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingOfTheBestAverageRatings">
-            <summary>
-            Returns user ranking sorted by best average ratings.
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingOfTheMostCommentingUsers">
-            <summary>
-            Returns users ranking sorted by the number of comments to skill posts.
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingOfTheMostEvaluativeUsers">
-            <summary>
-            Returns users ranking sorted by the number of ratings to skill posts.
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingOfTheMostActiveUsersInDiscussions">
-            <summary>
-            Returns users ranking sorted by the most posts in discussions.
-            </summary>
+            <param name="element">Choose one of the elements: skillPosts, bestRatings, numberOfGivingRatings, numberOfGivingComments, postsInDiscussions </param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllInformation(System.String)">
             <summary>
