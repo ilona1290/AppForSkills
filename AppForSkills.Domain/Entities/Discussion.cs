@@ -13,7 +13,8 @@ namespace AppForSkills.Domain.Entities
         public ICollection<PostInDiscussion> PostInDiscussions { get; set; }
         public int NumberOfPosts { get; set; }
         public int NumberOfLikes { get; set; }
-        public ICollection<LikeToPost> Likes { get; set; }
+        public ICollection<LikeToDiscussion> Likes { get; set; }
+        public ICollection<UserInformation> UsersInThisDiscussion { get; set; }
 
     }
 }
