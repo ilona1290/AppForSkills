@@ -13,7 +13,7 @@ namespace AppForSkills.Domain.Common
         public SkillPost SkillPost { get; set; }
         public int? ParentCommentId { get; set; }
         public ICollection<Comment> AnswersToComment { get; set; }
-        public int NumberOfLikesToComment { get; set; }
+        public int NumberOfLikes { get; set; }
         public ICollection<LikeToComment> Likes { get; set; }
 
     }
