@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace AppForSkills.Domain.Common
 {
-    public class Rating
+    public class Rating : AuditableEntity
     {
+        public int Value { get; set; }
+        public int SkillId { get; set; }
+        public SkillPost SkillPost { get; set; }
     }
 }
