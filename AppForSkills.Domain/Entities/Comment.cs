@@ -16,6 +16,8 @@ namespace AppForSkills.Domain.Entities
         public ICollection<Comment> AnswersToComment { get; set; }
         public int NumberOfLikes { get; set; }
         public ICollection<LikeToComment> Likes { get; set; }
+        public int UserId { get; set; }
+        public UserInformation User { get; set; }
 
     }
 }
