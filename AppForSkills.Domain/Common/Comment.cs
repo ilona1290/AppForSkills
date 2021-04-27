@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace AppForSkills.Domain.Common
 {
-    public class Comment
+    public class Comment : AuditableEntity
     {
+        public string CommentText { get; set; }
+        public int SkillPostId { get; set; }
+        public SkillPost SkillPost { get; set; }
+        public int? IdOfCommentToWhichAnswerCommentIs { get; set; }
+        public ICollection<Comment> AnswersToComment { get; set; }
+        public int NumberOfLikesToComment { get; set; }
+        public ICollection<LikeToComment> Likes { get; set; }
 
     }
 }
