@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace AppForSkills.Domain.Entities
 {
-    public class LikeToDiscussion : AuditableEntity
+    public class LikeToDiscussion
     {
+        public int Id { get; set; }
         public int DiscussionId { get; set; }
+        public Discussion Discussion { get; set; }
+        public string User { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppForSkills.Domain.Entities
 {
-    public class RepostedPost
+    public class ReportedPost
     {
         public int Id { get; set; }
         public int ReportedPostId { get; set; }
