@@ -11,6 +11,7 @@ namespace AppForSkills.Domain.Entities
     {
         public int Id { get; set; }
         public int DiscussionId { get; set; }
+        public Discussion Discussion { get; set; }
         public string User { get; set; }
     }
 }
