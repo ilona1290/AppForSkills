@@ -11,9 +11,7 @@ namespace AppForSkills.Domain.Entities
     {
         public string FirstPost { get; set; }
         public ICollection<PostInDiscussion> PostsInDiscussion { get; set; }
-        public int NumberOfPosts { get; set; }
-        public int NumberOfLikes { get; set; }
-        public ICollection<LikeToDiscussion> Likes { get; set; }
+        public ICollection<Like> Likes { get; set; }
         public ICollection<UserInformation> UsersInThisDiscussion { get; set; }
 
     }

@@ -15,7 +15,6 @@ namespace AppForSkills.Domain.Entities
         public int Views { get; set; }
         public int NumberOfRatings { get; set; }
         public float AverageRating { get; set; }
-        public int NumberOfComments { get; set; }
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public int UserId { get; set; }
