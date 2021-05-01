@@ -15,5 +15,6 @@ namespace AppForSkills.Domain.Entities
         public ICollection<Like> Likes { get; set; }
         public int? ParentPostId { get; set; }
         public ICollection<PostInDiscussion> AnswersToPost { get; set; }
+        public bool Reported { get; set; } = false;
     }
 }
