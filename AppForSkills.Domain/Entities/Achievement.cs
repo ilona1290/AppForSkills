@@ -10,6 +10,6 @@ namespace AppForSkills.Domain.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<UserInformation> UsersWithThisAchivement { get; set; }
+        public ICollection<UserInformation> UsersWithAchivement { get; set; }
     }
 }
