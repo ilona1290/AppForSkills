@@ -1,9 +1,7 @@
 ﻿using AppForSkills.Domain.Common;
+using AppForSkills.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +14,15 @@ namespace AppForSkills.Persistance
 
         }
 
+        public DbSet<Achievement> Achievements { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Discussion> Discussions { get; set; }
+        public DbSet<Like> Likes { get; set; }
+        public DbSet<PostInDiscussion> PostsInDiscussion { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<SkillPost> SkillPosts { get; set; }
+        public DbSet<UserInformation> UserInformations { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -25,7 +32,7 @@ namespace AppForSkills.Persistance
         {
             foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
             {
-                switch(entry.State)
+                switch (entry.State)
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedBy = string.Empty;

@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AppForSkills.Api.Controllers
 {
@@ -49,10 +46,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        
+
         public void AddSkill()
         {
-            
+
         }
 
         /// <summary>
@@ -160,7 +157,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        
+
         public void DeleteCommentFromUserSkill(int idComment)
         {
         }
