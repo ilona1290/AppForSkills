@@ -14,7 +14,7 @@ namespace AppForSkills.Persistance
 
         public TContext CreateDbContext(string[] args)
         {
-            var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}AppForSkills", Path.DirectorySeparatorChar);
+            var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}AppForSkills.Api", Path.DirectorySeparatorChar);
             return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
         }
 
