@@ -14,6 +14,7 @@ namespace AppForSkills.Persistance.Configurations
         public void Configure(EntityTypeBuilder<Achievement> builder)
         {
             builder.Property(p => p.Name).HasMaxLength(100).HasColumnName("Achievement").IsRequired();
+            builder.Property(p => p.Description).HasMaxLength(500).IsRequired();
         }
     }
 }
