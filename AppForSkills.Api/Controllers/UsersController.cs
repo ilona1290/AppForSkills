@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AppForSkills.Api.Controllers
 {
@@ -68,7 +64,7 @@ namespace AppForSkills.Api.Controllers
 
         public void EditUserSkill(int id)
         {
-            
+
         }
 
         /// <summary>
@@ -113,7 +109,7 @@ namespace AppForSkills.Api.Controllers
 
         public void CreateCommentToUserSkill(int id, string comment)
         {
-            
+
         }
 
         /// <summary>
@@ -128,7 +124,7 @@ namespace AppForSkills.Api.Controllers
 
         public void EditCommentToUserSkill(int id, int idComment, string comment)
         {
-            
+
         }
 
         /// <summary>

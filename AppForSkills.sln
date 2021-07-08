@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppForSkills.Persistance", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{43D132A2-06DE-4BD6-9AB4-16A530C46417}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppForSkills.Application", "AppForSkills.Application\AppForSkills.Application.csproj", "{D84F3C2F-C968-433D-AEEA-C5DFD88919A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppForSkills.Application", "AppForSkills.Application\AppForSkills.Application.csproj", "{D84F3C2F-C968-433D-AEEA-C5DFD88919A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

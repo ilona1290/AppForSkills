@@ -4,18 +4,12 @@ using AppForSkills.Infrastructure;
 using AppForSkills.Persistance;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AppForSkills.Api
 {
@@ -44,7 +38,8 @@ namespace AppForSkills.Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
                     Title = "AppForSkills.Api",
                     Version = "v1",
                     Description = "A web application for users, who want to share theirs skills with others users.",
@@ -73,7 +68,7 @@ namespace AppForSkills.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                
+
             }
 
             app.UseSwagger();
