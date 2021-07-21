@@ -48,8 +48,8 @@ namespace AppForSkills.Persistance
                 );
 
             modelBuilder.Entity<Rating>().HasData(
-                new Rating() { Id = 1, Value = 5, SkillId = 2, Created = DateTime.Now, CreatedBy = "Turysta12", UserId = 3},
-                new Rating() { Id = 2, Value = 4, SkillId = 2, Created = DateTime.Now, CreatedBy = "SuperAdmin", UserId = 1}
+                new Rating() { Id = 1, Created = DateTime.Now, CreatedBy = "Turysta12", SkillPostId = 2, UserId = 3, Value = 5 },
+                new Rating() { Id = 2, Created = DateTime.Now, CreatedBy = "SuperAdmin", SkillPostId = 2, UserId = 1, Value = 4 }
                 );
 
             modelBuilder.Entity<Like>().HasData(

@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
+using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -19,9 +20,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetAllSkills()
+        public async Task<ActionResult<SkillPostsVm>> GetAllSkillsAsync()
         {
-            return "value";
+            var vm = await Mediator.Send(new GetSkillPostsQuery());
+            return vm;
         }
 
         /// <summary>

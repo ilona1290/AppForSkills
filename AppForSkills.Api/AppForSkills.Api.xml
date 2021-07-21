@@ -44,7 +44,7 @@
             Reports post in discussion.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.GetAllSkills">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.GetAllSkillsAsync">
             <summary>
             Returns all user skills.
             </summary>

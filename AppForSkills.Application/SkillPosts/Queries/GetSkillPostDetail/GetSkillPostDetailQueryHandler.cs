@@ -27,7 +27,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
             var skillPost = await _context.SkillPosts.Where(s => s.Id == request.SkillPostId).FirstOrDefaultAsync(cancellationToken);
             var comments = _context.Comments.Where(c => c.SkillPostId == request.SkillPostId && c.ParentCommentId == null);
             var answerComments = _context.Comments.Where(c => c.ParentCommentId != null);
-            var ratings = _context.Ratings.Where(r => r.SkillId == request.SkillPostId).Select(r => r.Value).ToList();
+            var ratings = _context.Ratings.Where(r => r.SkillPostId == request.SkillPostId).Select(r => r.Value).ToList();
 
             var skillPostVm = _mapper.Map<SkillPostVm>(skillPost);
             var commentDtos = await comments.ProjectTo<CommentDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);

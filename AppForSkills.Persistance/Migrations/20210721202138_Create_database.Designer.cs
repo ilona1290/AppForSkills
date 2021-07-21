@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppForSkills.Persistance.Migrations
 {
     [DbContext(typeof(AppForSkillsDbContext))]
-    [Migration("20210528193045_initial_configuration")]
-    partial class initial_configuration
+    [Migration("20210721202138_Create_database")]
+    partial class Create_database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,11 @@ namespace AppForSkills.Persistance.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -52,6 +57,26 @@ namespace AppForSkills.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Achievements");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Dodano pierwszy post.",
+                            Name = "Świerzak"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Rozpoczęto pierwszą dyskusję.",
+                            Name = "Początkujący mówca"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Dodano pierwszy post do dyskusji.",
+                            Name = "Pierwsze udzielenie się"
+                        });
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.Comment", b =>
@@ -108,6 +133,29 @@ namespace AppForSkills.Persistance.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CommentText = "Wow! Super zdjęcie.",
+                            Created = new DateTime(2021, 7, 21, 22, 21, 37, 853, DateTimeKind.Local).AddTicks(4673),
+                            CreatedBy = "Turysta12",
+                            SkillPostId = 2,
+                            StatusId = 0,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CommentText = "Dzięki.",
+                            Created = new DateTime(2021, 7, 21, 22, 21, 37, 853, DateTimeKind.Local).AddTicks(5360),
+                            CreatedBy = "Podrożnik",
+                            ParentCommentId = 1,
+                            SkillPostId = 2,
+                            StatusId = 0,
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.Discussion", b =>
@@ -146,6 +194,15 @@ namespace AppForSkills.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Discussions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2021, 7, 21, 22, 21, 37, 854, DateTimeKind.Local).AddTicks(353),
+                            FirstPost = "Cześć. W tej części aplikacji będziesz mógł rozpoczynać dyskusje, bądź udzielać się już w istniejących.",
+                            StatusId = 1
+                        });
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.Like", b =>
@@ -178,6 +235,26 @@ namespace AppForSkills.Persistance.Migrations
                     b.HasIndex("PostInDiscussionId");
 
                     b.ToTable("Likes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CommentId = 1,
+                            User = "Podróżnik"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CommentId = 2,
+                            User = "Turysta12"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CommentId = 1,
+                            User = "SuperAdmin"
+                        });
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.PostInDiscussion", b =>
@@ -259,16 +336,13 @@ namespace AppForSkills.Persistance.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SkillId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("SkillPostId")
                         .HasColumnType("int");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.Property<int>("Value")
@@ -281,6 +355,28 @@ namespace AppForSkills.Persistance.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Ratings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2021, 7, 21, 22, 21, 37, 853, DateTimeKind.Local).AddTicks(6235),
+                            CreatedBy = "Turysta12",
+                            SkillPostId = 2,
+                            StatusId = 0,
+                            UserId = 3,
+                            Value = 5
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(2021, 7, 21, 22, 21, 37, 853, DateTimeKind.Local).AddTicks(7138),
+                            CreatedBy = "SuperAdmin",
+                            SkillPostId = 2,
+                            StatusId = 0,
+                            UserId = 1,
+                            Value = 4
+                        });
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.SkillPost", b =>
@@ -337,6 +433,31 @@ namespace AppForSkills.Persistance.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("SkillPosts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddressOfPhotoOrVideo = "images/firstPost.jpg",
+                            Created = new DateTime(2021, 7, 21, 22, 21, 37, 845, DateTimeKind.Local).AddTicks(3206),
+                            Description = "Cześć. W tej części aplikacji będziesz mógł zaprezentować pozostałym użytkownikom swoje umiejętności/talenty w formie zdjęcia, bądź filmiku. Dodać do niego tytuł i opis. Każdy użytkownik, może oceniać, komentować dany post. Baw się dobrze!",
+                            StatusId = 1,
+                            Title = "Start",
+                            UserId = 1,
+                            Views = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddressOfPhotoOrVideo = "images/Eiffel_Tower.jpg",
+                            Created = new DateTime(2021, 7, 21, 22, 21, 37, 852, DateTimeKind.Local).AddTicks(3041),
+                            CreatedBy = "Podrożnik",
+                            Description = "Cześć. Autorskie zdjęcie wieży Eiffla",
+                            StatusId = 2,
+                            Title = "Wieża Eiffla",
+                            UserId = 2,
+                            Views = 0
+                        });
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.UserInformation", b =>
@@ -360,6 +481,29 @@ namespace AppForSkills.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserInformations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            RecentLoginDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RegistrationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Username = "SuperAdmin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            RecentLoginDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RegistrationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Username = "Podrożnik"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            RecentLoginDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RegistrationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Username = "Turysta12"
+                        });
                 });
 
             modelBuilder.Entity("DiscussionUserInformation", b =>
@@ -457,9 +601,7 @@ namespace AppForSkills.Persistance.Migrations
 
                     b.HasOne("AppForSkills.Domain.Entities.UserInformation", "User")
                         .WithMany("GavedRatings")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("SkillPost");
 
