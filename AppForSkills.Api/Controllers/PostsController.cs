@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AppForSkills.Api.Controllers
 {
     [Route("api/posts")]
     [ApiController]
-    public class PostsController : ControllerBase
+    public class PostsController : BaseController
     {
         /// <summary>
         /// Returns all user skills.
@@ -33,9 +35,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetSkillWithGeneralInformation(int id)
+        public async Task<ActionResult<SkillPostVm>> GetSkillWithGeneralInformation(int id)
         {
-            return "value";
+            var vm = await Mediator.Send(new GetSkillPostDetailQuery() { SkillPostId = id });
+            return vm;
         }
 
         /// <summary>

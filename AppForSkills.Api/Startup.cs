@@ -32,7 +32,7 @@ namespace AppForSkills.Api
                 builder.WithOrigins("https://localhost:44390");
             }));
             services.AddInfrastructure(Configuration);
-            services.AddApplication(Configuration);
+            services.AddApplication();
             services.AddPersistance(Configuration);
             services.AddCommon(Configuration);
             services.AddControllers();
