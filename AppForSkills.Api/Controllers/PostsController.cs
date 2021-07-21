@@ -105,22 +105,6 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Returns comments, which user skill receive.
-        /// </summary>
-        /// <param name="id">Post id</param>
-        [Route("{id}/comments")]
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public List<string> GetCommentFromUserSkill(int id)
-        {
-            return new List<string> { "value1", "value2" };
-        }
-
-        /// <summary>
         /// Adds comment to user skill.
         /// </summary>
         /// <param name="id">Post id</param>
