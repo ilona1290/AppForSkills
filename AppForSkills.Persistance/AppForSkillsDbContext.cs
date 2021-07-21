@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AppForSkills.Persistance
 {
-    public class AppForSkillsDbContext : DbContext
+    public class AppForSkillsDbContext : DbContext, IAppForSkillsDbContext
     {
         private readonly IDateTime _dateTime;
         public AppForSkillsDbContext(DbContextOptions<AppForSkillsDbContext> options, IDateTime dateTime) : base(options)
