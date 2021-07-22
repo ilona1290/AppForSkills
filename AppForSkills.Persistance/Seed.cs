@@ -55,7 +55,12 @@ namespace AppForSkills.Persistance
             modelBuilder.Entity<Like>().HasData(
                 new Like() { Id = 1, CommentId = 1, User = "Podróżnik"},
                 new Like() { Id = 2, CommentId = 2, User = "Turysta12"},
-                new Like() { Id = 3, CommentId = 1, User = "SuperAdmin"}
+                new Like() { Id = 3, CommentId = 1, User = "SuperAdmin"},
+                new Like() { Id = 4, DiscussionId = 1, User = "Podróżnik" },
+                new Like() { Id = 5, DiscussionId = 2, User = "Turysta12" },
+                new Like() { Id = 6, DiscussionId = 2, User = "SuperAdmin" },
+                new Like() { Id = 7, PostInDiscussionId = 1, User = "Podróżnik"},
+                new Like() { Id = 8, PostInDiscussionId = 3, User = "Podróżnik" }
                 );
             modelBuilder.Entity<Discussion>(d =>
             {
@@ -65,9 +70,29 @@ namespace AppForSkills.Persistance
                     StatusId = 1,
                     Created = DateTime.Now,
                     FirstPost = "Cześć. W tej części aplikacji będziesz mógł rozpoczynać dyskusje, bądź udzielać się " +
-                    "już w istniejących."
-                });
+                    "już w istniejących.",
+                    CreatedBy = "SuperAdmin"
+                },
+                new Discussion()
+                {
+                    Id = 2,
+                    StatusId = 1,
+                    Created = DateTime.Now,
+                    CreatedBy = "Podróżnik",
+                    FirstPost = "Jaki kraj chcielibyście odwiedzić?"
+                }
+                );
             });
+
+            modelBuilder.Entity<PostInDiscussion>().HasData(
+                new PostInDiscussion() { Id = 1, DiscussionId = 2, PostText = "Australia", Created = DateTime.Now, 
+                    CreatedBy = "Turysta12", StatusId = 1},
+                new PostInDiscussion() { Id = 2, StatusId = 1, Created = DateTime.Now, CreatedBy = "Podróżnik", 
+                    DiscussionId = 2, ParentPostId = 1, PostText = "Dlaczego?"},
+                new PostInDiscussion() { Id = 3, Created = DateTime.Now, CreatedBy = "Turysta12", DiscussionId = 2, 
+                    ParentPostId = 2, PostText = "Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).",
+                    StatusId = 1}
+                );
 
             modelBuilder.Entity<Achievement>().HasData(
                 new Achievement() { Id = 1, Name = "Świerzak", Description = "Dodano pierwszy post."},

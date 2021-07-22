@@ -77,12 +77,6 @@
             </summary>
             <param name="idRating">Id of rating, which user wants to remove</param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.GetCommentFromUserSkill(System.Int32)">
-            <summary>
-            Returns comments, which user skill receive.
-            </summary>
-            <param name="id">Post id</param>
-        </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.AddCommentToUserSkill(System.Int32,System.String)">
             <summary>
             Adds comment to user skill.

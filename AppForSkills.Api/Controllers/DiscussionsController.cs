@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AppForSkills.Application.Discussions.GetDiscussions;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AppForSkills.Api.Controllers
 {
     [Route("api/discussions")]
     [ApiController]
-    public class DiscussionsController : ControllerBase
+    public class DiscussionsController : BaseController
     {
         /// <summary>
         /// Returns all discussions.
@@ -16,9 +19,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetAllDiscussions()
+        public async Task<ActionResult<DiscussionsVm>> GetAllDiscussions()
         {
-            return "value";
+            var vm = await Mediator.Send(new GetDiscussionsQuery());
+            return vm;
         }
 
         /// <summary>
