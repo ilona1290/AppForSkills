@@ -25,25 +25,24 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
         public async Task<SkillPostVm> Handle(GetSkillPostDetailQuery request, CancellationToken cancellationToken)
         {
             var skillPost = await _context.SkillPosts.Where(s => s.Id == request.SkillPostId).FirstOrDefaultAsync(cancellationToken);
-            var comments = _context.Comments.Where(c => c.SkillPostId == request.SkillPostId && c.ParentCommentId == null);
-            var answerComments = _context.Comments.Where(c => c.ParentCommentId != null);
+            var comments = _context.Comments.Where(c => c.SkillPostId == request.SkillPostId);
             var ratings = _context.Ratings.Where(r => r.SkillPostId == request.SkillPostId).Select(r => r.Value).ToList();
 
             var skillPostVm = _mapper.Map<SkillPostVm>(skillPost);
             var commentDtos = await comments.ProjectTo<CommentDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
-            var answerCommentDtos = await answerComments.ProjectTo<CommentDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
-            
-            
-            foreach (var answerComment in answerCommentDtos)
+
+            int index;
+            int length = commentDtos.Count;
+            for (int i = length - 1; i > 0; i--)
             {
-                foreach (var comment in commentDtos)
+                if (commentDtos[i].ParentCommentId != null)
                 {
-                    if(comment.Id == answerComment.ParentCommentId)
-                    {
-                        comment.AnswersToComment.Add(answerComment);
-                    }
+                    index = (int)commentDtos[i].ParentCommentId - 1;
+                    commentDtos[index].AnswersToComment.Add(commentDtos[i]);
                 }
             }
+
+            commentDtos = commentDtos.Where(p => p.ParentCommentId == null).ToList();
 
             int sum = ratings.Sum();
             float average = (float)sum / ratings.Count;
