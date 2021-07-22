@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Discussions.GetDiscussions;
+using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,9 +36,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetDiscussion(int id)
+        public async Task<ActionResult<DiscussionVm>> GetDiscussion(int id)
         {
-            return "value";
+            var vm = await Mediator.Send(new GetDiscussionQuery() { DiscussionId = id });
+            return vm;
         }
 
         /// <summary>

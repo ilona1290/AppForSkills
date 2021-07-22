@@ -91,7 +91,13 @@ namespace AppForSkills.Persistance
                     DiscussionId = 2, ParentPostId = 1, PostText = "Dlaczego?"},
                 new PostInDiscussion() { Id = 3, Created = DateTime.Now, CreatedBy = "Turysta12", DiscussionId = 2, 
                     ParentPostId = 2, PostText = "Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).",
-                    StatusId = 1}
+                    StatusId = 1},
+                new PostInDiscussion() { Id = 4, Created = DateTime.Now, CreatedBy = "Podróżnik", DiscussionId = 1,
+                    PostText = "Jasne.", StatusId = 1},
+                new PostInDiscussion() { Id = 5, DiscussionId = 2, PostText = "Włochy", Created = DateTime.Now,
+                    CreatedBy = "SuperAdmin", StatusId = 1},
+                new PostInDiscussion() { Id = 6, StatusId = 1, Created = DateTime.Now, CreatedBy = "SuperAdmin",
+                    DiscussionId = 2, ParentPostId = 1, PostText = "Możesz rozwinąć?"}
                 );
 
             modelBuilder.Entity<Achievement>().HasData(
@@ -104,6 +110,15 @@ namespace AppForSkills.Persistance
                 new UserInformation() { Id = 1, Username = "SuperAdmin" },
                 new UserInformation() { Id = 2, Username = "Podrożnik"},
                 new UserInformation() { Id = 3, Username = "Turysta12"}
+                );
+
+            modelBuilder.SharedTypeEntity<Dictionary<string, object>>("DiscussionUserInformation")
+                .HasData(
+                    new { DiscussionsId = 2, UsersInDiscussionId = 2 },
+                    new { DiscussionsId = 2, UsersInDiscussionId = 3 },
+                    new { DiscussionsId = 2, UsersInDiscussionId = 1 },
+                    new { DiscussionsId = 1, UsersInDiscussionId = 1 },
+                    new { DiscussionsId = 1, UsersInDiscussionId = 2 }
                 );
         }
     }
