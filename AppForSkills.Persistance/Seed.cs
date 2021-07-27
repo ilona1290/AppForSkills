@@ -31,7 +31,7 @@ namespace AppForSkills.Persistance
                     Id = 2,
                     StatusId = 2,
                     Created = DateTime.Now,
-                    CreatedBy = "Podrożnik",
+                    CreatedBy = "Podróżnik",
                     AddressOfPhotoOrVideo = "images/Eiffel_Tower.jpg",
                     Title = "Wieża Eiffla",
                     Description = "Cześć. Autorskie zdjęcie wieży Eiffla",
@@ -106,13 +106,13 @@ namespace AppForSkills.Persistance
                 new Achievement() { Id = 3, Name = "Pierwsze udzielenie się", Description = "Dodano pierwszy post do dyskusji."}
                 );
 
-            modelBuilder.Entity<UserInformation>().HasData(
-                new UserInformation() { Id = 1, Username = "SuperAdmin" },
-                new UserInformation() { Id = 2, Username = "Podrożnik"},
-                new UserInformation() { Id = 3, Username = "Turysta12"}
+            modelBuilder.Entity<User>().HasData(
+                new User() { Id = 1, Username = "SuperAdmin" },
+                new User() { Id = 2, Username = "Podróżnik"},
+                new User() { Id = 3, Username = "Turysta12"}
                 );
 
-            modelBuilder.SharedTypeEntity<Dictionary<string, object>>("DiscussionUserInformation")
+            modelBuilder.SharedTypeEntity<Dictionary<string, object>>("DiscussionUser")
                 .HasData(
                     new { DiscussionsId = 2, UsersInDiscussionId = 2 },
                     new { DiscussionsId = 2, UsersInDiscussionId = 3 },

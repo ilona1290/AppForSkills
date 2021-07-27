@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AppForSkills.Domain.Entities
 {
-    public class UserInformation
+    public class User
     {
         public int Id { get; set; }
         public string Username { get; set; }

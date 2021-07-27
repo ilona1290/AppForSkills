@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppForSkills.Persistance.Migrations
 {
-    public partial class add_next_data_about_users_in_discussion : Migration
+    public partial class small_changes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,200 +12,213 @@ namespace AppForSkills.Persistance.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 17, 18, 1, 971, DateTimeKind.Local).AddTicks(9654));
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 231, DateTimeKind.Local).AddTicks(475));
 
             migrationBuilder.UpdateData(
                 table: "Comments",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 17, 18, 1, 972, DateTimeKind.Local).AddTicks(440));
-
-            migrationBuilder.InsertData(
-                table: "DiscussionUserInformation",
-                columns: new[] { "DiscussionsId", "UsersInDiscussionId" },
-                values: new object[] { 2, 1 });
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 231, DateTimeKind.Local).AddTicks(1251));
 
             migrationBuilder.UpdateData(
                 table: "Discussions",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 17, 18, 1, 972, DateTimeKind.Local).AddTicks(7295));
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 231, DateTimeKind.Local).AddTicks(7807));
 
             migrationBuilder.UpdateData(
                 table: "Discussions",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 17, 18, 1, 972, DateTimeKind.Local).AddTicks(7684));
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 231, DateTimeKind.Local).AddTicks(8192));
 
             migrationBuilder.UpdateData(
                 table: "PostsInDiscussion",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 17, 18, 1, 972, DateTimeKind.Local).AddTicks(9084));
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 231, DateTimeKind.Local).AddTicks(9496));
 
             migrationBuilder.UpdateData(
                 table: "PostsInDiscussion",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 17, 18, 1, 972, DateTimeKind.Local).AddTicks(9100));
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 231, DateTimeKind.Local).AddTicks(9511));
 
             migrationBuilder.UpdateData(
                 table: "PostsInDiscussion",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 17, 18, 1, 972, DateTimeKind.Local).AddTicks(9464));
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 231, DateTimeKind.Local).AddTicks(9869));
 
             migrationBuilder.UpdateData(
                 table: "PostsInDiscussion",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 17, 18, 1, 972, DateTimeKind.Local).AddTicks(9474));
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 231, DateTimeKind.Local).AddTicks(9879));
 
-            migrationBuilder.InsertData(
+            migrationBuilder.UpdateData(
                 table: "PostsInDiscussion",
-                columns: new[] { "Id", "Created", "CreatedBy", "DiscussionId", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "ParentPostId", "PostInDiscussionId", "PostText", "Reported", "StatusId" },
-                values: new object[,]
-                {
-                    { 5, new DateTime(2021, 7, 22, 17, 18, 1, 972, DateTimeKind.Local).AddTicks(9478), "SuperAdmin", 2, null, null, null, null, null, null, "Włochy", false, 1 },
-                    { 6, new DateTime(2021, 7, 22, 17, 18, 1, 972, DateTimeKind.Local).AddTicks(9481), "SuperAdmin", 2, null, null, null, null, 1, null, "Możesz rozwinąć?", false, 1 }
-                });
+                keyColumn: "Id",
+                keyValue: 5,
+                column: "Created",
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 231, DateTimeKind.Local).AddTicks(9883));
+
+            migrationBuilder.UpdateData(
+                table: "PostsInDiscussion",
+                keyColumn: "Id",
+                keyValue: 6,
+                column: "Created",
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 231, DateTimeKind.Local).AddTicks(9886));
 
             migrationBuilder.UpdateData(
                 table: "Ratings",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 17, 18, 1, 972, DateTimeKind.Local).AddTicks(1454));
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 231, DateTimeKind.Local).AddTicks(2241));
 
             migrationBuilder.UpdateData(
                 table: "Ratings",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 17, 18, 1, 972, DateTimeKind.Local).AddTicks(2413));
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 231, DateTimeKind.Local).AddTicks(3216));
 
             migrationBuilder.UpdateData(
                 table: "SkillPosts",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 17, 18, 1, 963, DateTimeKind.Local).AddTicks(8995));
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 223, DateTimeKind.Local).AddTicks(2449));
 
             migrationBuilder.UpdateData(
                 table: "SkillPosts",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 17, 18, 1, 970, DateTimeKind.Local).AddTicks(6193));
+                value: new DateTime(2021, 7, 22, 19, 54, 25, 229, DateTimeKind.Local).AddTicks(7726));
+
+            migrationBuilder.UpdateData(
+                table: "Users",
+                keyColumn: "Id",
+                keyValue: 2,
+                column: "Username",
+                value: "Podróżnik");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "DiscussionUserInformation",
-                keyColumns: new[] { "DiscussionsId", "UsersInDiscussionId" },
-                keyValues: new object[] { 2, 1 });
-
-            migrationBuilder.DeleteData(
-                table: "PostsInDiscussion",
-                keyColumn: "Id",
-                keyValue: 5);
-
-            migrationBuilder.DeleteData(
-                table: "PostsInDiscussion",
-                keyColumn: "Id",
-                keyValue: 6);
-
             migrationBuilder.UpdateData(
                 table: "Comments",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 16, 4, 36, 218, DateTimeKind.Local).AddTicks(826));
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 329, DateTimeKind.Local).AddTicks(7819));
 
             migrationBuilder.UpdateData(
                 table: "Comments",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 16, 4, 36, 218, DateTimeKind.Local).AddTicks(2524));
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 329, DateTimeKind.Local).AddTicks(8630));
 
             migrationBuilder.UpdateData(
                 table: "Discussions",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 16, 4, 36, 219, DateTimeKind.Local).AddTicks(9250));
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(5040));
 
             migrationBuilder.UpdateData(
                 table: "Discussions",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 16, 4, 36, 220, DateTimeKind.Local).AddTicks(1145));
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(5394));
 
             migrationBuilder.UpdateData(
                 table: "PostsInDiscussion",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 16, 4, 36, 220, DateTimeKind.Local).AddTicks(4761));
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(6589));
 
             migrationBuilder.UpdateData(
                 table: "PostsInDiscussion",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 16, 4, 36, 220, DateTimeKind.Local).AddTicks(4775));
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(6603));
 
             migrationBuilder.UpdateData(
                 table: "PostsInDiscussion",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 16, 4, 36, 220, DateTimeKind.Local).AddTicks(5983));
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(6926));
 
             migrationBuilder.UpdateData(
                 table: "PostsInDiscussion",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 16, 4, 36, 220, DateTimeKind.Local).AddTicks(5993));
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(6936));
+
+            migrationBuilder.UpdateData(
+                table: "PostsInDiscussion",
+                keyColumn: "Id",
+                keyValue: 5,
+                column: "Created",
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(6939));
+
+            migrationBuilder.UpdateData(
+                table: "PostsInDiscussion",
+                keyColumn: "Id",
+                keyValue: 6,
+                column: "Created",
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(6942));
 
             migrationBuilder.UpdateData(
                 table: "Ratings",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 16, 4, 36, 218, DateTimeKind.Local).AddTicks(4167));
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 329, DateTimeKind.Local).AddTicks(9543));
 
             migrationBuilder.UpdateData(
                 table: "Ratings",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 16, 4, 36, 218, DateTimeKind.Local).AddTicks(5446));
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(419));
 
             migrationBuilder.UpdateData(
                 table: "SkillPosts",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 16, 4, 36, 210, DateTimeKind.Local).AddTicks(2804));
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 320, DateTimeKind.Local).AddTicks(3871));
 
             migrationBuilder.UpdateData(
                 table: "SkillPosts",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created",
-                value: new DateTime(2021, 7, 22, 16, 4, 36, 216, DateTimeKind.Local).AddTicks(7245));
+                value: new DateTime(2021, 7, 22, 19, 40, 43, 328, DateTimeKind.Local).AddTicks(6385));
+
+            migrationBuilder.UpdateData(
+                table: "Users",
+                keyColumn: "Id",
+                keyValue: 2,
+                column: "Username",
+                value: "Podrożnik");
         }
     }
 }

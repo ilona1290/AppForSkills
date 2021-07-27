@@ -28,8 +28,4 @@
     <ProjectReference Include="..\AppForSkills.Domain\AppForSkills.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

@@ -18,7 +18,7 @@ namespace AppForSkills.Application.Common.Interfaces
         DbSet<PostInDiscussion> PostsInDiscussion { get; set; }
         DbSet<Rating> Ratings { get; set; }
         DbSet<SkillPost> SkillPosts { get; set; }
-        DbSet<UserInformation> UserInformations { get; set; }
+        DbSet<User> Users { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

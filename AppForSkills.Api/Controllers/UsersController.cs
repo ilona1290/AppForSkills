@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AppForSkills.Application.Users.Queries.GetUserInformation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AppForSkills.Api.Controllers
 {
     [Route("api/users/{username}")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseController
     {
         /// <summary>
         /// Returns general information about user.
@@ -17,9 +19,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetAllInformation(string username)
+        public async Task<ActionResult<UserInformationVm>> GetAllInformation(string username)
         {
-            return "value";
+            var vm = await Mediator.Send(new GetUserInformationQuery() { Username = username });
+            return vm;
         }
 
         /// <summary>

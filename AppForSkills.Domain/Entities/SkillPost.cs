@@ -12,6 +12,6 @@ namespace AppForSkills.Domain.Entities
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public int UserId { get; set; }
-        public UserInformation User { get; set; }
+        public User User { get; set; }
     }
 }

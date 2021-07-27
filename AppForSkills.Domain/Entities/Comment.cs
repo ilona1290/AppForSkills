@@ -12,7 +12,7 @@ namespace AppForSkills.Domain.Entities
         public ICollection<Comment> AnswersToComment { get; set; }
         public ICollection<Like> Likes { get; set; }
         public int? UserId { get; set; }
-        public UserInformation User { get; set; }
+        public User User { get; set; }
 
     }
 }

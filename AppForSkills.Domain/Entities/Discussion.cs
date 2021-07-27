@@ -8,7 +8,7 @@ namespace AppForSkills.Domain.Entities
         public string FirstPost { get; set; }
         public ICollection<PostInDiscussion> PostsInDiscussion { get; set; }
         public ICollection<Like> Likes { get; set; }
-        public ICollection<UserInformation> UsersInDiscussion { get; set; }
+        public ICollection<User> UsersInDiscussion { get; set; }
 
     }
 }
