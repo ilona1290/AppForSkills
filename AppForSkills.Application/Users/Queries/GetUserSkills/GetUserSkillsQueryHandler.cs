@@ -1,5 +1,6 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
+using AppForSkills.Application.Users.Queries.GetUserSkills;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
