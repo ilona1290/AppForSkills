@@ -129,27 +129,7 @@
             Deletes selected user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetCommentsFromUserSkill(System.Int32)">
-            <summary>
-            Returns comments of selected user posts. 
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.CreateCommentToUserSkill(System.Int32,System.String)">
-            <summary>
-            Adds comment of selected user posts. 
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.EditCommentToUserSkill(System.Int32,System.Int32,System.String)">
-            <summary>
-            Edits comment of selected user posts. 
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.DeleteCommentFromUserSkill(System.Int32,System.Int32)">
-            <summary>
-            Deletes comment of selected user posts. 
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllRatingsWhichUserGave(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllRatingsWhichUserGaveAsync(System.String)">
             <summary>
             Returns all ratings, which user gave to other users. 
             </summary>

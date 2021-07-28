@@ -1,6 +1,7 @@
 ﻿using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using AppForSkills.Application.Users.Queries.GetUserInformation;
+using AppForSkills.Application.Users.Queries.GetUserRatings;
 using AppForSkills.Application.Users.Queries.GetUserSkills;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -90,7 +91,7 @@ namespace AppForSkills.Api.Controllers
 
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Returns comments of selected user posts. 
         /// </summary>
         [Route("skills/{id}/comments")]
@@ -148,7 +149,7 @@ namespace AppForSkills.Api.Controllers
         public void DeleteCommentFromUserSkill(int id, int idComment)
         {
 
-        }
+        }*/
 
         /// <summary>
         /// Returns all ratings, which user gave to other users. 
@@ -160,9 +161,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetAllRatingsWhichUserGave(string username)
+        public async Task<RatingsVm> GetAllRatingsWhichUserGaveAsync(string username)
         {
-            return "value";
+            var vm = await Mediator.Send(new GetUserRatingsQuery() { Username = username });
+            return vm;
         }
 
         /// <summary>
