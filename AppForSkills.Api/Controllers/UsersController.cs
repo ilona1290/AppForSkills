@@ -1,5 +1,6 @@
 ﻿using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
+using AppForSkills.Application.Users.Queries.GetUserComments;
 using AppForSkills.Application.Users.Queries.GetUserInformation;
 using AppForSkills.Application.Users.Queries.GetUserRatings;
 using AppForSkills.Application.Users.Queries.GetUserSkills;
@@ -39,7 +40,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<SkillPostsVm> GetAllUserSkillsAsync(string username)
+        public async Task<ActionResult<SkillPostsVm>> GetAllUserSkillsAsync(string username)
         {
             var vm = await Mediator.Send(new GetUserSkillsQuery() { Username = username });
             return vm;
@@ -55,7 +56,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<SkillPostVm> GetUserSkillAsync(int id)
+        public async Task<ActionResult<SkillPostVm>> GetUserSkillAsync(int id)
         {
             var vm = await Mediator.Send(new GetSkillPostDetailQuery() { SkillPostId = id });
             return vm;
@@ -91,66 +92,6 @@ namespace AppForSkills.Api.Controllers
 
         }
 
-        /*/// <summary>
-        /// Returns comments of selected user posts. 
-        /// </summary>
-        [Route("skills/{id}/comments")]
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public string GetCommentsFromUserSkill(int id)
-        {
-            return "value";
-        }
-
-        /// <summary>
-        /// Adds comment of selected user posts. 
-        /// </summary>
-        [Route("skills/{id}/comments")]
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public void CreateCommentToUserSkill(int id, string comment)
-        {
-
-        }
-
-        /// <summary>
-        /// Edits comment of selected user posts. 
-        /// </summary>
-        [Route("skills/{id}/comments/{idComment}")]
-        [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public void EditCommentToUserSkill(int id, int idComment, string comment)
-        {
-
-        }
-
-        /// <summary>
-        /// Deletes comment of selected user posts. 
-        /// </summary>
-        [Route("skills/{id}/comments/{idComment}")]
-        [HttpDelete]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public void DeleteCommentFromUserSkill(int id, int idComment)
-        {
-
-        }*/
-
         /// <summary>
         /// Returns all ratings, which user gave to other users. 
         /// </summary>
@@ -161,7 +102,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<RatingsVm> GetAllRatingsWhichUserGaveAsync(string username)
+        public async Task<ActionResult<RatingsVm>> GetAllRatingsWhichUserGaveAsync(string username)
         {
             var vm = await Mediator.Send(new GetUserRatingsQuery() { Username = username });
             return vm;
@@ -177,9 +118,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetAllCommentsWhichUserGave(string username)
+        public async Task<ActionResult<CommentsVm>> GetAllCommentsWhichUserGaveAsync(string username)
         {
-            return "value";
+            var vm = await Mediator.Send(new GetUserCommentsQuery() { Username = username });
+            return vm;
         }
 
         /// <summary>

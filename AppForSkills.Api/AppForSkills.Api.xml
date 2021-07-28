@@ -134,7 +134,7 @@
             Returns all ratings, which user gave to other users. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllCommentsWhichUserGave(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllCommentsWhichUserGaveAsync(System.String)">
             <summary>
             Returns all comments, which user gave to other users. 
             </summary>
