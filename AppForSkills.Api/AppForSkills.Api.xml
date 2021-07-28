@@ -109,7 +109,7 @@
             </summary>
             <param name="username"></param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllUserSkills(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllUserSkillsAsync(System.String)">
             <summary>
             Returns all user posts. 
             </summary>

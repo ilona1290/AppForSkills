@@ -1,4 +1,6 @@
-﻿using AppForSkills.Application.Users.Queries.GetUserInformation;
+﻿using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
+using AppForSkills.Application.Users.Queries.GetUserInformation;
+using AppForSkills.Application.Users.Queries.GetUsersSkills;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -35,9 +37,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetAllUserSkills(string username)
+        public async Task<SkillPostsVm> GetAllUserSkillsAsync(string username)
         {
-            return "value";
+            var vm = await Mediator.Send(new GetUserSkillsQuery() { Username = username });
+            return vm;
         }
 
         /// <summary>

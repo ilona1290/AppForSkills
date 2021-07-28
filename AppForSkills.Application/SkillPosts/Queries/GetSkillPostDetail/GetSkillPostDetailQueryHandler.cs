@@ -24,12 +24,20 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
 
         public async Task<SkillPostVm> Handle(GetSkillPostDetailQuery request, CancellationToken cancellationToken)
         {
-            var skillPost = await _context.SkillPosts.Where(s => s.Id == request.SkillPostId).FirstOrDefaultAsync(cancellationToken);
-            var comments = _context.Comments.Where(c => c.SkillPostId == request.SkillPostId);
+            var skillPost = await _context.SkillPosts.Where(s => s.Id == request.SkillPostId)
+                .Include(c => c.Comments).ThenInclude(q => q.AnswersToComment).ThenInclude(l => l.Likes)
+                .Include(r => r.Ratings)
+                .FirstOrDefaultAsync(cancellationToken);
+            /*var comments = _context.Comments.Where(c => c.SkillPostId == request.SkillPostId);
             var ratings = _context.Ratings.Where(r => r.SkillPostId == request.SkillPostId).Select(r => r.Value).ToList();
+            */
+
+            int sum = skillPost.Ratings.Select(r => r.Value).Sum();
+            float average = (float)sum / skillPost.Ratings.Count;
 
             var skillPostVm = _mapper.Map<SkillPostVm>(skillPost);
-            var commentDtos = await comments.ProjectTo<CommentDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
+            skillPostVm.Rating = average;
+            /*var commentDtos = await comments.ProjectTo<CommentDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
 
             int index;
             int length = commentDtos.Count;
@@ -42,13 +50,12 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
                 }
             }
 
-            commentDtos = commentDtos.Where(p => p.ParentCommentId == null).ToList();
+            commentDtos = commentDtos.Where(p => p.ParentCommentId == null).ToList();*/
 
-            int sum = ratings.Sum();
-            float average = (float)sum / ratings.Count;
+            
 
-            skillPostVm.Comments = commentDtos;
-            skillPostVm.Rating = average;
+            /*skillPostVm.Comments = commentDtos;
+            skillPostVm.Rating = average;*/
 
             return skillPostVm;
         }
