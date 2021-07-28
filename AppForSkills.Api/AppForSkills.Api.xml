@@ -114,7 +114,7 @@
             Returns all user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetUserSkill(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetUserSkillAsync(System.Int32)">
             <summary>
             Returns selected user posts. 
             </summary>

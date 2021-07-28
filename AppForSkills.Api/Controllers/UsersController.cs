@@ -1,4 +1,5 @@
-﻿using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
+﻿using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
+using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using AppForSkills.Application.Users.Queries.GetUserInformation;
 using AppForSkills.Application.Users.Queries.GetUserSkills;
 using Microsoft.AspNetCore.Http;
@@ -53,9 +54,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetUserSkill(int id)
+        public async Task<SkillPostVm> GetUserSkillAsync(int id)
         {
-            return "value";
+            var vm = await Mediator.Send(new GetSkillPostDetailQuery() { SkillPostId = id });
+            return vm;
         }
 
         /// <summary>
