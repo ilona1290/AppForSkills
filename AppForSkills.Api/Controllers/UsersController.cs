@@ -1,6 +1,6 @@
 ﻿using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using AppForSkills.Application.Users.Queries.GetUserInformation;
-using AppForSkills.Application.Users.Queries.GetUsersSkills;
+using AppForSkills.Application.Users.Queries.GetUserSkills;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
