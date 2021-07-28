@@ -144,7 +144,7 @@
             Returns all user achievements. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetDiscussionsWithUser(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetDiscussionsWithUserAsync(System.String)">
             <summary>
             Returns discussions, in which user participated. 
             </summary>
