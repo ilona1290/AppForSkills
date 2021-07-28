@@ -139,7 +139,7 @@
             Returns all comments, which user gave to other users. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetUserAchievements(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetUserAchievementsAsync(System.String)">
             <summary>
             Returns all user achievements. 
             </summary>

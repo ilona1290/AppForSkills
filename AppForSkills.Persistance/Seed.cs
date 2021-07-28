@@ -120,6 +120,17 @@ namespace AppForSkills.Persistance
                     new { DiscussionsId = 1, UsersInDiscussionId = 1 },
                     new { DiscussionsId = 1, UsersInDiscussionId = 2 }
                 );
+
+            modelBuilder.SharedTypeEntity<Dictionary<string, object>>("AchievementUser")
+                .HasData(
+                    new { AchievementsId = 1, UsersWithAchivementId = 1 },
+                    new { AchievementsId = 1, UsersWithAchivementId = 2 },
+                    new { AchievementsId = 2, UsersWithAchivementId = 1 },
+                    new { AchievementsId = 2, UsersWithAchivementId = 2 },
+                    new { AchievementsId = 3, UsersWithAchivementId = 1 },
+                    new { AchievementsId = 3, UsersWithAchivementId = 2 },
+                    new { AchievementsId = 3, UsersWithAchivementId = 3 }
+                );
         }
     }
 }

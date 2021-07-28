@@ -2,6 +2,7 @@
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
+using AppForSkills.Application.Users.Queries.GetUserAchievements;
 using AppForSkills.Application.Users.Queries.GetUserComments;
 using AppForSkills.Application.Users.Queries.GetUserDiscussions;
 using AppForSkills.Application.Users.Queries.GetUserInformation;
@@ -137,9 +138,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetUserAchievements(string username)
+        public async Task<ActionResult<AchievementsVm>> GetUserAchievementsAsync(string username)
         {
-            return "value";
+            var vm = await Mediator.Send(new GetUserAchievementsQuery() { Username = username });
+            return vm;
         }
 
         /// <summary>
