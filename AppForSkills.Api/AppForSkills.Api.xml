@@ -149,7 +149,7 @@
             Returns discussions, in which user participated. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetSelectedDiscussionWithUser(System.String,System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetSelectedDiscussionWithUser(System.Int32)">
             <summary>
             Returns selected discussion, in which user has been participated. 
             </summary>

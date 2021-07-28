@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Discussions.GetDiscussions;
+using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using AppForSkills.Application.Users.Queries.GetUserComments;
@@ -167,9 +168,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public string GetSelectedDiscussionWithUser(string username, int id)
+        public async Task<ActionResult<DiscussionVm>> GetSelectedDiscussionWithUser(int id)
         {
-            return "value";
+            var vm = await Mediator.Send(new GetDiscussionQuery() { DiscussionId = id });
+            return vm;
         }
 
     }
