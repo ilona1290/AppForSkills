@@ -76,12 +76,10 @@
             </summary>
             <param name="idRating">Id of rating, which user wants to remove</param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.AddCommentToUserSkill(System.Int32,System.String)">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.AddCommentToUserSkill(AppForSkills.Application.SkillPosts.Commands.CreateComment.CreateCommentCommand)">
             <summary>
             Adds comment to user skill.
             </summary>
-            <param name="id">Post id</param>
-            <param name="commentText">Post id</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.EditCommentToUserSkill(System.Int32,System.String)">
             <summary>

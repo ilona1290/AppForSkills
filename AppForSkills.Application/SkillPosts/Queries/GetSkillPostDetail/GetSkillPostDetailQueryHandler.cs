@@ -31,12 +31,20 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
             /*var comments = _context.Comments.Where(c => c.SkillPostId == request.SkillPostId);
             var ratings = _context.Ratings.Where(r => r.SkillPostId == request.SkillPostId).Select(r => r.Value).ToList();
             */
-
-            int sum = skillPost.Ratings.Select(r => r.Value).Sum();
-            float average = (float)sum / skillPost.Ratings.Count;
-
             var skillPostVm = _mapper.Map<SkillPostVm>(skillPost);
-            skillPostVm.Rating = average;
+
+            if (skillPost.Ratings.Count > 0)
+            {
+                int sum = skillPost.Ratings.Select(r => r.Value).Sum();
+                float average = (float)sum / skillPost.Ratings.Count;
+                skillPostVm.Rating = average;
+            }
+            else
+            {
+                skillPostVm.Rating = 0;
+            }
+            
+            
             /*var commentDtos = await comments.ProjectTo<CommentDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
 
             int index;

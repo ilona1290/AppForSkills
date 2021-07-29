@@ -8,17 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppForSkills.Application.SkillPosts.Commands.CreateRating
+namespace AppForSkills.Application.SkillPosts.Commands.CreateComment
 {
-    public class CreateRatingCommand : IRequest<int>, IMapFrom<Rating>
+    public class CreateCommentCommand : IRequest<int>, IMapFrom<Comment>
     {
-        public int Value { get; set; }
+        public string CommentText { get; set; }
         public int SkillPostId { get; set; }
+        public int? ParentCommentId { get; set; }
         public int UserId { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateRatingCommand, Rating>();
+            profile.CreateMap<CreateCommentCommand, Comment>();
         }
     }
 }

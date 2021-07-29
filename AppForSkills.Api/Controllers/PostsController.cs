@@ -1,4 +1,5 @@
-﻿using AppForSkills.Application.SkillPosts.Commands.CreateRating;
+﻿using AppForSkills.Application.SkillPosts.Commands.CreateComment;
+using AppForSkills.Application.SkillPosts.Commands.CreateRating;
 using AppForSkills.Application.SkillPosts.Commands.CreateSkillPost;
 using AppForSkills.Application.SkillPosts.Commands.DeleteRating;
 using AppForSkills.Application.SkillPosts.Commands.EditRating;
@@ -114,8 +115,6 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Adds comment to user skill.
         /// </summary>
-        /// <param name="id">Post id</param>
-        /// <param name="commentText">Post id</param>
         [Route("{id}/comments")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -123,8 +122,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void AddCommentToUserSkill(int id, [FromBody] string commentText)
+        public async Task<ActionResult> AddCommentToUserSkill(CreateCommentCommand command)
         {
+            var result = await Mediator.Send(command);
+            return Ok(result);
         }
 
         /// <summary>
