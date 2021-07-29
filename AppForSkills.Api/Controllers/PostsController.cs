@@ -1,4 +1,5 @@
-﻿using AppForSkills.Application.SkillPosts.Commands.CreateSkillPost;
+﻿using AppForSkills.Application.SkillPosts.Commands.CreateRating;
+using AppForSkills.Application.SkillPosts.Commands.CreateSkillPost;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using Microsoft.AspNetCore.Http;
@@ -69,9 +70,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void AddRating()
+        public async Task<ActionResult> AddRating(CreateRatingCommand command)
         {
-
+            var result = await Mediator.Send(command);
+            return Ok(result);
         }
 
         /// <summary>

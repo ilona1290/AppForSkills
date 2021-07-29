@@ -15,13 +15,11 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateSkillPost
     {
         private readonly IAppForSkillsDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IFileStore _fileStore;
 
-        public CreateSkillPostCommandHandler(IAppForSkillsDbContext context, IMapper mapper, IFileStore fileStore)
+        public CreateSkillPostCommandHandler(IAppForSkillsDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _fileStore = fileStore;
         }
 
         public async Task<int> Handle(CreateSkillPostCommand request, CancellationToken cancellationToken)

@@ -60,7 +60,7 @@
             Adds a skill.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.AddRating">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.AddRating(AppForSkills.Application.SkillPosts.Commands.CreateRating.CreateRatingCommand)">
             <summary>
             Adds a rating to user skill.
             </summary>
