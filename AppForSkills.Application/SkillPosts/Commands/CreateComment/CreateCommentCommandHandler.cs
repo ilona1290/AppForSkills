@@ -26,12 +26,6 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateComment
         {
             var comment = _mapper.Map<Comment>(request);
 
-            /*if(request.ParentCommentId != null)
-            {
-                var parentComment = _context.Comments.FirstOrDefault(c => c.Id == request.ParentCommentId);
-                parentComment.AnswersToComment.Add(comment);
-            }*/
-
             _context.Comments.Add(comment);
 
             await _context.SaveChangesAsync(cancellationToken);

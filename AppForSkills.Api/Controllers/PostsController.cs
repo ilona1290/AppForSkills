@@ -2,6 +2,7 @@
 using AppForSkills.Application.SkillPosts.Commands.CreateRating;
 using AppForSkills.Application.SkillPosts.Commands.CreateSkillPost;
 using AppForSkills.Application.SkillPosts.Commands.DeleteRating;
+using AppForSkills.Application.SkillPosts.Commands.EditComment;
 using AppForSkills.Application.SkillPosts.Commands.EditRating;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
@@ -131,8 +132,6 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Edits comment to user skill.
         /// </summary>
-        /// <param name="idComment">Id of comment, which user wants to edit</param>
-        /// <param name="commentText">New text of comment</param>
         [Route("{id}/comments/{idComment}")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -140,8 +139,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void EditCommentToUserSkill(int idComment, [FromBody] string commentText)
+        public async Task<ActionResult> EditCommentToUserSkill(EditCommentCommand command)
         {
+            var result = await Mediator.Send(command);
+            return Ok(result);
         }
 
         /// <summary>

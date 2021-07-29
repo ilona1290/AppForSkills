@@ -81,12 +81,10 @@
             Adds comment to user skill.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.EditCommentToUserSkill(System.Int32,System.String)">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.EditCommentToUserSkill(AppForSkills.Application.SkillPosts.Commands.EditComment.EditCommentCommand)">
             <summary>
             Edits comment to user skill.
             </summary>
-            <param name="idComment">Id of comment, which user wants to edit</param>
-            <param name="commentText">New text of comment</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.DeleteCommentFromUserSkill(System.Int32)">
             <summary>
