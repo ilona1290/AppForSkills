@@ -1,5 +1,7 @@
 ﻿using AppForSkills.Application.SkillPosts.Commands.CreateRating;
 using AppForSkills.Application.SkillPosts.Commands.CreateSkillPost;
+using AppForSkills.Application.SkillPosts.Commands.DeleteRating;
+using AppForSkills.Application.SkillPosts.Commands.EditRating;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using Microsoft.AspNetCore.Http;
@@ -79,7 +81,6 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Edits a rating.
         /// </summary>
-        /// <param name="idRating">Id Of rating, which user wants to edit</param>
         [Route("{id}")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -87,9 +88,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void EditRating(int idRating)
+        public async Task<ActionResult> EditRating(EditRatingCommand command)
         {
-
+            var result = await Mediator.Send(command);
+            return Ok(result);
         }
 
         /// <summary>
@@ -103,9 +105,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void DeleteRating(int idRating)
+        public async Task<ActionResult> DeleteRating(int idRating)
         {
-
+            var result = await Mediator.Send(new DeleteRatingCommand() { RatingId = idRating });
+            return Ok(result);
         }
 
         /// <summary>

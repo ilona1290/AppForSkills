@@ -26,7 +26,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
         {
             var skillPost = await _context.SkillPosts.Where(s => s.Id == request.SkillPostId)
                 .Include(c => c.Comments).ThenInclude(q => q.AnswersToComment).ThenInclude(l => l.Likes)
-                .Include(r => r.Ratings)
+                .Include(r => r.Ratings.Where(r => r.StatusId == 1))
                 .FirstOrDefaultAsync(cancellationToken);
             /*var comments = _context.Comments.Where(c => c.SkillPostId == request.SkillPostId);
             var ratings = _context.Ratings.Where(r => r.SkillPostId == request.SkillPostId).Select(r => r.Value).ToList();

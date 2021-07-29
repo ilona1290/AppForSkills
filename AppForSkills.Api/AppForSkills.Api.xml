@@ -65,11 +65,10 @@
             Adds a rating to user skill.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.EditRating(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.EditRating(AppForSkills.Application.SkillPosts.Commands.EditRating.EditRatingCommand)">
             <summary>
             Edits a rating.
             </summary>
-            <param name="idRating">Id Of rating, which user wants to edit</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.DeleteRating(System.Int32)">
             <summary>
