@@ -1,4 +1,5 @@
-﻿using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
+﻿using AppForSkills.Application.SkillPosts.Commands.CreateSkillPost;
+using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -52,9 +53,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void AddSkill()
+        public async Task<ActionResult> AddSkill(CreateSkillPostCommand command)
         {
-
+            var result = await Mediator.Send(command);
+            return Ok(result);
         }
 
         /// <summary>

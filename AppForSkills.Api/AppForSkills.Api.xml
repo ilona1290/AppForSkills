@@ -55,7 +55,7 @@
             </summary>
             <param name="id">Post id</param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.AddSkill">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.AddSkill(AppForSkills.Application.SkillPosts.Commands.CreateSkillPost.CreateSkillPostCommand)">
             <summary>
             Adds a skill.
             </summary>
