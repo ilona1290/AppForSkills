@@ -25,7 +25,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
         public async Task<SkillPostVm> Handle(GetSkillPostDetailQuery request, CancellationToken cancellationToken)
         {
             var skillPost = await _context.SkillPosts.Where(s => s.Id == request.SkillPostId)
-                .Include(c => c.Comments).ThenInclude(q => q.AnswersToComment).ThenInclude(l => l.Likes)
+                .Include(c => c.Comments.Where(r => r.StatusId == 1)).ThenInclude(q => q.AnswersToComment).ThenInclude(l => l.Likes)
                 .Include(r => r.Ratings.Where(r => r.StatusId == 1))
                 .FirstOrDefaultAsync(cancellationToken);
             /*var comments = _context.Comments.Where(c => c.SkillPostId == request.SkillPostId);

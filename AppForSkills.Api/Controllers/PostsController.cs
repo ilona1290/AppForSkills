@@ -1,6 +1,7 @@
 ﻿using AppForSkills.Application.SkillPosts.Commands.CreateComment;
 using AppForSkills.Application.SkillPosts.Commands.CreateRating;
 using AppForSkills.Application.SkillPosts.Commands.CreateSkillPost;
+using AppForSkills.Application.SkillPosts.Commands.DeleteComment;
 using AppForSkills.Application.SkillPosts.Commands.DeleteRating;
 using AppForSkills.Application.SkillPosts.Commands.EditComment;
 using AppForSkills.Application.SkillPosts.Commands.EditRating;
@@ -156,8 +157,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void DeleteCommentFromUserSkill(int idComment)
+        public async Task<ActionResult> DeleteCommentFromUserSkill(int idComment)
         {
+            var result = await Mediator.Send(new DeleteCommentCommand() { CommentId = idComment });
+            return Ok(result);
         }
     }
 }
