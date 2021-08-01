@@ -20,6 +20,7 @@ namespace AppForSkills.Application.Discussions.Commands.DeletePost
         public async Task<Unit> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
             var post = await _context.PostsInDiscussion.Where(c => c.StatusId == 1 && c.Id == request.PostId)
+                .Include(p => p.Likes)
                 .FirstOrDefaultAsync(cancellationToken);
 
             _context.PostsInDiscussion.Remove(post);

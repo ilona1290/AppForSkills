@@ -1,5 +1,6 @@
 ﻿using AppForSkills.Application.Discussions.Commands.CreateDiscussion;
 using AppForSkills.Application.Discussions.Commands.CreatePost;
+using AppForSkills.Application.Discussions.Commands.DeleteDiscussion;
 using AppForSkills.Application.Discussions.Commands.DeletePost;
 using AppForSkills.Application.Discussions.Commands.EditDiscussion;
 using AppForSkills.Application.Discussions.Commands.EditPost;
@@ -75,6 +76,22 @@ namespace AppForSkills.Api.Controllers
         public async Task<ActionResult> EditDiscussion(EditDiscussionCommand command)
         {
             var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Deletes discussion.
+        /// </summary>
+        [Route("{id}")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> DeleteDiscussion(int id)
+        {
+            var result = await Mediator.Send(new DeleteDiscussionCommand() { Id = id });
             return Ok(result);
         }
 

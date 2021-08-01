@@ -24,6 +24,11 @@
             Edits first post in discussion.
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.DeleteDiscussion(System.Int32)">
+            <summary>
+            Deletes discussion.
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.DiscussionsController.AddPostToDiscussion(AppForSkills.Application.Discussions.Commands.CreatePost.CreatePostCommand)">
             <summary>
             Adds post to discussion.
