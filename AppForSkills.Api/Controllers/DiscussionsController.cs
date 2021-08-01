@@ -1,4 +1,5 @@
-﻿using AppForSkills.Application.Discussions.GetDiscussions;
+﻿using AppForSkills.Application.Discussions.Commands.CreateDiscussion;
+using AppForSkills.Application.Discussions.GetDiscussions;
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -51,9 +52,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void BeginDiscussion()
+        public async Task<ActionResult> BeginDiscussion(CreateDiscussionCommand command)
         {
-
+            var result = await Mediator.Send(command);
+            return Ok(result);
         }
 
         /// <summary>

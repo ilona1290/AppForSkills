@@ -14,7 +14,7 @@
             Returns single discussion.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.BeginDiscussion">
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.BeginDiscussion(AppForSkills.Application.Discussions.Commands.CreateDiscussion.CreateDiscussionCommand)">
             <summary>
             Begins single discussion.
             </summary>
