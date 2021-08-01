@@ -19,6 +19,11 @@
             Begins single discussion.
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.EditDiscussion(AppForSkills.Application.Discussions.Commands.EditDiscussion.EditDiscussionCommand)">
+            <summary>
+            Edits first post in discussion.
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.DiscussionsController.AddPostToDiscussion(AppForSkills.Application.Discussions.Commands.CreatePost.CreatePostCommand)">
             <summary>
             Adds post to discussion.

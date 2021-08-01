@@ -1,6 +1,7 @@
 ﻿using AppForSkills.Application.Discussions.Commands.CreateDiscussion;
 using AppForSkills.Application.Discussions.Commands.CreatePost;
 using AppForSkills.Application.Discussions.Commands.DeletePost;
+using AppForSkills.Application.Discussions.Commands.EditDiscussion;
 using AppForSkills.Application.Discussions.Commands.EditPost;
 using AppForSkills.Application.Discussions.GetDiscussions;
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
@@ -56,6 +57,22 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<ActionResult> BeginDiscussion(CreateDiscussionCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Edits first post in discussion.
+        /// </summary>
+        [Route("{id}")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> EditDiscussion(EditDiscussionCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);
