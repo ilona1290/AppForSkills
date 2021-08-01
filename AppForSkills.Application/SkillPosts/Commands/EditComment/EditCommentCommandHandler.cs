@@ -13,12 +13,10 @@ namespace AppForSkills.Application.SkillPosts.Commands.EditComment
     public class EditCommentCommandHandler : IRequestHandler<EditCommentCommand>
     {
         private readonly IAppForSkillsDbContext _context;
-        private readonly IMapper _mapper;
 
-        public EditCommentCommandHandler(IAppForSkillsDbContext context, IMapper mapper)
+        public EditCommentCommandHandler(IAppForSkillsDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<Unit> Handle(EditCommentCommand request, CancellationToken cancellationToken)

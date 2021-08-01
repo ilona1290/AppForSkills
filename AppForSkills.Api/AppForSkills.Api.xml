@@ -24,7 +24,7 @@
             Adds post to discussion.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.EditPostInDiscussion(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.EditPostInDiscussion(AppForSkills.Application.Discussions.Commands.EditPost.EditPostCommand)">
             <summary>
             Edits post in discussion.
             </summary>
