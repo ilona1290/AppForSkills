@@ -1,5 +1,6 @@
 ﻿using AppForSkills.Application.Discussions.Commands.CreateDiscussion;
 using AppForSkills.Application.Discussions.Commands.CreatePost;
+using AppForSkills.Application.Discussions.Commands.DeletePost;
 using AppForSkills.Application.Discussions.Commands.EditPost;
 using AppForSkills.Application.Discussions.GetDiscussions;
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
@@ -102,9 +103,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void DeletePostInDiscussion(int idPost)
+        public async Task<ActionResult> DeletePostInDiscussion(int idPost)
         {
-
+            var result = await Mediator.Send(new DeletePostCommand() { PostId = idPost });
+            return Ok(result);
         }
 
         /// <summary>
