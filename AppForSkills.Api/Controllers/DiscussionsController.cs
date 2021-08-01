@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Discussions.Commands.CreateDiscussion;
+using AppForSkills.Application.Discussions.Commands.CreatePost;
 using AppForSkills.Application.Discussions.GetDiscussions;
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using MediatR;
@@ -68,9 +69,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void AddPostToDiscussion()
+        public async Task<ActionResult> AddPostToDiscussion(CreatePostCommand command)
         {
-
+            var result = await Mediator.Send(command);
+            return Ok(result);
         }
 
         /// <summary>

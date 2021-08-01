@@ -9,27 +9,28 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AppForSkills.Application.Discussions.Commands.CreateDiscussion
+namespace AppForSkills.Application.Discussions.Commands.CreatePost
 {
-    public class CreateDiscussionCommandHandler : IRequestHandler<CreateDiscussionCommand, int>
+    public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, int>
     {
         private readonly IAppForSkillsDbContext _context;
         private readonly IMapper _mapper;
-        public CreateDiscussionCommandHandler(IAppForSkillsDbContext context, IMapper mapper)
+
+        public CreatePostCommandHandler(IAppForSkillsDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<int> Handle(CreateDiscussionCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreatePostCommand request, CancellationToken cancellationToken)
         {
-            var discussion = _mapper.Map<Discussion>(request);
-                
-            _context.Discussions.Add(discussion);
+            var post = _mapper.Map<PostInDiscussion>(request);
+
+            _context.PostsInDiscussion.Add(post);
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return discussion.Id;
+            return post.Id;
         }
     }
 }

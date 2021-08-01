@@ -14,6 +14,7 @@ namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
     {
         public int Id { get; set; }
         public string Username { get; set; }
+        public DateTime Date { get; set; }
         public string PostText { get; set; }
         public int? ParentPostId { get; set; }
         public ICollection<PostInDiscussionDto> AnswersToPost { get; set; }
@@ -22,7 +23,8 @@ namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
         public void Mapping(Profile profile)
         {
             profile.CreateMap<PostInDiscussion, PostInDiscussionDto>()
-                .ForMember(s => s.Username, map => map.MapFrom(src => src.CreatedBy));
+                .ForMember(s => s.Username, map => map.MapFrom(src => src.CreatedBy))
+                .ForMember(s => s.Date, map => map.MapFrom(src => src.Created));
                 
         }
     }
