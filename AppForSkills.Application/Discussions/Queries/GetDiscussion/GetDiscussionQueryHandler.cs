@@ -23,8 +23,9 @@ namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
         }
         public async Task<DiscussionVm> Handle(GetDiscussionQuery request, CancellationToken cancellationToken)
         {
-            var discussion = await _context.Discussions.Where(d => d.Id == request.DiscussionId).FirstOrDefaultAsync(cancellationToken);
-            var posts = _context.PostsInDiscussion.Where(d => d.DiscussionId == request.DiscussionId);
+            var discussion = await _context.Discussions.Where(d => d.StatusId == 1 && d.Id == request.DiscussionId)
+                .FirstOrDefaultAsync(cancellationToken);
+            var posts = _context.PostsInDiscussion.Where(d => d.StatusId == 1 && d.DiscussionId == request.DiscussionId);
 
             var discussionVm = _mapper.Map<DiscussionVm>(discussion);
             var postDtos = await posts.ProjectTo<PostInDiscussionDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);

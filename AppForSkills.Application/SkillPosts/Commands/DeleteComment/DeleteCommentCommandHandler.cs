@@ -21,7 +21,7 @@ namespace AppForSkills.Application.SkillPosts.Commands.DeleteComment
 
         public async Task<Unit> Handle(DeleteCommentCommand request, CancellationToken cancellationToken)
         {
-            var comment = await _context.Comments.Where(c => c.Id == request.CommentId)
+            var comment = await _context.Comments.Where(c => c.StatusId == 1 && c.Id == request.CommentId)
                 .FirstOrDefaultAsync(cancellationToken);
 
             _context.Comments.Remove(comment);

@@ -22,7 +22,7 @@ namespace AppForSkills.Application.Users.Queries.GetUserInformation
         }
         public async Task<UserInformationVm> Handle(GetUserInformationQuery request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.Where(d => d.Username == request.Username)
+            var user = await _context.Users.Where(d => d.StatusId == 1 && d.Username == request.Username)
                 .Include(u => u.UserSkills)
                 .Include(c => c.UserComments)
                 .Include(r => r.GavedRatings)

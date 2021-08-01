@@ -21,7 +21,7 @@ namespace AppForSkills.Application.SkillPosts.Commands.DeleteRating
 
         public async Task<Unit> Handle(DeleteRatingCommand request, CancellationToken cancellationToken)
         {
-            var rating = await _context.Ratings.Where(r => r.Id == request.RatingId)
+            var rating = await _context.Ratings.Where(r => r.StatusId == 1 && r.Id == request.RatingId)
                 .FirstOrDefaultAsync(cancellationToken);
 
             _context.Ratings.Remove(rating);

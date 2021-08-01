@@ -24,7 +24,7 @@ namespace AppForSkills.Application.Discussions.GetDiscussions
 
         public async Task<DiscussionsVm> Handle(GetDiscussionsQuery request, CancellationToken cancellationToken)
         {
-            var discussions = _context.Discussions.OrderByDescending(s => s.Created);
+            var discussions = _context.Discussions.Where(d => d.StatusId == 1).OrderByDescending(s => s.Created);
             var discussionDtos = await discussions.ProjectTo<DiscussionDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
 
             var discussionsVm = new DiscussionsVm

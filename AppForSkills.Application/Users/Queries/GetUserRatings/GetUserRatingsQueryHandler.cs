@@ -25,7 +25,7 @@ namespace AppForSkills.Application.Users.Queries.GetUserRatings
 
         public async Task<RatingsVm> Handle(GetUserRatingsQuery request, CancellationToken cancellationToken)
         {
-            var ratings = _context.Ratings.Where(r => r.User.Username == request.Username)
+            var ratings = _context.Ratings.Where(r => r.StatusId == 1 && r.User.Username == request.Username)
                 .OrderByDescending(r => r.Created);
 
             var ratingDtos = await ratings.ProjectTo<RatingDto>(_mapper.ConfigurationProvider)

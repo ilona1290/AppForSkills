@@ -5,6 +5,7 @@ using AppForSkills.Application.SkillPosts.Commands.DeleteComment;
 using AppForSkills.Application.SkillPosts.Commands.DeleteRating;
 using AppForSkills.Application.SkillPosts.Commands.EditComment;
 using AppForSkills.Application.SkillPosts.Commands.EditRating;
+using AppForSkills.Application.SkillPosts.Queries.GetRatingsToSkillPost;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using Microsoft.AspNetCore.Http;
@@ -64,6 +65,22 @@ namespace AppForSkills.Api.Controllers
             var result = await Mediator.Send(command);
             return Ok(result);
         }
+
+        /// <summary>
+        /// Returns all ratings to skill.
+        /// </summary>
+        [Route("{id}/ratings")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<RatingsPostVm>> GetAllRatingsAsync(int id)
+        {
+            var vm = await Mediator.Send(new GetRatingsToSkillPostQuery() { SkillId = id});
+            return vm;
+        }
+
 
         /// <summary>
         /// Adds a rating to user skill.

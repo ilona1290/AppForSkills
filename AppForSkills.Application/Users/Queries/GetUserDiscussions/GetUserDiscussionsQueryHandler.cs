@@ -25,8 +25,8 @@ namespace AppForSkills.Application.Users.Queries.GetUserDiscussions
 
         public async Task<DiscussionsVm> Handle(GetUserDiscussionsQuery request, CancellationToken cancellationToken)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == request.Username);
-            var discussions = _context.Discussions.Where(d => d.UsersInDiscussion.Contains(user));
+            var user = _context.Users.FirstOrDefault(u => u.StatusId == 1 && u.Username == request.Username);
+            var discussions = _context.Discussions.Where(d => d.StatusId == 1 && d.UsersInDiscussion.Contains(user));
 
             var discussionDtos = await discussions.ProjectTo<DiscussionDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
 

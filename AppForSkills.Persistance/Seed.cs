@@ -29,7 +29,7 @@ namespace AppForSkills.Persistance
                 new SkillPost()
                 {
                     Id = 2,
-                    StatusId = 2,
+                    StatusId = 1,
                     Created = DateTime.Now,
                     CreatedBy = "Podróżnik",
                     AddressOfPhotoOrVideo = "images/Eiffel_Tower.jpg",
@@ -41,15 +41,15 @@ namespace AppForSkills.Persistance
             });
 
             modelBuilder.Entity<Comment>().HasData(
-                new Comment() { Id = 1, CommentText = "Wow! Super zdjęcie.", CreatedBy = "Turysta12", Created = DateTime.Now,
+                new Comment() { Id = 1, StatusId = 1, CommentText = "Wow! Super zdjęcie.", CreatedBy = "Turysta12", Created = DateTime.Now,
                     SkillPostId = 2, UserId = 3 },
-                new Comment() { Id = 2, CommentText = "Dzięki.", CreatedBy = "Podrożnik", Created = DateTime.Now,
+                new Comment() { Id = 2, StatusId = 1, CommentText = "Dzięki.", CreatedBy = "Podrożnik", Created = DateTime.Now,
                     SkillPostId = 2, UserId = 2, ParentCommentId = 1}
                 );
 
             modelBuilder.Entity<Rating>().HasData(
-                new Rating() { Id = 1, Created = DateTime.Now, CreatedBy = "Turysta12", SkillPostId = 2, UserId = 3, Value = 5 },
-                new Rating() { Id = 2, Created = DateTime.Now, CreatedBy = "SuperAdmin", SkillPostId = 2, UserId = 1, Value = 4 }
+                new Rating() { Id = 1, StatusId = 1, Created = DateTime.Now, CreatedBy = "Turysta12", SkillPostId = 2, UserId = 3, Value = 5 },
+                new Rating() { Id = 2, StatusId = 1, Created = DateTime.Now, CreatedBy = "SuperAdmin", SkillPostId = 2, UserId = 1, Value = 4 }
                 );
 
             modelBuilder.Entity<Like>().HasData(
@@ -85,31 +85,31 @@ namespace AppForSkills.Persistance
             });
 
             modelBuilder.Entity<PostInDiscussion>().HasData(
-                new PostInDiscussion() { Id = 1, DiscussionId = 2, PostText = "Australia", Created = DateTime.Now, 
-                    CreatedBy = "Turysta12", StatusId = 1},
+                new PostInDiscussion() { Id = 1, StatusId = 1, DiscussionId = 2, PostText = "Australia", Created = DateTime.Now, 
+                    CreatedBy = "Turysta12"},
                 new PostInDiscussion() { Id = 2, StatusId = 1, Created = DateTime.Now, CreatedBy = "Podróżnik", 
                     DiscussionId = 2, ParentPostId = 1, PostText = "Dlaczego?"},
-                new PostInDiscussion() { Id = 3, Created = DateTime.Now, CreatedBy = "Turysta12", DiscussionId = 2, 
-                    ParentPostId = 2, PostText = "Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).",
-                    StatusId = 1},
-                new PostInDiscussion() { Id = 4, Created = DateTime.Now, CreatedBy = "Podróżnik", DiscussionId = 1,
-                    PostText = "Jasne.", StatusId = 1},
-                new PostInDiscussion() { Id = 5, DiscussionId = 2, PostText = "Włochy", Created = DateTime.Now,
-                    CreatedBy = "SuperAdmin", StatusId = 1},
+                new PostInDiscussion() { Id = 3, StatusId = 1, Created = DateTime.Now, CreatedBy = "Turysta12", 
+                    DiscussionId = 2, ParentPostId = 2, 
+                    PostText = "Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :)."},
+                new PostInDiscussion() { Id = 4, StatusId = 1, Created = DateTime.Now, CreatedBy = "Podróżnik", 
+                    DiscussionId = 1, PostText = "Jasne."},
+                new PostInDiscussion() { Id = 5, StatusId = 1, DiscussionId = 2, PostText = "Włochy", Created = DateTime.Now,
+                    CreatedBy = "SuperAdmin"},
                 new PostInDiscussion() { Id = 6, StatusId = 1, Created = DateTime.Now, CreatedBy = "SuperAdmin",
                     DiscussionId = 2, ParentPostId = 1, PostText = "Możesz rozwinąć?"}
                 );
 
             modelBuilder.Entity<Achievement>().HasData(
-                new Achievement() { Id = 1, Name = "Świerzak", Description = "Dodano pierwszy post."},
-                new Achievement() { Id = 2, Name = "Początkujący mówca", Description = "Rozpoczęto pierwszą dyskusję." },
-                new Achievement() { Id = 3, Name = "Pierwsze udzielenie się", Description = "Dodano pierwszy post do dyskusji."}
+                new Achievement() { Id = 1, StatusId = 1, Name = "Świerzak", Description = "Dodano pierwszy post."},
+                new Achievement() { Id = 2, StatusId = 1, Name = "Początkujący mówca", Description = "Rozpoczęto pierwszą dyskusję." },
+                new Achievement() { Id = 3, StatusId = 1, Name = "Pierwsze udzielenie się", Description = "Dodano pierwszy post do dyskusji."}
                 );
 
             modelBuilder.Entity<User>().HasData(
-                new User() { Id = 1, Username = "SuperAdmin" },
-                new User() { Id = 2, Username = "Podróżnik"},
-                new User() { Id = 3, Username = "Turysta12"}
+                new User() { Id = 1, StatusId = 1, Username = "SuperAdmin" },
+                new User() { Id = 2, StatusId = 1, Username = "Podróżnik"},
+                new User() { Id = 3, StatusId = 1, Username = "Turysta12"}
                 );
 
             modelBuilder.SharedTypeEntity<Dictionary<string, object>>("DiscussionUser")

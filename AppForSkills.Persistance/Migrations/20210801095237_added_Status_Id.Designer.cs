@@ -4,14 +4,16 @@ using AppForSkills.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppForSkills.Persistance.Migrations
 {
     [DbContext(typeof(AppForSkillsDbContext))]
-    partial class AppForSkillsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210801095237_added_Status_Id")]
+    partial class added_Status_Id
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,7 +182,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 1,
                             CommentText = "Wow! Super zdjęcie.",
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 927, DateTimeKind.Local).AddTicks(9559),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 779, DateTimeKind.Local).AddTicks(3832),
                             CreatedBy = "Turysta12",
                             SkillPostId = 2,
                             StatusId = 1,
@@ -190,7 +192,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 2,
                             CommentText = "Dzięki.",
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 928, DateTimeKind.Local).AddTicks(229),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 779, DateTimeKind.Local).AddTicks(4527),
                             CreatedBy = "Podrożnik",
                             ParentCommentId = 1,
                             SkillPostId = 2,
@@ -240,7 +242,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 928, DateTimeKind.Local).AddTicks(6179),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 780, DateTimeKind.Local).AddTicks(481),
                             CreatedBy = "SuperAdmin",
                             FirstPost = "Cześć. W tej części aplikacji będziesz mógł rozpoczynać dyskusje, bądź udzielać się już w istniejących.",
                             StatusId = 1
@@ -248,7 +250,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 928, DateTimeKind.Local).AddTicks(6529),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 780, DateTimeKind.Local).AddTicks(832),
                             CreatedBy = "Podróżnik",
                             FirstPost = "Jaki kraj chcielibyście odwiedzić?",
                             StatusId = 1
@@ -394,7 +396,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 928, DateTimeKind.Local).AddTicks(7802),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 780, DateTimeKind.Local).AddTicks(2165),
                             CreatedBy = "Turysta12",
                             DiscussionId = 2,
                             PostText = "Australia",
@@ -404,7 +406,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 928, DateTimeKind.Local).AddTicks(7817),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 780, DateTimeKind.Local).AddTicks(2180),
                             CreatedBy = "Podróżnik",
                             DiscussionId = 2,
                             ParentPostId = 1,
@@ -415,7 +417,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 928, DateTimeKind.Local).AddTicks(8142),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 780, DateTimeKind.Local).AddTicks(2538),
                             CreatedBy = "Turysta12",
                             DiscussionId = 2,
                             ParentPostId = 2,
@@ -426,7 +428,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 928, DateTimeKind.Local).AddTicks(8151),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 780, DateTimeKind.Local).AddTicks(2587),
                             CreatedBy = "Podróżnik",
                             DiscussionId = 1,
                             PostText = "Jasne.",
@@ -436,7 +438,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 5,
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 928, DateTimeKind.Local).AddTicks(8154),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 780, DateTimeKind.Local).AddTicks(2591),
                             CreatedBy = "SuperAdmin",
                             DiscussionId = 2,
                             PostText = "Włochy",
@@ -446,7 +448,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 6,
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 928, DateTimeKind.Local).AddTicks(8156),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 780, DateTimeKind.Local).AddTicks(2594),
                             CreatedBy = "SuperAdmin",
                             DiscussionId = 2,
                             ParentPostId = 1,
@@ -505,7 +507,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 928, DateTimeKind.Local).AddTicks(1119),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 779, DateTimeKind.Local).AddTicks(5416),
                             CreatedBy = "Turysta12",
                             SkillPostId = 2,
                             StatusId = 1,
@@ -515,7 +517,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 928, DateTimeKind.Local).AddTicks(1988),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 779, DateTimeKind.Local).AddTicks(6277),
                             CreatedBy = "SuperAdmin",
                             SkillPostId = 2,
                             StatusId = 1,
@@ -584,7 +586,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 1,
                             AddressOfPhotoOrVideo = "images/firstPost.jpg",
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 920, DateTimeKind.Local).AddTicks(3174),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 770, DateTimeKind.Local).AddTicks(6766),
                             Description = "Cześć. W tej części aplikacji będziesz mógł zaprezentować pozostałym użytkownikom swoje umiejętności/talenty w formie zdjęcia, bądź filmiku. Dodać do niego tytuł i opis. Każdy użytkownik, może oceniać, komentować dany post. Baw się dobrze!",
                             StatusId = 1,
                             Title = "Start",
@@ -595,10 +597,10 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 2,
                             AddressOfPhotoOrVideo = "images/Eiffel_Tower.jpg",
-                            Created = new DateTime(2021, 8, 1, 11, 55, 17, 926, DateTimeKind.Local).AddTicks(8135),
+                            Created = new DateTime(2021, 8, 1, 11, 52, 36, 777, DateTimeKind.Local).AddTicks(4242),
                             CreatedBy = "Podróżnik",
                             Description = "Cześć. Autorskie zdjęcie wieży Eiffla",
-                            StatusId = 1,
+                            StatusId = 2,
                             Title = "Wieża Eiffla",
                             UserId = 2,
                             Views = 0

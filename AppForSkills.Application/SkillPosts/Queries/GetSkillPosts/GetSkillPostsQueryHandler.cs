@@ -23,7 +23,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPosts
         }
         public async Task<SkillPostsVm> Handle(GetSkillPostsQuery request, CancellationToken cancellationToken)
         {
-            var skillPosts = _context.SkillPosts.OrderByDescending(s => s.Created);
+            var skillPosts = _context.SkillPosts.Where(a => a.StatusId == 1).OrderByDescending(s => s.Created);
             var skillPostDtos = await skillPosts.ProjectTo<SkillPostDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
 
             var skillPostsVm = new SkillPostsVm

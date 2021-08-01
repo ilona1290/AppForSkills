@@ -23,7 +23,7 @@ namespace AppForSkills.Application.SkillPosts.Commands.EditComment
 
         public async Task<Unit> Handle(EditCommentCommand request, CancellationToken cancellationToken)
         {
-            var comment = _context.Comments.FirstOrDefault(c => c.Id == request.Id);
+            var comment = _context.Comments.FirstOrDefault(c => c.StatusId == 1 && c.Id == request.Id);
             comment.CommentText = request.CommentText;
 
             await _context.SaveChangesAsync(cancellationToken);

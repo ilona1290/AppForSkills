@@ -26,7 +26,7 @@ namespace AppForSkills.Application.Users.Queries.GetUsersSkills
 
         public async Task<SkillPostsVm> Handle(GetUserSkillsQuery request, CancellationToken cancellationToken)
         {
-            var skillPosts = _context.SkillPosts.Where(s => s.User.Username == request.Username)
+            var skillPosts = _context.SkillPosts.Where(s => s.StatusId == 1 && s.User.Username == request.Username)
                 .OrderByDescending(s => s.Created);
             var skillPostDtos = await skillPosts.ProjectTo<SkillPostDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);

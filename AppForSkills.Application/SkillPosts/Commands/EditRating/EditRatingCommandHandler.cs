@@ -25,7 +25,7 @@ namespace AppForSkills.Application.SkillPosts.Commands.EditRating
 
         public async Task<Unit> Handle(EditRatingCommand request, CancellationToken cancellationToken)
         {
-            var rating = _context.Ratings.FirstOrDefault(r => r.Id == request.Id);
+            var rating = _context.Ratings.FirstOrDefault(r => r.StatusId == 1 && r.Id == request.Id);
 
             rating.Value = request.Value;
 
