@@ -2,6 +2,7 @@
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
+using AppForSkills.Application.Users.Commands.EditSkillPost;
 using AppForSkills.Application.Users.Queries.GetUserAchievements;
 using AppForSkills.Application.Users.Queries.GetUserComments;
 using AppForSkills.Application.Users.Queries.GetUserDiscussions;
@@ -76,9 +77,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void EditUserSkill(int id)
+        public async Task<ActionResult> EditUserSkill(EditSkillPostCommand command)
         {
-
+            var result = await Mediator.Send(command);
+            return Ok(result);
         }
 
         /// <summary>

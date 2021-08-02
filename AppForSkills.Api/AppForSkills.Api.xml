@@ -129,7 +129,7 @@
             Returns selected user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.EditUserSkill(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.EditUserSkill(AppForSkills.Application.Users.Commands.EditSkillPost.EditSkillPostCommand)">
             <summary>
             Edits selected user posts. 
             </summary>
