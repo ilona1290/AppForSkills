@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AppForSkills.Application.Users.Commands.EditSkillPost
+namespace AppForSkills.Application.SkillPosts.Commands.EditSkillPost
 {
     public class EditSkillPostCommandHandler : IRequestHandler<EditSkillPostCommand>
     {

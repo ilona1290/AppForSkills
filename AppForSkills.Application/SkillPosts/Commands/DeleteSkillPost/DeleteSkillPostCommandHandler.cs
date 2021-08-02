@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AppForSkills.Application.Users.Commands.DeleteSkillPost
+namespace AppForSkills.Application.SkillPosts.Commands.DeleteSkillPost
 {
     public class DeleteSkillPostCommandHandler : IRequestHandler<DeleteSkillPostCommand>
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppForSkills.Application.Users.Commands.EditSkillPost
+namespace AppForSkills.Application.SkillPosts.Commands.EditSkillPost
 {
     public class EditSkillPostCommand : IRequest
     {

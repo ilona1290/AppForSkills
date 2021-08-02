@@ -2,8 +2,8 @@
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
-using AppForSkills.Application.Users.Commands.DeleteSkillPost;
-using AppForSkills.Application.Users.Commands.EditSkillPost;
+using AppForSkills.Application.SkillPosts.Commands.DeleteSkillPost;
+using AppForSkills.Application.SkillPosts.Commands.EditSkillPost;
 using AppForSkills.Application.Users.Queries.GetUserAchievements;
 using AppForSkills.Application.Users.Queries.GetUserComments;
 using AppForSkills.Application.Users.Queries.GetUserDiscussions;
