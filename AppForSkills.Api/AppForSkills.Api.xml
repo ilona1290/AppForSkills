@@ -44,7 +44,7 @@
             Deletes post in discussion.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.GiveLikePostInDiscussion(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.LikeToPostAsync(System.Int32)">
             <summary>
             Gives like to post in discussion.
             </summary>
