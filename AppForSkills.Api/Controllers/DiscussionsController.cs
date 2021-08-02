@@ -4,6 +4,7 @@ using AppForSkills.Application.Discussions.Commands.DeleteDiscussion;
 using AppForSkills.Application.Discussions.Commands.DeletePost;
 using AppForSkills.Application.Discussions.Commands.EditDiscussion;
 using AppForSkills.Application.Discussions.Commands.EditPost;
+using AppForSkills.Application.Discussions.Commands.ReportPost;
 using AppForSkills.Application.Discussions.GetDiscussions;
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using MediatR;
@@ -162,15 +163,16 @@ namespace AppForSkills.Api.Controllers
         /// Reports post in discussion.
         /// </summary>
         [Route("{id}/posts/{idPost}/report")]
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void ReportPostInDiscussion(int idPost)
+        public async Task<ActionResult> ReportPostInDiscussion(int idPost)
         {
-
+            await Mediator.Send(new ReportPostCommand() { PostId = idPost });
+            return Ok();
         }
     }
 }
