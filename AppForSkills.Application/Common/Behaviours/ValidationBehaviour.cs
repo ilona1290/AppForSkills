@@ -29,7 +29,7 @@ namespace AppForSkills.Application.Common.Behaviours
 
                 if(failures.Count != 0)
                 {
-                    throw new Exception();
+                    throw new ValidationException(failures);
                 }
             }
             return await next();
