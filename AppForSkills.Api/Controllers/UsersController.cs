@@ -2,6 +2,7 @@
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
+using AppForSkills.Application.Users.Commands.DeleteSkillPost;
 using AppForSkills.Application.Users.Commands.EditSkillPost;
 using AppForSkills.Application.Users.Queries.GetUserAchievements;
 using AppForSkills.Application.Users.Queries.GetUserComments;
@@ -93,9 +94,10 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public void DeleteUserSkill(int id)
+        public async Task<ActionResult> DeleteUserSkill(int id)
         {
-
+            var result = await Mediator.Send(new DeleteSkillPostCommand() { SkillPostId = id });
+            return Ok(result);
         }
 
         /// <summary>
