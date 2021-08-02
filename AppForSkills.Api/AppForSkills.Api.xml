@@ -49,6 +49,11 @@
             Gives like to post in discussion.
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.DeleteLike(System.Int32)">
+            <summary>
+            Deletes like.
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.DiscussionsController.ReportPostInDiscussion(System.Int32)">
             <summary>
             Reports post in discussion.

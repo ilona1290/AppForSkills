@@ -8,6 +8,7 @@ using AppForSkills.Application.Discussions.Commands.ReportPost;
 using AppForSkills.Application.Discussions.GetDiscussions;
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using AppForSkills.Application.Likes.Command;
+using AppForSkills.Application.Likes.Command.Unlike;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -158,6 +159,22 @@ namespace AppForSkills.Api.Controllers
         public async Task<ActionResult> LikeToPostAsync(int idPost)
         {
             await Mediator.Send(new GiveLikeCommand() { PostInDiscussionId = idPost, User = "" });
+            return Ok();
+        }
+
+        /// <summary>
+        /// Deletes like.
+        /// </summary>
+        [Route("{id}/posts/{idPost}/unlike")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> DeleteLike(int idLike)
+        {
+            await Mediator.Send(new UnlikeCommand() { LikeId = idLike });
             return Ok();
         }
 
