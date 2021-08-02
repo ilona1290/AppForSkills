@@ -44,8 +44,11 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
             {
                 skillPostVm.Rating = 0;
             }
-            
-            
+
+            skillPost.Views++;
+            await _context.SaveChangesAsync(cancellationToken);
+            skillPostVm.Views++;
+
             /*var commentDtos = await comments.ProjectTo<CommentDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
 
             int index;
@@ -61,7 +64,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
 
             commentDtos = commentDtos.Where(p => p.ParentCommentId == null).ToList();*/
 
-            
+
 
             /*skillPostVm.Comments = commentDtos;
             skillPostVm.Rating = average;*/
