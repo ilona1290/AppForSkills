@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AppForSkills.Application.Likes.Command.GiveLike
+namespace AppForSkills.Application.Likes.Commands.GiveLike
 {
     public class GiveLikeCommandHandler : IRequestHandler<GiveLikeCommand>
     {

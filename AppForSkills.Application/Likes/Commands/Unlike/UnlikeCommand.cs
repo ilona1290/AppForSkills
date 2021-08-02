@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppForSkills.Application.Likes.Command.Unlike
+namespace AppForSkills.Application.Likes.Commands.Unlike
 {
     public class UnlikeCommand : IRequest
     {

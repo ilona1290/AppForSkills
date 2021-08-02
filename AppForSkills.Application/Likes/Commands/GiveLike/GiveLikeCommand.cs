@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppForSkills.Application.Likes.Command
+namespace AppForSkills.Application.Likes.Commands.GiveLike
 {
     public class GiveLikeCommand : IRequest, IMapFrom<Like>
     {
