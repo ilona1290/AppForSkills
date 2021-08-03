@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
+using AppForSkills.Application.Exceptions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -28,8 +29,14 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
                 .Include(r => r.Ratings.Where(r => r.StatusId == 1))
                 .FirstOrDefaultAsync(cancellationToken);
 
+            if (skillPost == null)
+            {
+                throw new WrongIDException("Skill Post with gaved id could not display, because not exists in database. " +
+                    "Give another id.");
+            }
+
             var comments = _context.Comments.Where(c => c.StatusId == 1 && c.SkillPostId == skillPost.Id && c.ParentCommentId == null)
-                .Include(l => l.Likes).Include(a => a.AnswersToComment).ThenInclude(l => l.Likes);
+                .Include(l => l.Likes).Include(a => a.AnswersToComment.Where(a => a.StatusId == 1)).ThenInclude(l => l.Likes);
 
             var commentsVm = await comments.ProjectTo<CommentDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
             var skillPostVm = _mapper.Map<SkillPostVm>(skillPost);

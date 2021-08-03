@@ -25,7 +25,6 @@ namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
             profile.CreateMap<PostInDiscussion, PostInDiscussionDto>()
                 .ForMember(s => s.Username, map => map.MapFrom(src => src.CreatedBy))
                 .ForMember(s => s.Date, map => map.MapFrom(src => src.Created));
-                
         }
     }
 }

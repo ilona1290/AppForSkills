@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
+using AppForSkills.Application.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,6 +24,12 @@ namespace AppForSkills.Application.SkillPosts.Commands.DeleteComment
         {
             var comment = await _context.Comments.Where(c => c.StatusId == 1 && c.Id == request.CommentId)
                 .FirstOrDefaultAsync(cancellationToken);
+
+            if(comment == null)
+            {
+                throw new WrongIDException("Comment with gaved id could not delete, because not exists in database. " +
+                    "Give another id.");
+            }
 
             _context.Comments.Remove(comment);
 

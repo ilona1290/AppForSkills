@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
+using AppForSkills.Application.Exceptions;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,12 @@ namespace AppForSkills.Application.Discussions.Commands.EditDiscussion
         public async Task<Unit> Handle(EditDiscussionCommand request, CancellationToken cancellationToken)
         {
             var discussion = _context.Discussions.FirstOrDefault(d => d.StatusId == 1 && d.Id == request.DiscussionId);
+
+            if (discussion == null)
+            {
+                throw new WrongIDException("Discussion with gaved id could not update, because not exists in database. " +
+                    "Give another id.");
+            }
 
             discussion.FirstPost = request.FirstPost;
 

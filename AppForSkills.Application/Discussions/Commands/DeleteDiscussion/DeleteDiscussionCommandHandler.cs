@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
+using AppForSkills.Application.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,6 +23,12 @@ namespace AppForSkills.Application.Discussions.Commands.DeleteDiscussion
             var discussion = await _context.Discussions.Where(c => c.StatusId == 1 && c.Id == request.Id)
                 .Include(d => d.PostsInDiscussion)
                 .FirstOrDefaultAsync(cancellationToken);
+
+            if (discussion == null)
+            {
+                throw new WrongIDException("Discussion with gaved id could not delete, because not exists in database. " +
+                    "Give another id.");
+            }
 
             _context.Discussions.Remove(discussion);
 

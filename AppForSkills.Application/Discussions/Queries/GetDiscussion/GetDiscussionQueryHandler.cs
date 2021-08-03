@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
+using AppForSkills.Application.Exceptions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -24,25 +25,23 @@ namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
         public async Task<DiscussionVm> Handle(GetDiscussionQuery request, CancellationToken cancellationToken)
         {
             var discussion = await _context.Discussions.Where(d => d.StatusId == 1 && d.Id == request.DiscussionId)
+                .Include(d => d.Likes).Include(q => q.UsersInDiscussion)
                 .FirstOrDefaultAsync(cancellationToken);
+
+            if (discussion == null)
+            {
+                throw new WrongIDException("Discussion with gaved id could not display, because not exists in database. " +
+                    "Give another id.");
+            }
+
             var posts = _context.PostsInDiscussion.Where(d => d.StatusId == 1 && d.Reported == false &&
-                d.DiscussionId == request.DiscussionId);
+                d.DiscussionId == request.DiscussionId)
+                .Include(a => a.Likes).Include(q => q.AnswersToPost.Where(a => a.StatusId == 1 && a.Reported == false))
+                .ThenInclude(l => l.Likes);
 
             var discussionVm = _mapper.Map<DiscussionVm>(discussion);
             var postDtos = await posts.ProjectTo<PostInDiscussionDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
 
-            int index;
-            int length = postDtos.Count;
-            for (int i = length - 1; i > 0; i--)
-            {
-                if (postDtos[i].ParentPostId != null)
-                {
-                    index = (int)postDtos[i].ParentPostId - 1;
-                    postDtos[index].AnswersToPost.Add(postDtos[i]);
-                }
-            }
-
-            postDtos = postDtos.Where(p => p.ParentPostId == null).ToList();
             discussionVm.Posts = postDtos;
             return discussionVm;
         }

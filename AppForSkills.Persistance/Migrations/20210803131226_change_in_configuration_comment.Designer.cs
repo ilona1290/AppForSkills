@@ -4,14 +4,16 @@ using AppForSkills.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppForSkills.Persistance.Migrations
 {
     [DbContext(typeof(AppForSkillsDbContext))]
-    partial class AppForSkillsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210803131226_change_in_configuration_comment")]
+    partial class change_in_configuration_comment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,7 +179,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 1,
                             CommentText = "Wow! Super zdjęcie.",
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 804, DateTimeKind.Local).AddTicks(3964),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 893, DateTimeKind.Local).AddTicks(5163),
                             CreatedBy = "Turysta12",
                             SkillPostId = 2,
                             StatusId = 1,
@@ -187,7 +189,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 2,
                             CommentText = "Dzięki.",
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 804, DateTimeKind.Local).AddTicks(5274),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 893, DateTimeKind.Local).AddTicks(5978),
                             CreatedBy = "Podrożnik",
                             ParentCommentId = 1,
                             SkillPostId = 2,
@@ -237,7 +239,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 805, DateTimeKind.Local).AddTicks(7399),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 894, DateTimeKind.Local).AddTicks(2222),
                             CreatedBy = "SuperAdmin",
                             FirstPost = "Cześć. W tej części aplikacji będziesz mógł rozpoczynać dyskusje, bądź udzielać się już w istniejących.",
                             StatusId = 1
@@ -245,7 +247,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 805, DateTimeKind.Local).AddTicks(9915),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 894, DateTimeKind.Local).AddTicks(2580),
                             CreatedBy = "Podróżnik",
                             FirstPost = "Jaki kraj chcielibyście odwiedzić?",
                             StatusId = 1
@@ -365,6 +367,9 @@ namespace AppForSkills.Persistance.Migrations
                     b.Property<int?>("ParentPostId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PostInDiscussionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PostText")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -380,7 +385,7 @@ namespace AppForSkills.Persistance.Migrations
 
                     b.HasIndex("DiscussionId");
 
-                    b.HasIndex("ParentPostId");
+                    b.HasIndex("PostInDiscussionId");
 
                     b.ToTable("PostsInDiscussion");
 
@@ -388,7 +393,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 806, DateTimeKind.Local).AddTicks(3769),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 894, DateTimeKind.Local).AddTicks(4019),
                             CreatedBy = "Turysta12",
                             DiscussionId = 2,
                             PostText = "Australia",
@@ -398,7 +403,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 806, DateTimeKind.Local).AddTicks(3807),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 894, DateTimeKind.Local).AddTicks(4036),
                             CreatedBy = "Podróżnik",
                             DiscussionId = 2,
                             ParentPostId = 1,
@@ -409,7 +414,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 806, DateTimeKind.Local).AddTicks(5416),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 894, DateTimeKind.Local).AddTicks(4386),
                             CreatedBy = "Turysta12",
                             DiscussionId = 2,
                             ParentPostId = 2,
@@ -420,7 +425,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 806, DateTimeKind.Local).AddTicks(5439),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 894, DateTimeKind.Local).AddTicks(4396),
                             CreatedBy = "Podróżnik",
                             DiscussionId = 1,
                             PostText = "Jasne.",
@@ -430,7 +435,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 5,
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 806, DateTimeKind.Local).AddTicks(5444),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 894, DateTimeKind.Local).AddTicks(4399),
                             CreatedBy = "SuperAdmin",
                             DiscussionId = 2,
                             PostText = "Włochy",
@@ -440,7 +445,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 6,
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 806, DateTimeKind.Local).AddTicks(5450),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 894, DateTimeKind.Local).AddTicks(4402),
                             CreatedBy = "SuperAdmin",
                             DiscussionId = 2,
                             ParentPostId = 1,
@@ -499,7 +504,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 804, DateTimeKind.Local).AddTicks(6971),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 893, DateTimeKind.Local).AddTicks(6904),
                             CreatedBy = "Turysta12",
                             SkillPostId = 2,
                             StatusId = 1,
@@ -509,7 +514,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 804, DateTimeKind.Local).AddTicks(8751),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 893, DateTimeKind.Local).AddTicks(7813),
                             CreatedBy = "SuperAdmin",
                             SkillPostId = 2,
                             StatusId = 1,
@@ -578,7 +583,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 1,
                             AddressOfPhotoOrVideo = "images/firstPost.jpg",
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 795, DateTimeKind.Local).AddTicks(6104),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 884, DateTimeKind.Local).AddTicks(6635),
                             Description = "Cześć. W tej części aplikacji będziesz mógł zaprezentować pozostałym użytkownikom swoje umiejętności/talenty w formie zdjęcia, bądź filmiku. Dodać do niego tytuł i opis. Każdy użytkownik, może oceniać, komentować dany post. Baw się dobrze!",
                             StatusId = 1,
                             Title = "Start",
@@ -589,7 +594,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 2,
                             AddressOfPhotoOrVideo = "images/Eiffel_Tower.jpg",
-                            Created = new DateTime(2021, 8, 3, 15, 17, 0, 802, DateTimeKind.Local).AddTicks(4710),
+                            Created = new DateTime(2021, 8, 3, 15, 12, 25, 892, DateTimeKind.Local).AddTicks(3228),
                             CreatedBy = "Podróżnik",
                             Description = "Cześć. Autorskie zdjęcie wieży Eiffla",
                             StatusId = 1,
@@ -760,13 +765,11 @@ namespace AppForSkills.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppForSkills.Domain.Entities.PostInDiscussion", "ParentPost")
+                    b.HasOne("AppForSkills.Domain.Entities.PostInDiscussion", null)
                         .WithMany("AnswersToPost")
-                        .HasForeignKey("ParentPostId");
+                        .HasForeignKey("PostInDiscussionId");
 
                     b.Navigation("Discussion");
-
-                    b.Navigation("ParentPost");
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.Rating", b =>

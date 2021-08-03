@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
+using AppForSkills.Application.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,6 +24,12 @@ namespace AppForSkills.Application.SkillPosts.Commands.DeleteRating
         {
             var rating = await _context.Ratings.Where(r => r.StatusId == 1 && r.Id == request.RatingId)
                 .FirstOrDefaultAsync(cancellationToken);
+
+            if(rating == null)
+            {
+                throw new WrongIDException("Rating with gaved id could not delete, because not exists in database. " +
+                    "Give another id.");
+            }
 
             _context.Ratings.Remove(rating);
 
