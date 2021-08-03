@@ -22,9 +22,8 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
         {
             profile.CreateMap<Comment, CommentDto>()
                 .ForMember(s => s.Username, map => map.MapFrom(src => src.CreatedBy))
-                .ForMember(s => s.AnswersToComment, map => map
-                .MapFrom(src => src.AnswersToComment.Where(a => a.ParentCommentId == src.Id)))
-                .ForMember(s => s.Likes, map => map.MapFrom(src => src.Likes.Where(s => s.CommentId != null)));
+                .ForMember(s => s.AnswersToComment, map => map.MapFrom(src => src.AnswersToComment))
+                .ForMember(s => s.Likes, map => map.MapFrom(src => src.Likes));
         }
     }
 }

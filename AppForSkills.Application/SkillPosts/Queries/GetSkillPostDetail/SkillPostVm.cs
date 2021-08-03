@@ -26,7 +26,8 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
             profile.CreateMap<SkillPost, SkillPostVm>()
                 .ForMember(s => s.Username, map => map.MapFrom(src => src.CreatedBy))
                 .ForMember(s => s.PublishingDate, map => map.MapFrom(src => src.Created))
-                .ForMember(s => s.Rating, map => map.Ignore());
+                .ForMember(s => s.Rating, map => map.Ignore())
+                .ForMember(s => s.Comments, map => map.MapFrom(src => src.Comments.Where(c => c.ParentCommentId == null)));
         }
     }
 }

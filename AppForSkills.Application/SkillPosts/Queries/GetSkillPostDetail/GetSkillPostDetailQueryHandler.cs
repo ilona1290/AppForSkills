@@ -25,14 +25,16 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
         public async Task<SkillPostVm> Handle(GetSkillPostDetailQuery request, CancellationToken cancellationToken)
         {
             var skillPost = await _context.SkillPosts.Where(s => s.StatusId == 1 && s.Id == request.SkillPostId)
-                .Include(c => c.Comments.Where(r => r.StatusId == 1)).ThenInclude(a => a.AnswersToComment)
-                .ThenInclude(c => c.Likes)
                 .Include(r => r.Ratings.Where(r => r.StatusId == 1))
                 .FirstOrDefaultAsync(cancellationToken);
-            /*var comments = _context.Comments.Where(c => c.SkillPostId == request.SkillPostId);
-            var ratings = _context.Ratings.Where(r => r.SkillPostId == request.SkillPostId).Select(r => r.Value).ToList();
-            */
+
+            var comments = _context.Comments.Where(c => c.StatusId == 1 && c.SkillPostId == skillPost.Id && c.ParentCommentId == null)
+                .Include(l => l.Likes).Include(a => a.AnswersToComment).ThenInclude(l => l.Likes);
+
+            var commentsVm = await comments.ProjectTo<CommentDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
             var skillPostVm = _mapper.Map<SkillPostVm>(skillPost);
+            skillPostVm.Comments = commentsVm;
+            
 
             if (skillPost.Ratings.Count > 0)
             {
@@ -48,26 +50,6 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
             skillPost.Views++;
             await _context.SaveChangesAsync(cancellationToken);
             skillPostVm.Views++;
-
-            /*var commentDtos = await comments.ProjectTo<CommentDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
-
-            int index;
-            int length = commentDtos.Count;
-            for (int i = length - 1; i > 0; i--)
-            {
-                if (commentDtos[i].ParentCommentId != null)
-                {
-                    index = (int)commentDtos[i].ParentCommentId - 1;
-                    commentDtos[index].AnswersToComment.Add(commentDtos[i]);
-                }
-            }
-
-            commentDtos = commentDtos.Where(p => p.ParentCommentId == null).ToList();*/
-
-
-
-            /*skillPostVm.Comments = commentDtos;
-            skillPostVm.Rating = average;*/
 
             return skillPostVm;
         }
