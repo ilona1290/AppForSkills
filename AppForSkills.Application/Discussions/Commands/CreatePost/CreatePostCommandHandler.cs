@@ -40,6 +40,8 @@ namespace AppForSkills.Application.Discussions.Commands.CreatePost
                 throw new WrongIDException("User not exists.");
             }
 
+            post.UserId = user.Id;
+
             var discussion = _context.Discussions.Where(u => u.StatusId == 1 && u.Id == request.DiscussionId)
                 .Include(s => s.UsersInDiscussion).FirstOrDefault();
 
