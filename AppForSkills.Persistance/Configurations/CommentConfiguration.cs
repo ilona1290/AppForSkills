@@ -12,7 +12,7 @@ namespace AppForSkills.Persistance.Configurations
     public class CommentConfiguration : IEntityTypeConfiguration<Comment>
     {
         public void Configure(EntityTypeBuilder<Comment> builder)
-        {
+        { 
             builder.Property(p => p.CommentText).HasMaxLength(500).IsRequired();
         }
     }

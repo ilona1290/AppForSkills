@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AppForSkills.Persistance
 {
-    public class AppForSkillsDbContext : DbContext
+    public class AppForSkillsDbContext : DbContext, IAppForSkillsDbContext
     {
         private readonly IDateTime _dateTime;
         public AppForSkillsDbContext(DbContextOptions<AppForSkillsDbContext> options, IDateTime dateTime) : base(options)
@@ -28,7 +28,7 @@ namespace AppForSkills.Persistance
         public DbSet<PostInDiscussion> PostsInDiscussion { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<SkillPost> SkillPosts { get; set; }
-        public DbSet<UserInformation> UserInformations { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

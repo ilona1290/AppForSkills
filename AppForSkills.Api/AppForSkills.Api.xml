@@ -14,17 +14,27 @@
             Returns single discussion.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.BeginDiscussion">
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.BeginDiscussion(AppForSkills.Application.Discussions.Commands.CreateDiscussion.CreateDiscussionCommand)">
             <summary>
             Begins single discussion.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.AddPostToDiscussion">
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.EditDiscussion(AppForSkills.Application.Discussions.Commands.EditDiscussion.EditDiscussionCommand)">
+            <summary>
+            Edits first post in discussion.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.DeleteDiscussion(System.Int32)">
+            <summary>
+            Deletes discussion.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.AddPostToDiscussion(AppForSkills.Application.Discussions.Commands.CreatePost.CreatePostCommand)">
             <summary>
             Adds post to discussion.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.EditPostInDiscussion(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.EditPostInDiscussion(AppForSkills.Application.Discussions.Commands.EditPost.EditPostCommand)">
             <summary>
             Edits post in discussion.
             </summary>
@@ -34,9 +44,14 @@
             Deletes post in discussion.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.GiveLikePostInDiscussion(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.LikeToPostAsync(System.Int32)">
             <summary>
             Gives like to post in discussion.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.DeleteLike(System.Int32)">
+            <summary>
+            Deletes like.
             </summary>
         </member>
         <member name="M:AppForSkills.Api.Controllers.DiscussionsController.ReportPostInDiscussion(System.Int32)">
@@ -44,7 +59,7 @@
             Reports post in discussion.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.GetAllSkills">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.GetAllSkillsAsync">
             <summary>
             Returns all user skills.
             </summary>
@@ -55,21 +70,25 @@
             </summary>
             <param name="id">Post id</param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.AddSkill">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.AddSkill(AppForSkills.Application.SkillPosts.Commands.CreateSkillPost.CreateSkillPostCommand)">
             <summary>
             Adds a skill.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.AddRating">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.GetAllRatingsAsync(System.Int32)">
+            <summary>
+            Returns all ratings to skill.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.AddRating(AppForSkills.Application.SkillPosts.Commands.CreateRating.CreateRatingCommand)">
             <summary>
             Adds a rating to user skill.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.EditRating(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.EditRating(AppForSkills.Application.SkillPosts.Commands.EditRating.EditRatingCommand)">
             <summary>
             Edits a rating.
             </summary>
-            <param name="idRating">Id Of rating, which user wants to edit</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.DeleteRating(System.Int32)">
             <summary>
@@ -77,25 +96,15 @@
             </summary>
             <param name="idRating">Id of rating, which user wants to remove</param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.GetCommentFromUserSkill(System.Int32)">
-            <summary>
-            Returns comments, which user skill receive.
-            </summary>
-            <param name="id">Post id</param>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.AddCommentToUserSkill(System.Int32,System.String)">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.AddCommentToUserSkill(AppForSkills.Application.SkillPosts.Commands.CreateComment.CreateCommentCommand)">
             <summary>
             Adds comment to user skill.
             </summary>
-            <param name="id">Post id</param>
-            <param name="commentText">Post id</param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.EditCommentToUserSkill(System.Int32,System.String)">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.EditCommentToUserSkill(AppForSkills.Application.SkillPosts.Commands.EditComment.EditCommentCommand)">
             <summary>
             Edits comment to user skill.
             </summary>
-            <param name="idComment">Id of comment, which user wants to edit</param>
-            <param name="commentText">New text of comment</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.DeleteCommentFromUserSkill(System.Int32)">
             <summary>
@@ -115,17 +124,17 @@
             </summary>
             <param name="username"></param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllUserSkills(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllUserSkillsAsync(System.String)">
             <summary>
             Returns all user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetUserSkill(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetUserSkillAsync(System.Int32)">
             <summary>
             Returns selected user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.EditUserSkill(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.EditUserSkill(AppForSkills.Application.SkillPosts.Commands.EditSkillPost.EditSkillPostCommand)">
             <summary>
             Edits selected user posts. 
             </summary>
@@ -135,47 +144,27 @@
             Deletes selected user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetCommentsFromUserSkill(System.Int32)">
-            <summary>
-            Returns comments of selected user posts. 
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.CreateCommentToUserSkill(System.Int32,System.String)">
-            <summary>
-            Adds comment of selected user posts. 
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.EditCommentToUserSkill(System.Int32,System.Int32,System.String)">
-            <summary>
-            Edits comment of selected user posts. 
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.DeleteCommentFromUserSkill(System.Int32,System.Int32)">
-            <summary>
-            Deletes comment of selected user posts. 
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllRatingsWhichUserGave(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllRatingsWhichUserGaveAsync(System.String)">
             <summary>
             Returns all ratings, which user gave to other users. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllCommentsWhichUserGave(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllCommentsWhichUserGaveAsync(System.String)">
             <summary>
             Returns all comments, which user gave to other users. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetUserAchievements(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetUserAchievementsAsync(System.String)">
             <summary>
             Returns all user achievements. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetDiscussionsWithUser(System.String)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetDiscussionsWithUserAsync(System.String)">
             <summary>
             Returns discussions, in which user participated. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetSelectedDiscussionWithUser(System.String,System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.UsersController.GetSelectedDiscussionWithUser(System.Int32)">
             <summary>
             Returns selected discussion, in which user has been participated. 
             </summary>

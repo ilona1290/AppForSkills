@@ -19,7 +19,7 @@ namespace AppForSkills.Persistance.Migrations
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AchievementUserInformation", b =>
+            modelBuilder.Entity("AchievementUser", b =>
                 {
                     b.Property<int>("AchievementsId")
                         .HasColumnType("int");
@@ -31,7 +31,44 @@ namespace AppForSkills.Persistance.Migrations
 
                     b.HasIndex("UsersWithAchivementId");
 
-                    b.ToTable("AchievementUserInformation");
+                    b.ToTable("AchievementUser");
+
+                    b.HasData(
+                        new
+                        {
+                            AchievementsId = 1,
+                            UsersWithAchivementId = 1
+                        },
+                        new
+                        {
+                            AchievementsId = 1,
+                            UsersWithAchivementId = 2
+                        },
+                        new
+                        {
+                            AchievementsId = 2,
+                            UsersWithAchivementId = 1
+                        },
+                        new
+                        {
+                            AchievementsId = 2,
+                            UsersWithAchivementId = 2
+                        },
+                        new
+                        {
+                            AchievementsId = 3,
+                            UsersWithAchivementId = 1
+                        },
+                        new
+                        {
+                            AchievementsId = 3,
+                            UsersWithAchivementId = 2
+                        },
+                        new
+                        {
+                            AchievementsId = 3,
+                            UsersWithAchivementId = 3
+                        });
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.Achievement", b =>
@@ -52,6 +89,9 @@ namespace AppForSkills.Persistance.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("Achievement");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Achievements");
@@ -61,19 +101,22 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 1,
                             Description = "Dodano pierwszy post.",
-                            Name = "Świerzak"
+                            Name = "Świerzak",
+                            StatusId = 1
                         },
                         new
                         {
                             Id = 2,
                             Description = "Rozpoczęto pierwszą dyskusję.",
-                            Name = "Początkujący mówca"
+                            Name = "Początkujący mówca",
+                            StatusId = 1
                         },
                         new
                         {
                             Id = 3,
                             Description = "Dodano pierwszy post do dyskusji.",
-                            Name = "Pierwsze udzielenie się"
+                            Name = "Pierwsze udzielenie się",
+                            StatusId = 1
                         });
                 });
 
@@ -83,9 +126,6 @@ namespace AppForSkills.Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CommentId")
-                        .HasColumnType("int");
 
                     b.Property<string>("CommentText")
                         .IsRequired()
@@ -124,13 +164,34 @@ namespace AppForSkills.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CommentId");
-
                     b.HasIndex("SkillPostId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CommentText = "Wow! Super zdjęcie.",
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 461, DateTimeKind.Local).AddTicks(6959),
+                            CreatedBy = "Turysta12",
+                            SkillPostId = 2,
+                            StatusId = 1,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CommentText = "Dzięki.",
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 461, DateTimeKind.Local).AddTicks(7814),
+                            CreatedBy = "Podrożnik",
+                            ParentCommentId = 1,
+                            SkillPostId = 2,
+                            StatusId = 1,
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.Discussion", b =>
@@ -174,8 +235,17 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2021, 7, 8, 19, 47, 14, 480, DateTimeKind.Local).AddTicks(8831),
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 462, DateTimeKind.Local).AddTicks(5936),
+                            CreatedBy = "SuperAdmin",
                             FirstPost = "Cześć. W tej części aplikacji będziesz mógł rozpoczynać dyskusje, bądź udzielać się już w istniejących.",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 462, DateTimeKind.Local).AddTicks(6357),
+                            CreatedBy = "Podróżnik",
+                            FirstPost = "Jaki kraj chcielibyście odwiedzić?",
                             StatusId = 1
                         });
                 });
@@ -210,6 +280,56 @@ namespace AppForSkills.Persistance.Migrations
                     b.HasIndex("PostInDiscussionId");
 
                     b.ToTable("Likes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CommentId = 1,
+                            User = "Podróżnik"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CommentId = 2,
+                            User = "Turysta12"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CommentId = 1,
+                            User = "SuperAdmin"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DiscussionId = 1,
+                            User = "Podróżnik"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DiscussionId = 2,
+                            User = "Turysta12"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DiscussionId = 2,
+                            User = "SuperAdmin"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            PostInDiscussionId = 1,
+                            User = "Podróżnik"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            PostInDiscussionId = 3,
+                            User = "Podróżnik"
+                        });
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.PostInDiscussion", b =>
@@ -243,9 +363,6 @@ namespace AppForSkills.Persistance.Migrations
                     b.Property<int?>("ParentPostId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PostInDiscussionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PostText")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -257,13 +374,81 @@ namespace AppForSkills.Persistance.Migrations
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DiscussionId");
 
-                    b.HasIndex("PostInDiscussionId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("PostsInDiscussion");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 462, DateTimeKind.Local).AddTicks(7790),
+                            CreatedBy = "Turysta12",
+                            DiscussionId = 2,
+                            PostText = "Australia",
+                            Reported = false,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 462, DateTimeKind.Local).AddTicks(7807),
+                            CreatedBy = "Podróżnik",
+                            DiscussionId = 2,
+                            ParentPostId = 1,
+                            PostText = "Dlaczego?",
+                            Reported = false,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 462, DateTimeKind.Local).AddTicks(8205),
+                            CreatedBy = "Turysta12",
+                            DiscussionId = 2,
+                            ParentPostId = 2,
+                            PostText = "Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).",
+                            Reported = false,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 462, DateTimeKind.Local).AddTicks(8217),
+                            CreatedBy = "Podróżnik",
+                            DiscussionId = 1,
+                            PostText = "Jasne.",
+                            Reported = false,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 462, DateTimeKind.Local).AddTicks(8221),
+                            CreatedBy = "SuperAdmin",
+                            DiscussionId = 2,
+                            PostText = "Włochy",
+                            Reported = false,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 462, DateTimeKind.Local).AddTicks(8223),
+                            CreatedBy = "SuperAdmin",
+                            DiscussionId = 2,
+                            ParentPostId = 1,
+                            PostText = "Możesz rozwinąć?",
+                            Reported = false,
+                            StatusId = 1
+                        });
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.Rating", b =>
@@ -291,16 +476,13 @@ namespace AppForSkills.Persistance.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SkillId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SkillPostId")
+                    b.Property<int>("SkillPostId")
                         .HasColumnType("int");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.Property<int>("Value")
@@ -313,6 +495,28 @@ namespace AppForSkills.Persistance.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Ratings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 461, DateTimeKind.Local).AddTicks(9313),
+                            CreatedBy = "Turysta12",
+                            SkillPostId = 2,
+                            StatusId = 1,
+                            UserId = 3,
+                            Value = 5
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 462, DateTimeKind.Local).AddTicks(755),
+                            CreatedBy = "SuperAdmin",
+                            SkillPostId = 2,
+                            StatusId = 1,
+                            UserId = 1,
+                            Value = 4
+                        });
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.SkillPost", b =>
@@ -375,16 +579,28 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 1,
                             AddressOfPhotoOrVideo = "images/firstPost.jpg",
-                            Created = new DateTime(2021, 7, 8, 19, 47, 14, 470, DateTimeKind.Local).AddTicks(9276),
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 448, DateTimeKind.Local).AddTicks(7975),
                             Description = "Cześć. W tej części aplikacji będziesz mógł zaprezentować pozostałym użytkownikom swoje umiejętności/talenty w formie zdjęcia, bądź filmiku. Dodać do niego tytuł i opis. Każdy użytkownik, może oceniać, komentować dany post. Baw się dobrze!",
                             StatusId = 1,
                             Title = "Start",
                             UserId = 1,
                             Views = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddressOfPhotoOrVideo = "images/Eiffel_Tower.jpg",
+                            Created = new DateTime(2021, 8, 4, 16, 46, 48, 460, DateTimeKind.Local).AddTicks(2895),
+                            CreatedBy = "Podróżnik",
+                            Description = "Cześć. Autorskie zdjęcie wieży Eiffla",
+                            StatusId = 1,
+                            Title = "Wieża Eiffla",
+                            UserId = 2,
+                            Views = 0
                         });
                 });
 
-            modelBuilder.Entity("AppForSkills.Domain.Entities.UserInformation", b =>
+            modelBuilder.Entity("AppForSkills.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -397,6 +613,9 @@ namespace AppForSkills.Persistance.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -404,7 +623,7 @@ namespace AppForSkills.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserInformations");
+                    b.ToTable("Users");
 
                     b.HasData(
                         new
@@ -412,11 +631,28 @@ namespace AppForSkills.Persistance.Migrations
                             Id = 1,
                             RecentLoginDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RegistrationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StatusId = 1,
                             Username = "SuperAdmin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            RecentLoginDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RegistrationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StatusId = 1,
+                            Username = "Podróżnik"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            RecentLoginDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RegistrationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StatusId = 1,
+                            Username = "Turysta12"
                         });
                 });
 
-            modelBuilder.Entity("DiscussionUserInformation", b =>
+            modelBuilder.Entity("DiscussionUser", b =>
                 {
                     b.Property<int>("DiscussionsId")
                         .HasColumnType("int");
@@ -428,10 +664,37 @@ namespace AppForSkills.Persistance.Migrations
 
                     b.HasIndex("UsersInDiscussionId");
 
-                    b.ToTable("DiscussionUserInformation");
+                    b.ToTable("DiscussionUser");
+
+                    b.HasData(
+                        new
+                        {
+                            DiscussionsId = 2,
+                            UsersInDiscussionId = 2
+                        },
+                        new
+                        {
+                            DiscussionsId = 2,
+                            UsersInDiscussionId = 3
+                        },
+                        new
+                        {
+                            DiscussionsId = 2,
+                            UsersInDiscussionId = 1
+                        },
+                        new
+                        {
+                            DiscussionsId = 1,
+                            UsersInDiscussionId = 1
+                        },
+                        new
+                        {
+                            DiscussionsId = 1,
+                            UsersInDiscussionId = 2
+                        });
                 });
 
-            modelBuilder.Entity("AchievementUserInformation", b =>
+            modelBuilder.Entity("AchievementUser", b =>
                 {
                     b.HasOne("AppForSkills.Domain.Entities.Achievement", null)
                         .WithMany()
@@ -439,7 +702,7 @@ namespace AppForSkills.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppForSkills.Domain.Entities.UserInformation", null)
+                    b.HasOne("AppForSkills.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UsersWithAchivementId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -448,17 +711,13 @@ namespace AppForSkills.Persistance.Migrations
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.Comment", b =>
                 {
-                    b.HasOne("AppForSkills.Domain.Entities.Comment", null)
-                        .WithMany("AnswersToComment")
-                        .HasForeignKey("CommentId");
-
                     b.HasOne("AppForSkills.Domain.Entities.SkillPost", "SkillPost")
                         .WithMany("Comments")
                         .HasForeignKey("SkillPostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppForSkills.Domain.Entities.UserInformation", "User")
+                    b.HasOne("AppForSkills.Domain.Entities.User", "User")
                         .WithMany("UserComments")
                         .HasForeignKey("UserId");
 
@@ -496,24 +755,26 @@ namespace AppForSkills.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppForSkills.Domain.Entities.PostInDiscussion", null)
-                        .WithMany("AnswersToPost")
-                        .HasForeignKey("PostInDiscussionId");
+                    b.HasOne("AppForSkills.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Discussion");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.Rating", b =>
                 {
                     b.HasOne("AppForSkills.Domain.Entities.SkillPost", "SkillPost")
                         .WithMany("Ratings")
-                        .HasForeignKey("SkillPostId");
-
-                    b.HasOne("AppForSkills.Domain.Entities.UserInformation", "User")
-                        .WithMany("GavedRatings")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("SkillPostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("AppForSkills.Domain.Entities.User", "User")
+                        .WithMany("GavedRatings")
+                        .HasForeignKey("UserId");
 
                     b.Navigation("SkillPost");
 
@@ -522,7 +783,7 @@ namespace AppForSkills.Persistance.Migrations
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.SkillPost", b =>
                 {
-                    b.HasOne("AppForSkills.Domain.Entities.UserInformation", "User")
+                    b.HasOne("AppForSkills.Domain.Entities.User", "User")
                         .WithMany("UserSkills")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -531,7 +792,7 @@ namespace AppForSkills.Persistance.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DiscussionUserInformation", b =>
+            modelBuilder.Entity("DiscussionUser", b =>
                 {
                     b.HasOne("AppForSkills.Domain.Entities.Discussion", null)
                         .WithMany()
@@ -539,7 +800,7 @@ namespace AppForSkills.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AppForSkills.Domain.Entities.UserInformation", null)
+                    b.HasOne("AppForSkills.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UsersInDiscussionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -548,8 +809,6 @@ namespace AppForSkills.Persistance.Migrations
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.Comment", b =>
                 {
-                    b.Navigation("AnswersToComment");
-
                     b.Navigation("Likes");
                 });
 
@@ -562,8 +821,6 @@ namespace AppForSkills.Persistance.Migrations
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.PostInDiscussion", b =>
                 {
-                    b.Navigation("AnswersToPost");
-
                     b.Navigation("Likes");
                 });
 
@@ -574,7 +831,7 @@ namespace AppForSkills.Persistance.Migrations
                     b.Navigation("Ratings");
                 });
 
-            modelBuilder.Entity("AppForSkills.Domain.Entities.UserInformation", b =>
+            modelBuilder.Entity("AppForSkills.Domain.Entities.User", b =>
                 {
                     b.Navigation("GavedRatings");
 
