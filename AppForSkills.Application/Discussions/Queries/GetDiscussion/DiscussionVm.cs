@@ -21,7 +21,8 @@ namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
         {
             profile.CreateMap<Discussion, DiscussionVm>()
                 .ForMember(s => s.Username, map => map.MapFrom(src => src.CreatedBy))
-                .ForMember(s => s.PublishingDate, map => map.MapFrom(src => src.Created));
+                .ForMember(s => s.PublishingDate, map => map.MapFrom(src => src.Created))
+                .ForMember(s => s.Posts, map => map.MapFrom(src => src.PostsInDiscussion));
         }
     }
 

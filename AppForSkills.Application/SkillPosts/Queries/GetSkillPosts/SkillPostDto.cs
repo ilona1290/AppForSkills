@@ -23,8 +23,8 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPosts
         {
             profile.CreateMap<SkillPost, SkillPostDto>()
                 .ForMember(s => s.Username, map => map.MapFrom(src => src.CreatedBy))
-                .ForMember(s => s.Comment, map => map.MapFrom(src => src.Comments.Count))
-                .ForMember(s => s.Rating, map => map.MapFrom(src => src.Ratings.Count));
+                .ForMember(s => s.Comment, map => map.MapFrom(src => src.Comments.Where(s => s.StatusId == 1).Count()))
+                .ForMember(s => s.Rating, map => map.MapFrom(src => src.Ratings.Where(s => s.StatusId == 1).Count()));
         }
     }
 }

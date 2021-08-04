@@ -14,16 +14,15 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
         public int Id { get; set; }
         public string Username { get; set; }
         public string CommentText { get; set; }
+        public DateTime Date { get; set; }
         public int? ParentCommentId { get; set; }
-        public ICollection<CommentDto> AnswersToComment { get; set; }
         public ICollection<LikeDto> Likes { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Comment, CommentDto>()
                 .ForMember(s => s.Username, map => map.MapFrom(src => src.CreatedBy))
-                .ForMember(s => s.AnswersToComment, map => map.MapFrom(src => src.AnswersToComment))
-                .ForMember(s => s.Likes, map => map.MapFrom(src => src.Likes));
+                .ForMember(s => s.Date, map => map.MapFrom(src => src.Created));
         }
     }
 }

@@ -25,7 +25,8 @@ namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
         public async Task<DiscussionVm> Handle(GetDiscussionQuery request, CancellationToken cancellationToken)
         {
             var discussion = await _context.Discussions.Where(d => d.StatusId == 1 && d.Id == request.DiscussionId)
-                .Include(d => d.Likes).Include(q => q.UsersInDiscussion)
+                .Include(d => d.Likes)
+                .Include(p => p.PostsInDiscussion.Where(d => d.StatusId == 1 && d.Reported == false)).ThenInclude(l => l.Likes)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (discussion == null)
@@ -34,15 +35,8 @@ namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
                     "Give another id.");
             }
 
-            var posts = _context.PostsInDiscussion.Where(d => d.StatusId == 1 && d.Reported == false &&
-                d.DiscussionId == request.DiscussionId)
-                .Include(a => a.Likes).Include(q => q.AnswersToPost.Where(a => a.StatusId == 1 && a.Reported == false))
-                .ThenInclude(l => l.Likes);
-
             var discussionVm = _mapper.Map<DiscussionVm>(discussion);
-            var postDtos = await posts.ProjectTo<PostInDiscussionDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
-
-            discussionVm.Posts = postDtos;
+            
             return discussionVm;
         }
     }

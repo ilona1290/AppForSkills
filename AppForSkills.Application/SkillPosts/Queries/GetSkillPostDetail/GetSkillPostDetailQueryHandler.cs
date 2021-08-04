@@ -26,6 +26,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
         public async Task<SkillPostVm> Handle(GetSkillPostDetailQuery request, CancellationToken cancellationToken)
         {
             var skillPost = await _context.SkillPosts.Where(s => s.StatusId == 1 && s.Id == request.SkillPostId)
+                .Include(p => p.Comments.Where(d => d.StatusId == 1)).ThenInclude(l => l.Likes)
                 .Include(r => r.Ratings.Where(r => r.StatusId == 1))
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -35,14 +36,8 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
                     "Give another id.");
             }
 
-            var comments = _context.Comments.Where(c => c.StatusId == 1 && c.SkillPostId == skillPost.Id && c.ParentCommentId == null)
-                .Include(l => l.Likes).Include(a => a.AnswersToComment.Where(a => a.StatusId == 1)).ThenInclude(l => l.Likes);
-
-            var commentsVm = await comments.ProjectTo<CommentDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
             var skillPostVm = _mapper.Map<SkillPostVm>(skillPost);
-            skillPostVm.Comments = commentsVm;
             
-
             if (skillPost.Ratings.Count > 0)
             {
                 int sum = skillPost.Ratings.Select(r => r.Value).Sum();
