@@ -43,7 +43,7 @@ namespace AppForSkills.Persistance
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = string.Empty;
+                        entry.Entity.CreatedBy = "SuperAdmin";
                         entry.Entity.Created = _dateTime.Now;
                         entry.Entity.StatusId = 1;
                         break;

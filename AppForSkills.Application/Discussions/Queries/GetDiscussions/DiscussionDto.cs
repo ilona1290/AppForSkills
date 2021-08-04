@@ -22,7 +22,8 @@ namespace AppForSkills.Application.Discussions.GetDiscussions
         {
             profile.CreateMap<Discussion, DiscussionDto>()
                 .ForMember(s => s.Username, map => map.MapFrom(src => src.CreatedBy))
-                .ForMember(s => s.Posts, map => map.MapFrom(src => src.PostsInDiscussion.Count))
+                .ForMember(s => s.Posts, map => map.MapFrom(src => src.PostsInDiscussion
+                    .Where(p => p.StatusId == 1).Count()))
                 .ForMember(s => s.Likes, map => map.MapFrom(src => src.Likes.Count))
                 .ForMember(s => s.Users, map => map.MapFrom(src => src.UsersInDiscussion.Count));
         }

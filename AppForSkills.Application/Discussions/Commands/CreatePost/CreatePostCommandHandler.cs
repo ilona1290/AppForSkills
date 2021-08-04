@@ -1,7 +1,9 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
+using AppForSkills.Application.Exceptions;
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,26 @@ namespace AppForSkills.Application.Discussions.Commands.CreatePost
 
             _context.PostsInDiscussion.Add(post);
 
+            await _context.SaveChangesAsync(cancellationToken);
+
+            var user = _context.Users.Where(u => u.StatusId == 1 && u.Username == post.CreatedBy)
+                .Include(u => u.Discussions).FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new WrongIDException("User not exists.");
+            }
+
+            var discussion = _context.Discussions.Where(u => u.StatusId == 1 && u.Id == request.DiscussionId)
+                .Include(s => s.UsersInDiscussion).FirstOrDefault();
+
+            if (discussion == null)
+            {
+                throw new WrongIDException("Discussion not exists. Wrong Id");
+            }
+
+            discussion.UsersInDiscussion.Add(user);
+            user.Discussions.Add(discussion);
             await _context.SaveChangesAsync(cancellationToken);
 
             return post.Id;
