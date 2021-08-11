@@ -13,11 +13,12 @@ using AppForSkills.Application.Users.Queries.GetUserSkills;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AppForSkills.Api.Controllers
 {
     [Route("api/users/{username}")]
-    [ApiController]
+    [Authorize]
     public class UsersController : BaseController
     {
         /// <summary>

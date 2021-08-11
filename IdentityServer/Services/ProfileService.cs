@@ -1,4 +1,5 @@
-﻿using IdentityServer.Models;
+﻿using IdentityModel;
+using IdentityServer.Models;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
@@ -25,7 +26,7 @@ namespace IdentityServer.Services
 
             var claims = new List<Claim>
             {
-                new Claim("Name", user.UserName)
+                new Claim(JwtClaimTypes.Name, user.UserName)
             };
 
             context.IssuedClaims.AddRange(claims);

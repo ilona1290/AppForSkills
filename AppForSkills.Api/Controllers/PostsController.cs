@@ -8,6 +8,7 @@ using AppForSkills.Application.SkillPosts.Commands.EditRating;
 using AppForSkills.Application.SkillPosts.Queries.GetRatingsToSkillPost;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 namespace AppForSkills.Api.Controllers
 {
     [Route("api/posts")]
-    [ApiController]
+    [Authorize]
     public class PostsController : BaseController
     {
         /// <summary>
