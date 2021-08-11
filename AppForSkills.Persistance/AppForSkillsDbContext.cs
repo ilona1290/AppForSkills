@@ -12,9 +12,11 @@ namespace AppForSkills.Persistance
     public class AppForSkillsDbContext : DbContext, IAppForSkillsDbContext
     {
         private readonly IDateTime _dateTime;
-        public AppForSkillsDbContext(DbContextOptions<AppForSkillsDbContext> options, IDateTime dateTime) : base(options)
+        private readonly ICurrentUserService _userService;
+        public AppForSkillsDbContext(DbContextOptions<AppForSkillsDbContext> options, IDateTime dateTime, ICurrentUserService userService) : base(options)
         {
             _dateTime = dateTime;
+            _userService = userService;
         }
 
         public AppForSkillsDbContext(DbContextOptions<AppForSkillsDbContext> options) : base(options)
@@ -43,19 +45,19 @@ namespace AppForSkills.Persistance
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = string.Empty;
+                        entry.Entity.CreatedBy = _userService.Username;
                         entry.Entity.Created = _dateTime.Now;
                         entry.Entity.StatusId = 1;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.ModifiedBy = string.Empty;
+                        entry.Entity.ModifiedBy = _userService.Username;
                         entry.Entity.Modified = _dateTime.Now;
                         break;
                     case EntityState.Deleted:
-                        entry.Entity.ModifiedBy = string.Empty;
+                        entry.Entity.ModifiedBy = _userService.Username;
                         entry.Entity.Modified = _dateTime.Now;
                         entry.Entity.Inactivated = _dateTime.Now;
-                        entry.Entity.InactivatedBy = string.Empty;
+                        entry.Entity.InactivatedBy = _userService.Username;
                         entry.Entity.StatusId = 0;
                         entry.State = EntityState.Modified;
                         break;
