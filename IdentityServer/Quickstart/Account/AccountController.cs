@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServerHost.Quickstart.UI
 {
@@ -109,6 +110,8 @@ namespace IdentityServerHost.Quickstart.UI
                 {
                     var user = await _userManager.FindByNameAsync(model.Username);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
+                    user.RecentLogin = DateTime.Now;
+                    await _userManager.UpdateAsync(user);
 
                     if (context != null)
                     {
@@ -139,13 +142,62 @@ namespace IdentityServerHost.Quickstart.UI
                     }
                 }
 
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId:context?.Client.ClientId));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 
             // something went wrong, show form with error
             var vm = await BuildLoginViewModelAsync(model);
             return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult Register(string returnUrl)
+        {
+            return View(new RegisterViewModel { ReturnUrl = returnUrl});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model, string button)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var test = await _userManager.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+            var test1 = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == model.Username);
+            if(test != null)
+            {
+                ModelState.AddModelError("Email", "Email has already existed");
+                return View(model);
+            }
+            if(test1 != null)
+            {
+                ModelState.AddModelError("Username", "Username has already existed");
+                return View(model);
+            }
+            var user = new ApplicationUser()
+            {
+                Email = model.Email,
+                UserName = model.Username,
+                EmailConfirmed = true,
+                Registration = DateTime.Now,
+                RecentLogin = DateTime.Now
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, false);
+                return Redirect(model.ReturnUrl);
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return View(model);
         }
 
         

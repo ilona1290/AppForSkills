@@ -44,6 +44,7 @@ namespace IdentityServer
                             UserName = "alice",
                             Email = "AliceSmith@email.com",
                             EmailConfirmed = true,
+                            Registration = DateTime.Now
                         };
                         var result = userMgr.CreateAsync(alice, "Pass123$").Result;
                         if (!result.Succeeded)
@@ -75,7 +76,8 @@ namespace IdentityServer
                         {
                             UserName = "bob",
                             Email = "BobSmith@email.com",
-                            EmailConfirmed = true
+                            EmailConfirmed = true,
+                            Registration = DateTime.Now
                         };
                         var result = userMgr.CreateAsync(bob, "Pass123$").Result;
                         if (!result.Succeeded)
