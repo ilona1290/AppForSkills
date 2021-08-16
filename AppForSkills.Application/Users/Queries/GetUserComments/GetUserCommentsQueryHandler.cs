@@ -24,7 +24,7 @@ namespace AppForSkills.Application.Users.Queries.GetUserComments
 
         public async Task<CommentsVm> Handle(GetUserCommentsQuery request, CancellationToken cancellationToken)
         {
-            var comments = _context.Comments.Where(c => c.StatusId == 1 && c.User.Username == request.Username)
+            var comments = _context.Comments.Where(c => c.StatusId == 1 && c.CreatedBy == request.Username)
                 .OrderByDescending(c => c.Created);
 
             var commentsDtos = await comments.ProjectTo<UserCommentDto>(_mapper.ConfigurationProvider)

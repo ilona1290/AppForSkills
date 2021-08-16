@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
+using AppForSkills.Application.Exceptions;
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
@@ -29,6 +30,16 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateRating
 
             _context.Ratings.Add(rating);
 
+            await _context.SaveChangesAsync(cancellationToken);
+
+            var user = _context.Users.Where(u => u.StatusId == 1 && u.Username == rating.CreatedBy).FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new WrongIDException("User not exists.");
+            }
+
+            rating.UserId = user.Id;
             await _context.SaveChangesAsync(cancellationToken);
 
             return rating.Id;

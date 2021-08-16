@@ -15,7 +15,6 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateSkillPost
         public string NameOfPhotoOrVideo { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public int UserId { get; set; }
 
         public void Mapping(Profile profile)
         {

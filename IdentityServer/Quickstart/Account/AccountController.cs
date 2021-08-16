@@ -18,6 +18,12 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
+using System.Collections.Generic;
+using System.Net.Http.Json;
+using Newtonsoft.Json;
+using System.Text;
+using IdentityServer.Quickstart.Account;
 
 namespace IdentityServerHost.Quickstart.UI
 {
@@ -112,7 +118,17 @@ namespace IdentityServerHost.Quickstart.UI
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
                     user.RecentLogin = DateTime.Now;
                     await _userManager.UpdateAsync(user);
-
+                    using (var client = new HttpClient())
+                    {
+                        var updateUser = new UpdateRecentLoginInAPIVm
+                        {
+                            Username = user.UserName,
+                            RecentLogin = user.RecentLogin
+                        };
+                        var json = JsonConvert.SerializeObject(updateUser);
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                        await client.PutAsync("https://localhost:44371/api/users/update-login", content);
+                    }
                     if (context != null)
                     {
                         if (context.IsNativeClient())
@@ -189,6 +205,18 @@ namespace IdentityServerHost.Quickstart.UI
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
+                using (var client = new HttpClient())
+                {
+                    var userToApp = new RegisterUserToAPIVm
+                    {
+                        Username = user.UserName,
+                        RegistrationDate = user.Registration,
+                        RecentLoginDate = user.RecentLogin
+                    };
+                    var json = JsonConvert.SerializeObject(userToApp);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    await client.PostAsync("https://localhost:44371/api/users/create-user", content);
+                }
                 return Redirect(model.ReturnUrl);
             }
 
