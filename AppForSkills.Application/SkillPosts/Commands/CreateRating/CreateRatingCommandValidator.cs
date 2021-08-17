@@ -12,7 +12,6 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateRating
         public CreateRatingCommandValidator()
         {
             RuleFor(r => r.Value).GreaterThan(0).LessThanOrEqualTo(5);
-            RuleFor(r => r.UserId).GreaterThan(0);
             RuleFor(r => r.SkillPostId).GreaterThan(0);
         }
     }

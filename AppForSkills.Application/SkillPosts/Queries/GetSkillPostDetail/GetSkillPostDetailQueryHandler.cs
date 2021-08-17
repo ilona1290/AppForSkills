@@ -17,10 +17,12 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
     {
         private readonly IAppForSkillsDbContext _context;
         private readonly IMapper _mapper;
-        public GetSkillPostDetailQueryHandler(IAppForSkillsDbContext skillsDbContext, IMapper mapper)
+        private readonly ICurrentUserService _userService;
+        public GetSkillPostDetailQueryHandler(IAppForSkillsDbContext skillsDbContext, IMapper mapper, ICurrentUserService userService)
         {
             _context = skillsDbContext;
             _mapper = mapper;
+            _userService = userService;
         }
 
         public async Task<SkillPostVm> Handle(GetSkillPostDetailQuery request, CancellationToken cancellationToken)

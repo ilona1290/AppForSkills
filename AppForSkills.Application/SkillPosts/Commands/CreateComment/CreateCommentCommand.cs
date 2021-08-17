@@ -15,7 +15,6 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateComment
         public string CommentText { get; set; }
         public int SkillPostId { get; set; }
         public int? ParentCommentId { get; set; }
-        public int UserId { get; set; }
 
         public void Mapping(Profile profile)
         {

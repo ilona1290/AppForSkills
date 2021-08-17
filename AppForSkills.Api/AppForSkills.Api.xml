@@ -118,6 +118,16 @@
             </summary>
             <param name="element">Choose one of the elements: skillPosts, bestRatings, numberOfGivingRatings, numberOfGivingComments, postsInDiscussions </param>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.UsersController.CreateUser(AppForSkills.Application.Users.Commands.CreateUser.CreateUserCommand)">
+            <summary>
+            Create user.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.UsersController.UpdateLoginDate(AppForSkills.Application.Users.Commands.UpdateLoginDate.UpdateLoginDateCommand)">
+            <summary>
+            Update user login date.
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllInformation(System.String)">
             <summary>
             Returns general information about user.

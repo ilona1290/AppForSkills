@@ -10,6 +10,7 @@ using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using AppForSkills.Application.Likes.Commands.GiveLike;
 using AppForSkills.Application.Likes.Commands.Unlike;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ using System.Threading.Tasks;
 namespace AppForSkills.Api.Controllers
 {
     [Route("api/discussions")]
-    [ApiController]
+    [Authorize]
     public class DiscussionsController : BaseController
     {
         /// <summary>

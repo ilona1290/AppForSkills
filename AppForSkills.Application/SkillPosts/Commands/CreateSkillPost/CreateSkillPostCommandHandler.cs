@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
+using AppForSkills.Application.Exceptions;
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
@@ -30,6 +31,16 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateSkillPost
 
             _context.SkillPosts.Add(skillPost);
 
+            await _context.SaveChangesAsync(cancellationToken);
+
+            var user = _context.Users.Where(u => u.StatusId == 1 && u.Username == skillPost.CreatedBy).FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new WrongIDException("User not exists.");
+            }
+
+            skillPost.UserId = user.Id;
             await _context.SaveChangesAsync(cancellationToken);
 
             return skillPost.Id;

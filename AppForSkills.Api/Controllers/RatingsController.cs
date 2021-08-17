@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppForSkills.Api.Controllers
 {
     [Route("api/ratings")]
-    [ApiController]
+    [Authorize]
     public class RatingsController : ControllerBase
     {
         /// <summary>

@@ -14,7 +14,6 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateRating
     {
         public int Value { get; set; }
         public int SkillPostId { get; set; }
-        public int UserId { get; set; }
 
         public void Mapping(Profile profile)
         {

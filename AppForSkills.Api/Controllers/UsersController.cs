@@ -13,13 +13,42 @@ using AppForSkills.Application.Users.Queries.GetUserSkills;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using AppForSkills.Application.Users.Commands.CreateUser;
+using AppForSkills.Application.Users.Commands.UpdateLoginDate;
 
 namespace AppForSkills.Api.Controllers
 {
-    [Route("api/users/{username}")]
-    [ApiController]
+    [Route("api/users")]
+    [Authorize]
     public class UsersController : BaseController
     {
+
+        /// <summary>
+        /// Create user.
+        /// </summary>
+        [Route("create-user")]
+        [HttpPost]
+        [AllowAnonymous]
+
+        public async Task<ActionResult> CreateUser(CreateUserCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Update user login date.
+        /// </summary>
+        [Route("update-login")]
+        [HttpPut]
+        [AllowAnonymous]
+
+        public async Task<ActionResult> UpdateLoginDate(UpdateLoginDateCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
         /// <summary>
         /// Returns general information about user.
         /// </summary>
