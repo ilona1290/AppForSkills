@@ -174,7 +174,7 @@ namespace IdentityServerHost.Quickstart.UI
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model, string button)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if(!ModelState.IsValid)
             {
