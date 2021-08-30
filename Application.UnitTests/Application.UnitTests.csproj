@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AppForSkills.Application\AppForSkills.Application.csproj" />
+    <ProjectReference Include="..\AppForSkills.Persistance\AppForSkills.Persistance.csproj" />
   </ItemGroup>
 
 </Project>
