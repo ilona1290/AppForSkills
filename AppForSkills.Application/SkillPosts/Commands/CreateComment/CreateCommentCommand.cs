@@ -18,7 +18,8 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateComment
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateCommentCommand, Comment>();
+            profile.CreateMap<CreateCommentCommand, Comment>()
+                .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }

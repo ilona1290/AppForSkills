@@ -19,7 +19,8 @@ namespace AppForSkills.Application.Likes.Commands.GiveLike
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<GiveLikeCommand, Like>();
+            profile.CreateMap<GiveLikeCommand, Like>()
+                .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }

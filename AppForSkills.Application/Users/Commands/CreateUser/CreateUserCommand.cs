@@ -18,7 +18,8 @@ namespace AppForSkills.Application.Users.Commands.CreateUser
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateUserCommand, User>();
+            profile.CreateMap<CreateUserCommand, User>()
+                .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }

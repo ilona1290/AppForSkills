@@ -16,12 +16,12 @@ namespace AppForSkills.Application.Users.Queries.GetUserComments
         public string CommentText { get; set; }
         public int? ParentCommentId { get; set; }
         public string ParentCommentText { get; set; }
-        public ICollection<UserCommentDto> AnswersToComment { get; set; }
         public ICollection<LikeDto> Likes { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Comment, UserCommentDto>();
+            profile.CreateMap<Comment, UserCommentDto>()
+                .ForMember(s => s.ParentCommentText, map => map.Ignore());
         }
     }
 }

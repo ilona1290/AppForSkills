@@ -17,7 +17,8 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateRating
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateRatingCommand, Rating>();
+            profile.CreateMap<CreateRatingCommand, Rating>()
+                .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }

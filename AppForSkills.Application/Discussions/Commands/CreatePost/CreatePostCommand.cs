@@ -17,7 +17,8 @@ namespace AppForSkills.Application.Discussions.Commands.CreatePost
         public int? ParentPostId { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreatePostCommand, PostInDiscussion>();
+            profile.CreateMap<CreatePostCommand, PostInDiscussion>()
+                .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }
