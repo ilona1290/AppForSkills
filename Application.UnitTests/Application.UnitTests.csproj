@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="User\Command\CreateUser\NewFolder\**" />
+    <EmbeddedResource Remove="User\Command\CreateUser\NewFolder\**" />
+    <None Remove="User\Command\CreateUser\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.9" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />

@@ -48,6 +48,15 @@ namespace Application.UnitTests.Common
             };
             context.PostsInDiscussion.Add(postInDiscussion);
 
+            var user = new AppForSkills.Domain.Entities.User()
+            {
+                Username = "user",
+                RegistrationDate = new DateTime(1999, 12, 29),
+                RecentLoginDate = new DateTime(2000, 1, 1),
+                StatusId = 1
+            };
+            context.Users.Add(user);
+
             context.SaveChanges();
             return mock;
         }

@@ -18,6 +18,9 @@ namespace AppForSkills.Application.Discussions.Commands.CreatePost
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CreatePostCommand, PostInDiscussion>()
+                .ForMember(s => s.PostText, map => map.MapFrom(src => src.PostText))
+                .ForMember(s => s.DiscussionId, map => map.MapFrom(src => src.DiscussionId))
+                .ForMember(s => s.ParentPostId, map => map.MapFrom(src => src.ParentPostId))
                 .ForAllOtherMembers(d => d.Ignore());
         }
     }

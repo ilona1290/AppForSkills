@@ -19,6 +19,8 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateSkillPost
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CreateSkillPostCommand, SkillPost>()
+                .ForMember(s => s.Title, map => map.MapFrom(src => src.Title))
+                .ForMember(s => s.Description, map => map.MapFrom(src => src.Description))
                 .ForAllOtherMembers(d => d.Ignore());
         }
     }

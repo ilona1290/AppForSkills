@@ -17,6 +17,7 @@ namespace AppForSkills.Application.Discussions.Commands.CreateDiscussion
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CreateDiscussionCommand, Discussion>()
+                .ForMember(m => m.FirstPost, map => map.MapFrom(src => src.FirstPost))
                 .ForAllOtherMembers(d => d.Ignore());
         }
     }

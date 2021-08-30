@@ -18,6 +18,8 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateRating
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CreateRatingCommand, Rating>()
+                .ForMember(s => s.Value, map => map.MapFrom(src => src.Value))
+                .ForMember(s => s.SkillPostId, map => map.MapFrom(src => src.SkillPostId))
                 .ForAllOtherMembers(d => d.Ignore());
         }
     }
