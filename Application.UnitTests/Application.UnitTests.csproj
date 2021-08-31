@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="User\Command\CreateUser\NewFolder\**" />
-    <EmbeddedResource Remove="User\Command\CreateUser\NewFolder\**" />
-    <None Remove="User\Command\CreateUser\NewFolder\**" />
+    <Compile Remove="User\Commands\CreateUser\NewFolder\**" />
+    <EmbeddedResource Remove="User\Commands\CreateUser\NewFolder\**" />
+    <None Remove="User\Commands\CreateUser\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>

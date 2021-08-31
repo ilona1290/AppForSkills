@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Application.UnitTests.User.Command.CreateUser
+namespace Application.UnitTests.User.Commands.CreateUser
 {
     public class CreateUserCommandHandlerTests : CommandTestBase, IClassFixture<MappingTestFixture>
     {
