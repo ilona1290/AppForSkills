@@ -16,12 +16,10 @@ namespace AppForSkills.Application.SkillPosts.Commands.EditRating
     public class EditRatingCommandHandler : IRequestHandler<EditRatingCommand>
     {
         private readonly IAppForSkillsDbContext _context;
-        private readonly IMapper _mapper;
 
-        public EditRatingCommandHandler(IAppForSkillsDbContext context, IMapper mapper)
+        public EditRatingCommandHandler(IAppForSkillsDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<Unit> Handle(EditRatingCommand request, CancellationToken cancellationToken)
