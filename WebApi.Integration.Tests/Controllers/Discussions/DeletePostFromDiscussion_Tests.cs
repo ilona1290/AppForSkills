@@ -23,9 +23,10 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
         public async Task GivenPostId_DeletePost()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
+            var discussionId = "3";
 
-            string id = "3";
-            var response = await client.DeleteAsync($"/api/discussions/2/posts/{id}");
+            string postId = "3";
+            var response = await client.DeleteAsync($"/api/discussions/{discussionId}/posts/{postId}");
             response.EnsureSuccessStatusCode();
         }
 
@@ -33,10 +34,11 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
         public async Task GivenWrongPostId_ValidationFieldsFail()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            string id = "0";
+            var discussionId = "3";
+            string postId = "0";
 
             var error = Should.Throw<FluentValidation.ValidationException>(async () => await client
-                .DeleteAsync($"/api/discussions/3/posts/{id}"));
+                .DeleteAsync($"/api/discussions/{discussionId}/posts/{postId}"));
 
             error.Message.ShouldContain("Wartość pola 'Post Id' musi być większa niż '0'.");
         }

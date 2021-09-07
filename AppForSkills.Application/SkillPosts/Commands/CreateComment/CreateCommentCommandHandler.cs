@@ -24,6 +24,14 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateComment
         {
             var comment = _mapper.Map<Comment>(request);
 
+            var skillPost = _context.SkillPosts.Where(u => u.StatusId == 1 && u.Id == request.SkillPostId)
+                .FirstOrDefault();
+
+            if (skillPost == null)
+            {
+                throw new WrongIDException("SkillPost not exists. Wrong Id");
+            }
+
             _context.Comments.Add(comment);
 
             await _context.SaveChangesAsync(cancellationToken);

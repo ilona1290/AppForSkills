@@ -26,7 +26,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
             response.EnsureSuccessStatusCode();
 
             var error = Should.Throw<WrongIDException>(async () => await client
-                .GetAsync($"/api/discussions/{id}/posts"));
+                .GetAsync($"/api/discussions/{id}"));
 
             error.Message.ShouldBe("Discussion with gaved id could not display, because not exists in database. " +
                     "Give another id.");

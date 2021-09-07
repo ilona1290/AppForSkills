@@ -23,7 +23,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
             var client = await _factory.GetAuthenticatedClientAsync();
 
             string id = "2";
-            var response = await client.GetAsync($"/api/discussions/{id}/posts");
+            var response = await client.GetAsync($"/api/discussions/{id}");
             response.EnsureSuccessStatusCode();
 
             var vm = await Utilities.GetResponseContent<DiscussionVm>(response);
@@ -37,7 +37,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
             var client = await _factory.GetAuthenticatedClientAsync();
 
             string id = "8";
-            var error = Should.Throw<WrongIDException>(async () => await client.GetAsync($"/api/discussions/{id}/posts"));
+            var error = Should.Throw<WrongIDException>(async () => await client.GetAsync($"/api/discussions/{id}"));
 
             error.Message.ShouldBe("Discussion with gaved id could not display, because not exists in database. " +
                     "Give another id.");

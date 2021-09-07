@@ -18,7 +18,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
         }
 
         [Fact]
-        public async Task GivenDiscussion_UpdateDiscussion()
+        public async Task GivenDiscussion_Update()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
             var discussion = new EditDiscussionCommand
@@ -32,7 +32,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
                 await Utilities.SendObjectAsContent(discussion));
             response.EnsureSuccessStatusCode();
 
-            var responseAfterUpdate = await client.GetAsync($"/api/discussions/{discussion.DiscussionId}/posts");
+            var responseAfterUpdate = await client.GetAsync($"/api/discussions/{discussion.DiscussionId}");
             responseAfterUpdate.EnsureSuccessStatusCode();
             var vm = await Utilities.GetResponseContent<DiscussionVm>(responseAfterUpdate);
             vm.FirstPost.ShouldBe(discussion.FirstPost);

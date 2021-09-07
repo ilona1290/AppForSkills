@@ -7,7 +7,7 @@ namespace AppForSkills.Application.SkillPosts.Commands.EditComment
         public EditCommentCommandValidator()
         {
             RuleFor(c => c.Id).GreaterThan(0);
-            RuleFor(c => c.CommentText).NotEmpty().MinimumLength(500);
+            RuleFor(c => c.CommentText).NotEmpty().MaximumLength(500);
         }
     }
 }

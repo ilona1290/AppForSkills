@@ -38,7 +38,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Returns single discussion.
         /// </summary>
-        [Route("{id}/posts")]
+        [Route("{id}")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

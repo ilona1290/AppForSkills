@@ -101,7 +101,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Edits a rating.
         /// </summary>
-        [Route("{id}")]
+        [Route("{id}/ratings/{idRating}")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -118,7 +118,7 @@ namespace AppForSkills.Api.Controllers
         /// Deletes a rating.
         /// </summary>
         /// <param name="idRating">Id of rating, which user wants to remove</param>
-        [Route("{id}")]
+        [Route("{id}/ratings/{idRating}")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
