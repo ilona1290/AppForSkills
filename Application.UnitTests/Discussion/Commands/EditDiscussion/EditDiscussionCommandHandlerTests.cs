@@ -4,9 +4,6 @@ using Application.UnitTests.Common;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -25,10 +22,10 @@ namespace Application.UnitTests.Discussion.Commands.EditDiscussion
         [Fact]
         public async Task Handle_GivenValidRequest_ShouldEditDiscussion()
         {
-            var command = new EditDiscussionCommand() 
-            { 
-                DiscussionId = 3, 
-                FirstPost = "Macie jakieś hobby? Jak tak to jakie?" 
+            var command = new EditDiscussionCommand()
+            {
+                DiscussionId = 3,
+                FirstPost = "Macie jakieś hobby? Jak tak to jakie?"
             };
 
             var result = await _handler.Handle(command, CancellationToken.None);

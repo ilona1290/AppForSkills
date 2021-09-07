@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppForSkills.Application.Exceptions
 {
@@ -10,7 +6,7 @@ namespace AppForSkills.Application.Exceptions
     {
         public WrongIDException() : base()
         {
-            
+
         }
 
         public WrongIDException(string message) : base(message)

@@ -1,13 +1,9 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
 using AppForSkills.Application.Exceptions;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -39,7 +35,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
             }
 
             var skillPostVm = _mapper.Map<SkillPostVm>(skillPost);
-            
+
             if (skillPost.Ratings.Count > 0)
             {
                 int sum = skillPost.Ratings.Select(r => r.Value).Sum();

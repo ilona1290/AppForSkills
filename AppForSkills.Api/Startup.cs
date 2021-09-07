@@ -51,7 +51,7 @@ namespace AppForSkills.Api
                 options.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin());
             });
 
-            if(Environment.IsEnvironment("Test"))
+            if (Environment.IsEnvironment("Test"))
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AppForSkillsDatabase")));
@@ -106,8 +106,8 @@ namespace AppForSkills.Api
                 });
             }
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
-            
+            services.TryAddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
+
             services.AddSwaggerGen(c =>
             {
                 c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
@@ -169,14 +169,14 @@ namespace AppForSkills.Api
                 });
             }
 
-            
+
 
             app.UseHealthChecks("/hc");
 
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
-            if(Environment.IsEnvironment("Test"))
+            if (Environment.IsEnvironment("Test"))
             {
                 app.UseIdentityServer();
             }

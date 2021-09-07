@@ -3,9 +3,6 @@ using AppForSkills.Domain.Entities;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
 {
@@ -15,7 +12,7 @@ namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
         public string Username { get; set; }
         public DateTime PublishingDate { get; set; }
         public string FirstPost { get; set; }
-        public List<PostInDiscussionDto> Posts  { get; set; }
+        public List<PostInDiscussionDto> Posts { get; set; }
 
         public void Mapping(Profile profile)
         {

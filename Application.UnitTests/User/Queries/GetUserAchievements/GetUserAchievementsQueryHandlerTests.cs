@@ -3,10 +3,7 @@ using AppForSkills.Persistance;
 using Application.UnitTests.Common;
 using AutoMapper;
 using Shouldly;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -30,7 +27,7 @@ namespace Application.UnitTests.User.Queries.GetUserAchievements
         {
             var handler = new GetUserAchievementsQueryHandler(_context, _mapper);
 
-            var result = await handler.Handle(new GetUserAchievementsQuery {Username = "Podróżnik" }, CancellationToken.None);
+            var result = await handler.Handle(new GetUserAchievementsQuery { Username = "Podróżnik" }, CancellationToken.None);
 
             result.ShouldBeOfType<AchievementsVm>();
             result.Achievements.ShouldBeOfType<List<AchievementDto>>();

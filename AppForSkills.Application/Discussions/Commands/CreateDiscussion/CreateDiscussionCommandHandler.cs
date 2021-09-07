@@ -2,10 +2,6 @@
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,7 +20,7 @@ namespace AppForSkills.Application.Discussions.Commands.CreateDiscussion
         public async Task<int> Handle(CreateDiscussionCommand request, CancellationToken cancellationToken)
         {
             var discussion = _mapper.Map<Discussion>(request);
-                
+
             _context.Discussions.Add(discussion);
 
             await _context.SaveChangesAsync(cancellationToken);

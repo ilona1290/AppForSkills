@@ -1,9 +1,8 @@
 ﻿using AppForSkills.Persistance;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace WebApi.Integration.Tests.Common
@@ -17,6 +16,17 @@ namespace WebApi.Integration.Tests.Common
             var result = JsonConvert.DeserializeObject<T>(stringResponse);
 
             return result;
+        }
+
+        public static async Task<ByteArrayContent> SendObjectAsContent(object obj)
+        {
+            var myContent = JsonConvert.SerializeObject(obj);
+
+            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return byteContent;
         }
         public static void InitiliazeDbForTests(AppForSkillsDbContext context)
         {
@@ -45,6 +55,15 @@ namespace WebApi.Integration.Tests.Common
                 StatusId = 1
             };
             context.Users.Add(user);
+
+            var alice = new AppForSkills.Domain.Entities.User()
+            {
+                Username = "alice",
+                RegistrationDate = new DateTime(1999, 12, 29),
+                RecentLoginDate = new DateTime(2000, 1, 1),
+                StatusId = 1
+            };
+            context.Users.Add(alice);
 
             context.SaveChanges();
         }

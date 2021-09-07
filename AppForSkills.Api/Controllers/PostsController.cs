@@ -11,7 +11,6 @@ using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AppForSkills.Api.Controllers
@@ -78,7 +77,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RatingsPostVm>> GetAllRatingsAsync(int id)
         {
-            var vm = await Mediator.Send(new GetRatingsToSkillPostQuery() { SkillId = id});
+            var vm = await Mediator.Send(new GetRatingsToSkillPostQuery() { SkillId = id });
             return vm;
         }
 

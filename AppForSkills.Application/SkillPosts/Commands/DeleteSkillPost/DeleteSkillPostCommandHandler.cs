@@ -2,10 +2,7 @@
 using AppForSkills.Application.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,7 +21,7 @@ namespace AppForSkills.Application.SkillPosts.Commands.DeleteSkillPost
                 .Include(a => a.Ratings).Include(q => q.Comments)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if(skillPost == null)
+            if (skillPost == null)
             {
                 throw new WrongIDException("Skill Post with gaved id could not delete, because not exists in database. " +
                     "Give another id.");

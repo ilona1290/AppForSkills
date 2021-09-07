@@ -1,10 +1,7 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
 using AppForSkills.Application.Exceptions;
 using MediatR;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,7 +20,7 @@ namespace AppForSkills.Application.Discussions.Commands.EditPost
         {
             var post = _context.PostsInDiscussion.FirstOrDefault(c => c.StatusId == 1 && c.Id == request.Id);
 
-            if(post == null)
+            if (post == null)
             {
                 throw new WrongIDException("Post with gaved id could not update, because not exists in database. " +
                     "Give another id.");

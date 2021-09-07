@@ -1,21 +1,21 @@
 ﻿using AppForSkills.Application.Discussions.GetDiscussions;
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
-using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
-using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using AppForSkills.Application.SkillPosts.Commands.DeleteSkillPost;
 using AppForSkills.Application.SkillPosts.Commands.EditSkillPost;
+using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
+using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
+using AppForSkills.Application.Users.Commands.CreateUser;
+using AppForSkills.Application.Users.Commands.UpdateLoginDate;
 using AppForSkills.Application.Users.Queries.GetUserAchievements;
 using AppForSkills.Application.Users.Queries.GetUserComments;
 using AppForSkills.Application.Users.Queries.GetUserDiscussions;
 using AppForSkills.Application.Users.Queries.GetUserInformation;
 using AppForSkills.Application.Users.Queries.GetUserRatings;
 using AppForSkills.Application.Users.Queries.GetUserSkills;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using AppForSkills.Application.Users.Commands.CreateUser;
-using AppForSkills.Application.Users.Commands.UpdateLoginDate;
 
 namespace AppForSkills.Api.Controllers
 {

@@ -3,10 +3,7 @@ using AppForSkills.Persistance;
 using Application.UnitTests.Common;
 using AutoMapper;
 using Shouldly;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -33,7 +30,7 @@ namespace Application.UnitTests.Discussion.Queries.GetDiscussions
             var result = await handler.Handle(new GetDiscussionsQuery(), CancellationToken.None);
 
             result.ShouldBeOfType<DiscussionsVm>();
-            result.Discussions.ShouldBeOfType <List<DiscussionDto>>();
+            result.Discussions.ShouldBeOfType<List<DiscussionDto>>();
             result.Discussions.Count.ShouldBe(3);
         }
     }

@@ -8,10 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using WebApi.Integration.Tests.Common.DummyServices;
 
 namespace WebApi.Integration.Tests.Common
 {
@@ -34,6 +33,7 @@ namespace WebApi.Integration.Tests.Common
                     });
 
                     services.AddScoped<IAppForSkillsDbContext>(provider => provider.GetService<AppForSkillsDbContext>());
+                    services.AddScoped<ICurrentUserService, DummyCurrentUserService>();
 
                     var sp = services.BuildServiceProvider();
 
@@ -57,7 +57,7 @@ namespace WebApi.Integration.Tests.Common
                     .UseSerilog()
                     .UseEnvironment("Test");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -76,7 +76,7 @@ namespace WebApi.Integration.Tests.Common
         {
             var disco = await client.GetDiscoveryDocumentAsync();
 
-            if(disco.IsError)
+            if (disco.IsError)
             {
                 throw new Exception(disco.Error);
             }
@@ -91,7 +91,7 @@ namespace WebApi.Integration.Tests.Common
                 Password = password
             });
 
-            if(response.IsError)
+            if (response.IsError)
             {
                 throw new Exception(response.Error);
             }

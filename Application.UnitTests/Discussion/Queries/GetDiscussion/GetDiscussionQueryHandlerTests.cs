@@ -1,14 +1,11 @@
 ﻿using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using AppForSkills.Application.Exceptions;
-using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Persistance;
 using Application.UnitTests.Common;
 using AutoMapper;
 using Shouldly;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
