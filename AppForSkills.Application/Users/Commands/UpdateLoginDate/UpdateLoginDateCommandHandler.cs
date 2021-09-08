@@ -21,7 +21,7 @@ namespace AppForSkills.Application.Users.Commands.UpdateLoginDate
 
             if (user == null)
             {
-                throw new WrongIDException("User not exists in database. ");
+                throw new WrongIDException("User not exists in database.");
             }
 
             user.RecentLoginDate = request.RecentLogin;

@@ -49,6 +49,7 @@ namespace WebApi.Integration.Tests.Common
 
             var user = new AppForSkills.Domain.Entities.User()
             {
+                Id = 4,
                 Username = "user",
                 RegistrationDate = new DateTime(1999, 12, 29),
                 RecentLoginDate = new DateTime(2000, 1, 1),
@@ -58,6 +59,7 @@ namespace WebApi.Integration.Tests.Common
 
             var alice = new AppForSkills.Domain.Entities.User()
             {
+                Id = 5,
                 Username = "alice",
                 RegistrationDate = new DateTime(1999, 12, 29),
                 RecentLoginDate = new DateTime(2000, 1, 1),
