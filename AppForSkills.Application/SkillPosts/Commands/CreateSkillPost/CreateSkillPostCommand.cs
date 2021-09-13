@@ -2,14 +2,15 @@
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace AppForSkills.Application.SkillPosts.Commands.CreateSkillPost
 {
     public class CreateSkillPostCommand : IRequest<int>, IMapFrom<SkillPost>
     {
-        public string NameOfPhotoOrVideo { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public IFormFile Skill { get; set; }
 
         public void Mapping(Profile profile)
         {

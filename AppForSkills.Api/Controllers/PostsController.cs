@@ -60,7 +60,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult> AddSkill(CreateSkillPostCommand command)
+        public async Task<ActionResult> AddSkill([FromForm]CreateSkillPostCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);
