@@ -2,11 +2,6 @@
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppForSkills.Application.SkillPosts.Commands.CreateRating
 {
@@ -17,7 +12,10 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateRating
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateRatingCommand, Rating>();
+            profile.CreateMap<CreateRatingCommand, Rating>()
+                .ForMember(s => s.Value, map => map.MapFrom(src => src.Value))
+                .ForMember(s => s.SkillPostId, map => map.MapFrom(src => src.SkillPostId))
+                .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }

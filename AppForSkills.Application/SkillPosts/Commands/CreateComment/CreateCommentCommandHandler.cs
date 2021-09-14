@@ -3,11 +3,7 @@ using AppForSkills.Application.Exceptions;
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,6 +23,14 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateComment
         public async Task<int> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
         {
             var comment = _mapper.Map<Comment>(request);
+
+            var skillPost = _context.SkillPosts.Where(u => u.StatusId == 1 && u.Id == request.SkillPostId)
+                .FirstOrDefault();
+
+            if (skillPost == null)
+            {
+                throw new WrongIDException("SkillPost not exists. Wrong Id");
+            }
 
             _context.Comments.Add(comment);
 

@@ -2,11 +2,6 @@
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppForSkills.Application.Discussions.Commands.CreatePost
 {
@@ -17,7 +12,11 @@ namespace AppForSkills.Application.Discussions.Commands.CreatePost
         public int? ParentPostId { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreatePostCommand, PostInDiscussion>();
+            profile.CreateMap<CreatePostCommand, PostInDiscussion>()
+                .ForMember(s => s.PostText, map => map.MapFrom(src => src.PostText))
+                .ForMember(s => s.DiscussionId, map => map.MapFrom(src => src.DiscussionId))
+                .ForMember(s => s.ParentPostId, map => map.MapFrom(src => src.ParentPostId))
+                .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }

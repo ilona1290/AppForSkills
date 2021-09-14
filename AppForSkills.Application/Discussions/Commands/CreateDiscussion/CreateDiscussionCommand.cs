@@ -2,11 +2,6 @@
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppForSkills.Application.Discussions.Commands.CreateDiscussion
 {
@@ -16,7 +11,9 @@ namespace AppForSkills.Application.Discussions.Commands.CreateDiscussion
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateDiscussionCommand, Discussion>();
+            profile.CreateMap<CreateDiscussionCommand, Discussion>()
+                .ForMember(m => m.FirstPost, map => map.MapFrom(src => src.FirstPost))
+                .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }

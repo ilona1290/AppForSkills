@@ -1,10 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,7 +24,7 @@ namespace AppForSkills.Application.Common.Behaviours
             _timer.Stop();
             var elapsed = _timer.ElapsedMilliseconds;
 
-            if(elapsed > 500)
+            if (elapsed > 500)
             {
                 var requestName = typeof(TRequest).Name;
 

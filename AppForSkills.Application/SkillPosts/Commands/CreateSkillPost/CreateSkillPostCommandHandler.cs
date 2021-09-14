@@ -4,9 +4,8 @@ using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,18 +15,36 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateSkillPost
     {
         private readonly IAppForSkillsDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IFileStore _fileStore;
 
-        public CreateSkillPostCommandHandler(IAppForSkillsDbContext context, IMapper mapper)
+        public CreateSkillPostCommandHandler(IAppForSkillsDbContext context, IMapper mapper, IFileStore fileStore)
         {
             _context = context;
             _mapper = mapper;
+            _fileStore = fileStore;
         }
 
         public async Task<int> Handle(CreateSkillPostCommand request, CancellationToken cancellationToken)
         {
             var skillPost = _mapper.Map<SkillPost>(request);
 
-            skillPost.AddressOfPhotoOrVideo = "images/" + request.NameOfPhotoOrVideo;
+            var bytes = _fileStore.FormFileToBytesArray(request.Skill);
+
+            var extension = Path.GetExtension(request.Skill.FileName);
+            if(extension == ".jpg" || extension == ".png" || extension == ".gif")
+            {
+                var fileDir = _fileStore.SafeWriteFile(bytes, request.Skill.FileName, "Images");
+                skillPost.AddressOfPhotoOrVideo = "Images/" + request.Skill.FileName;
+            }
+            else if(extension == ".mp4" || extension == ".avi")
+            {
+                var fileDir = _fileStore.SafeWriteFile(bytes, request.Skill.FileName, "Videos");
+                skillPost.AddressOfPhotoOrVideo = "Videos/" + request.Skill.FileName;
+            }
+            else
+            {
+                throw new Exception("Unsupported file format");
+            }
 
             _context.SkillPosts.Add(skillPost);
 

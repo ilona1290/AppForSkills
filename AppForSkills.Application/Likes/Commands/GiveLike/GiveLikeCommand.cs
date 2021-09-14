@@ -2,11 +2,6 @@
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppForSkills.Application.Likes.Commands.GiveLike
 {
@@ -19,7 +14,8 @@ namespace AppForSkills.Application.Likes.Commands.GiveLike
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<GiveLikeCommand, Like>();
+            profile.CreateMap<GiveLikeCommand, Like>()
+                .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }

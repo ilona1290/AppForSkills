@@ -9,7 +9,6 @@ using AppForSkills.Application.Discussions.GetDiscussions;
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
 using AppForSkills.Application.Likes.Commands.GiveLike;
 using AppForSkills.Application.Likes.Commands.Unlike;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +38,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Returns single discussion.
         /// </summary>
-        [Route("{id}/posts")]
+        [Route("{id}")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

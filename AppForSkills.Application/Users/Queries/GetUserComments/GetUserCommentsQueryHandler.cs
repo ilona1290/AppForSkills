@@ -3,10 +3,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,7 +29,7 @@ namespace AppForSkills.Application.Users.Queries.GetUserComments
 
             foreach (var comment in commentsDtos)
             {
-                if(comment.ParentCommentId != null)
+                if (comment.ParentCommentId != null)
                 {
                     comment.ParentCommentText = _context.Comments.FirstOrDefault(c => c.Id == comment.ParentCommentId)
                         .CommentText;

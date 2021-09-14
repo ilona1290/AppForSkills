@@ -4,10 +4,7 @@ using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,6 +25,14 @@ namespace AppForSkills.Application.Discussions.Commands.CreatePost
         {
             var post = _mapper.Map<PostInDiscussion>(request);
 
+            var discussion = _context.Discussions.Where(u => u.StatusId == 1 && u.Id == request.DiscussionId)
+                .Include(s => s.UsersInDiscussion).FirstOrDefault();
+
+            if (discussion == null)
+            {
+                throw new WrongIDException("Discussion not exists. Wrong Id");
+            }
+
             _context.PostsInDiscussion.Add(post);
 
             await _context.SaveChangesAsync(cancellationToken);
@@ -41,14 +46,6 @@ namespace AppForSkills.Application.Discussions.Commands.CreatePost
             }
 
             post.UserId = user.Id;
-
-            var discussion = _context.Discussions.Where(u => u.StatusId == 1 && u.Id == request.DiscussionId)
-                .Include(s => s.UsersInDiscussion).FirstOrDefault();
-
-            if (discussion == null)
-            {
-                throw new WrongIDException("Discussion not exists. Wrong Id");
-            }
 
             discussion.UsersInDiscussion.Add(user);
             user.Discussions.Add(discussion);

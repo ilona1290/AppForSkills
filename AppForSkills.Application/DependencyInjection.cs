@@ -2,7 +2,6 @@
 using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 

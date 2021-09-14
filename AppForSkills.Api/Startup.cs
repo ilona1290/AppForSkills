@@ -3,10 +3,16 @@ using AppForSkills.Application;
 using AppForSkills.Application.Common.Interfaces;
 using AppForSkills.Common;
 using AppForSkills.Infrastructure;
+using AppForSkills.Infrastructure.Identity;
 using AppForSkills.Persistance;
+using IdentityModel;
+using IdentityServer4.Models;
+using IdentityServer4.Test;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -16,17 +22,20 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Claims;
 
 namespace AppForSkills.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -41,9 +50,43 @@ namespace AppForSkills.Api
             {
                 options.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin());
             });
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
-            services.AddAuthentication("Bearer")
+
+            if (Environment.IsEnvironment("Test"))
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("AppForSkillsDatabase")));
+                services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+                services.AddIdentityServer()
+                    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
+                    {
+                        options.ApiResources.Add(new IdentityServer4.Models.ApiResource("api1"));
+                        options.ApiScopes.Add(new IdentityServer4.Models.ApiScope("api1"));
+                        options.Clients.Add(new IdentityServer4.Models.Client
+                        {
+                            ClientId = "client",
+                            AllowedGrantTypes = { GrantType.ResourceOwnerPassword },
+                            ClientSecrets = { new IdentityServer4.Models.Secret("secret".Sha256()) },
+                            AllowedScopes = { "openid", "profile", "AppForSkills.Api", "api1" }
+                        });
+                    }).AddTestUsers(new List<TestUser>
+                    {
+                        new TestUser
+                        {
+                            SubjectId = "4B434A88-212D-4A4D-A17C-F35102D73CBB",
+                            Username = "alice",
+                            Password = "Pass123$",
+                            Claims = new List<Claim>
+                            {
+                                new Claim(JwtClaimTypes.Email, "alice@user.com"),
+                                new Claim(ClaimTypes.Name, "alice")
+                            }
+                        }
+                    });
+                services.AddAuthentication("Bearer").AddIdentityServerJwt();
+            }
+            else
+            {
+                services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
                     options.Authority = "https://localhost:5001";
@@ -52,6 +95,19 @@ namespace AppForSkills.Api
                         ValidateAudience = false
                     };
                 });
+
+                services.AddAuthorization(options =>
+                {
+                    options.AddPolicy("ApiScope", policy =>
+                    {
+                        policy.RequireAuthenticatedUser();
+                        policy.RequireClaim("scope", "api1");
+                    });
+                });
+            }
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.TryAddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
+
             services.AddSwaggerGen(c =>
             {
                 c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
@@ -95,15 +151,6 @@ namespace AppForSkills.Api
                 c.IncludeXmlComments(filePath);
             });
             services.AddHealthChecks();
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ApiScope", policy =>
-                {
-                    policy.RequireAuthenticatedUser();
-                    policy.RequireClaim("scope", "api1");
-                });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -122,13 +169,17 @@ namespace AppForSkills.Api
                 });
             }
 
-            
+
 
             app.UseHealthChecks("/hc");
 
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
+            if (Environment.IsEnvironment("Test"))
+            {
+                app.UseIdentityServer();
+            }
 
             app.UseSerilogRequestLogging();
 
@@ -140,7 +191,7 @@ namespace AppForSkills.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers().RequireAuthorization("ApiScope");
+                endpoints.MapControllers();
             });
         }
     }

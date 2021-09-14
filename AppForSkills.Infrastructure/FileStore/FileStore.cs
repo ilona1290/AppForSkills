@@ -1,9 +1,7 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
-using System;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AppForSkills.Infrastructure.FileStore
@@ -24,6 +22,14 @@ namespace AppForSkills.Infrastructure.FileStore
             var outputFile = Path.Combine(path, sourceFileName);
             _fileWrapper.WriteAllBytes(outputFile, content);
             return outputFile;
+        }
+
+        public byte[] FormFileToBytesArray(IFormFile skill)
+        {
+            var memoryStream = new MemoryStream();
+            skill.CopyTo(memoryStream);
+            var bytes = memoryStream.ToArray();
+            return bytes;
         }
     }
 }

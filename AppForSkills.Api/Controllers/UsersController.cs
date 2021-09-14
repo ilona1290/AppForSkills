@@ -1,21 +1,21 @@
 ﻿using AppForSkills.Application.Discussions.GetDiscussions;
 using AppForSkills.Application.Discussions.Queries.GetDiscussion;
-using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
-using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using AppForSkills.Application.SkillPosts.Commands.DeleteSkillPost;
 using AppForSkills.Application.SkillPosts.Commands.EditSkillPost;
+using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
+using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
+using AppForSkills.Application.Users.Commands.CreateUser;
+using AppForSkills.Application.Users.Commands.UpdateLoginDate;
 using AppForSkills.Application.Users.Queries.GetUserAchievements;
 using AppForSkills.Application.Users.Queries.GetUserComments;
 using AppForSkills.Application.Users.Queries.GetUserDiscussions;
 using AppForSkills.Application.Users.Queries.GetUserInformation;
 using AppForSkills.Application.Users.Queries.GetUserRatings;
 using AppForSkills.Application.Users.Queries.GetUserSkills;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using AppForSkills.Application.Users.Commands.CreateUser;
-using AppForSkills.Application.Users.Commands.UpdateLoginDate;
 
 namespace AppForSkills.Api.Controllers
 {
@@ -49,11 +49,12 @@ namespace AppForSkills.Api.Controllers
             var result = await Mediator.Send(command);
             return Ok(result);
         }
+
         /// <summary>
         /// Returns general information about user.
         /// </summary>
-        /// <param name="username"></param>
         [HttpGet]
+        [Route("{username}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -68,7 +69,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Returns all user posts. 
         /// </summary>
-        [Route("skills")]
+        [Route("{username}/skills")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -84,7 +85,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Returns selected user posts. 
         /// </summary>
-        [Route("skills/{id}")]
+        [Route("{username}/skills/{id}")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -100,14 +101,14 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Edits selected user posts. 
         /// </summary>
-        [Route("skills/{id}")]
+        [Route("{username}/skills/{id}")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult> EditUserSkill(EditSkillPostCommand command)
+        public async Task<ActionResult> EditUserSkill([FromForm]EditSkillPostCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);
@@ -116,7 +117,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Deletes selected user posts. 
         /// </summary>
-        [Route("skills/{id}")]
+        [Route("{username}/skills/{id}")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -132,7 +133,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Returns all ratings, which user gave to other users. 
         /// </summary>
-        [Route("ratings")]
+        [Route("{username}/ratings")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -148,7 +149,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Returns all comments, which user gave to other users. 
         /// </summary>
-        [Route("comments")]
+        [Route("{username}/comments")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -164,7 +165,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Returns all user achievements. 
         /// </summary>
-        [Route("achievements")]
+        [Route("{username}/achievements")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -180,7 +181,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Returns discussions, in which user participated. 
         /// </summary>
-        [Route("discussions")]
+        [Route("{username}/discussions")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -196,7 +197,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Returns selected discussion, in which user has been participated. 
         /// </summary>
-        [Route("discussions/{id}")]
+        [Route("{username}/discussions/{id}")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -208,6 +209,5 @@ namespace AppForSkills.Api.Controllers
             var vm = await Mediator.Send(new GetDiscussionQuery() { DiscussionId = id });
             return vm;
         }
-
     }
 }

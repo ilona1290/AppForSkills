@@ -1,13 +1,9 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
 using AppForSkills.Application.Exceptions;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,12 +13,10 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
     {
         private readonly IAppForSkillsDbContext _context;
         private readonly IMapper _mapper;
-        private readonly ICurrentUserService _userService;
-        public GetSkillPostDetailQueryHandler(IAppForSkillsDbContext skillsDbContext, IMapper mapper, ICurrentUserService userService)
+        public GetSkillPostDetailQueryHandler(IAppForSkillsDbContext skillsDbContext, IMapper mapper)
         {
             _context = skillsDbContext;
             _mapper = mapper;
-            _userService = userService;
         }
 
         public async Task<SkillPostVm> Handle(GetSkillPostDetailQuery request, CancellationToken cancellationToken)
@@ -39,7 +33,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
             }
 
             var skillPostVm = _mapper.Map<SkillPostVm>(skillPost);
-            
+
             if (skillPost.Ratings.Count > 0)
             {
                 int sum = skillPost.Ratings.Select(r => r.Value).Sum();

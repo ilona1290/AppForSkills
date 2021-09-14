@@ -2,10 +2,7 @@
 using AppForSkills.Application.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -38,7 +35,7 @@ namespace AppForSkills.Application.Discussions.Commands.DeletePost
                 && s.DiscussionId == post.DiscussionId)
                 .ToListAsync(cancellationToken);
 
-            if(posts.Count == 0)
+            if (posts.Count == 0)
             {
                 var discussion = await _context.Discussions.Where(p => p.Id == post.DiscussionId)
                     .Include(u => u.UsersInDiscussion)

@@ -11,7 +11,6 @@ using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AppForSkills.Api.Controllers
@@ -61,7 +60,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult> AddSkill(CreateSkillPostCommand command)
+        public async Task<ActionResult> AddSkill([FromForm]CreateSkillPostCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);
@@ -78,7 +77,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RatingsPostVm>> GetAllRatingsAsync(int id)
         {
-            var vm = await Mediator.Send(new GetRatingsToSkillPostQuery() { SkillId = id});
+            var vm = await Mediator.Send(new GetRatingsToSkillPostQuery() { SkillId = id });
             return vm;
         }
 
@@ -102,7 +101,7 @@ namespace AppForSkills.Api.Controllers
         /// <summary>
         /// Edits a rating.
         /// </summary>
-        [Route("{id}")]
+        [Route("{id}/ratings/{idRating}")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -119,7 +118,7 @@ namespace AppForSkills.Api.Controllers
         /// Deletes a rating.
         /// </summary>
         /// <param name="idRating">Id of rating, which user wants to remove</param>
-        [Route("{id}")]
+        [Route("{id}/ratings/{idRating}")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
