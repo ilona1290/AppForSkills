@@ -30,9 +30,7 @@ namespace AppForSkills.Application.SkillPosts.Commands.EditSkillPost
                     "Give another id.");
             }
 
-            var memoryStream = new MemoryStream();
-            await request.Skill.CopyToAsync(memoryStream, cancellationToken);
-            var bytes = memoryStream.ToArray();
+            var bytes = _fileStore.FormFileToBytesArray(request.Skill);
 
             var fileExisted = File.ReadAllBytes(skillPost.AddressOfPhotoOrVideo);
             var theSame = bytes.SequenceEqual(fileExisted);

@@ -28,9 +28,7 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateSkillPost
         {
             var skillPost = _mapper.Map<SkillPost>(request);
 
-            var memoryStream = new MemoryStream();
-            await request.Skill.CopyToAsync(memoryStream, cancellationToken);
-            var bytes = memoryStream.ToArray();
+            var bytes = _fileStore.FormFileToBytesArray(request.Skill);
 
             var extension = Path.GetExtension(request.Skill.FileName);
             if(extension == ".jpg" || extension == ".png" || extension == ".gif")
@@ -45,7 +43,7 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateSkillPost
             }
             else
             {
-                new Exception("Unsupported file format");
+                throw new Exception("Unsupported file format");
             }
 
             _context.SkillPosts.Add(skillPost);
