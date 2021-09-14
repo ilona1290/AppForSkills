@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using WebApi.Integration.Tests.Common;
 using Xunit;
 
-namespace WebApi.Integration.Tests.Controllers.SkillPosts
+namespace WebApi.Integration.Tests.Controllers.Users
 {
     public class DeleteSkillPost_Tests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
@@ -31,7 +31,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
         }
 
         [Fact]
-        public async Task GivenSkillPostId_ReturnsWrongIDException()
+        public async Task GivenWrongSkillPostId_ReturnsWrongIDException()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
             string skillPostId = "100";
