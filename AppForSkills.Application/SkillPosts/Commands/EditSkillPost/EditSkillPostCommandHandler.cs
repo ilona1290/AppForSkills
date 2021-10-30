@@ -1,5 +1,6 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
 using AppForSkills.Application.Exceptions;
+using AppForSkills.Application.Common.Enums;
 using MediatR;
 using System;
 using System.IO;
@@ -37,13 +38,13 @@ namespace AppForSkills.Application.SkillPosts.Commands.EditSkillPost
             if (!theSame)
             {
                 File.Delete(skillPost.AddressOfPhotoOrVideo);
-                var extension = Path.GetExtension(request.Skill.FileName);
-                if (extension == ".jpg" || extension == ".png" || extension == ".gif")
+                var extension = Path.GetExtension(request.Skill.FileName).Remove(0, 1);
+                if (FileExtension.IsImage(extension))
                 {
                     var fileDir = _fileStore.SafeWriteFile(bytes, request.Skill.FileName, "Images");
                     skillPost.AddressOfPhotoOrVideo = "Images/" + request.Skill.FileName;
                 }
-                else if (extension == ".mp4" || extension == ".avi")
+                else if (FileExtension.IsVideo(extension))
                 {
                     var fileDir = _fileStore.SafeWriteFile(bytes, request.Skill.FileName, "Videos");
                     skillPost.AddressOfPhotoOrVideo = "Videos/" + request.Skill.FileName;
