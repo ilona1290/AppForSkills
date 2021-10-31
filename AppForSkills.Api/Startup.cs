@@ -48,7 +48,11 @@ namespace AppForSkills.Api
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin());
+                options.AddDefaultPolicy(
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("https://localhost:5000").AllowAnyHeader().AllowAnyMethod();
+                                  });
             });
 
             if (Environment.IsEnvironment("Test"))
@@ -191,7 +195,7 @@ namespace AppForSkills.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireAuthorization("ApiScope");
             });
         }
     }

@@ -3,8 +3,6 @@ using AppForSkills.Application.Users.Commands.CreateUser;
 using AppForSkills.Application.Users.Queries.GetUserInformation;
 using Shouldly;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Integration.Tests.Common;
 using Xunit;

@@ -1,5 +1,5 @@
-﻿using AppForSkills.Application.Common.Interfaces;
-using AppForSkills.Application.Common.Enums;
+﻿using AppForSkills.Application.Common.Enums;
+using AppForSkills.Application.Common.Interfaces;
 using AppForSkills.Application.Exceptions;
 using AppForSkills.Domain.Entities;
 using AutoMapper;
@@ -32,15 +32,15 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateSkillPost
             var bytes = _fileStore.FormFileToBytesArray(request.Skill);
 
             var extension = Path.GetExtension(request.Skill.FileName).Remove(0, 1);
-            if(FileExtension.IsImage(extension))
+            if (FileExtension.IsImage(extension))
             {
                 var fileDir = _fileStore.SafeWriteFile(bytes, request.Skill.FileName, "Images");
-                skillPost.AddressOfPhotoOrVideo = "Images/" + request.Skill.FileName;
+                skillPost.AddressOfPhotoOrVideo = "Images\\" + request.Skill.FileName;
             }
-            else if(FileExtension.IsVideo(extension))
+            else if (FileExtension.IsVideo(extension))
             {
                 var fileDir = _fileStore.SafeWriteFile(bytes, request.Skill.FileName, "Videos");
-                skillPost.AddressOfPhotoOrVideo = "Videos/" + request.Skill.FileName;
+                skillPost.AddressOfPhotoOrVideo = "Videos\\" + request.Skill.FileName;
             }
             else
             {

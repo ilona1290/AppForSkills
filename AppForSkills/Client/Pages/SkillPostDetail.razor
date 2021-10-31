@@ -1,0 +1,46 @@
+﻿@page "/skillPost"
+@using AppForSkills.Client.Models
+@inject HttpClient Http
+
+<AuthorizeView>
+    <Authorized>
+        @if (skillPost == null)
+        {
+            <p>Wczytywanie...</p>
+        }
+        else
+        {
+            <h3>Szczegóły posta</h3>
+            <h4>@skillPost.Username</h4>
+            <h5>@skillPost.PublishingDate</h5>
+            <h5>@skillPost.Title</h5>
+            <h5>@skillPost.Description</h5>
+            <h5>@skillPost.Views</h5>
+            <h5>@skillPost.Rating</h5>
+            <p>@skillPost.AddressOfPhotoOrVideo</p>
+            <img src="data:image;base64,@System.Convert.ToBase64String(image)" style="display: block; max-width: 550px; height: auto; " />
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private SkillPostVm skillPost;
+    private byte[] image;
+    private string path;
+    protected override async Task OnInitializedAsync()
+    {
+        skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/12");
+        image = await GetImage();
+    }
+
+    private async Task<byte[]> GetImage()
+    {
+        path = skillPost.AddressOfPhotoOrVideo.Replace("\\", "%5C");
+        image = await Http.GetFromJsonAsync<byte[]>($"api/posts/{path}/download");
+        return image;
+    }
+}
+

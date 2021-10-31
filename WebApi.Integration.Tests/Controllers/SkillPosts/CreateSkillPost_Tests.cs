@@ -1,14 +1,9 @@
 ﻿using AppForSkills.Api;
 using AppForSkills.Application.SkillPosts.Commands.CreateSkillPost;
-using Microsoft.AspNetCore.Http;
 using Shouldly;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using WebApi.Integration.Tests.Common;
 using Xunit;

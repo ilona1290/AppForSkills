@@ -11,6 +11,7 @@ using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace AppForSkills.Api.Controllers
@@ -51,6 +52,17 @@ namespace AppForSkills.Api.Controllers
             return vm;
         }
 
+        [Route("{path}/download")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public byte[] GetImage(string path)
+        {
+            byte[] b = System.IO.File.ReadAllBytes(path);
+            return b;
+        }
         /// <summary>
         /// Adds a skill.
         /// </summary>
@@ -60,7 +72,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult> AddSkill([FromForm]CreateSkillPostCommand command)
+        public async Task<ActionResult> AddSkill([FromForm] CreateSkillPostCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);

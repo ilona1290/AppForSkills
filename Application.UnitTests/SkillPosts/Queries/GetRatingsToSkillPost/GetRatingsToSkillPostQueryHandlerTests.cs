@@ -3,10 +3,7 @@ using AppForSkills.Persistance;
 using Application.UnitTests.Common;
 using AutoMapper;
 using Shouldly;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -31,7 +28,7 @@ namespace Application.UnitTests.SkillPosts.Queries.GetRatingsToSkillPost
             var handler = new GetRatingsToSkillPostQueryHandler(_context, _mapper);
             var skillId = 2;
 
-            var result = await handler.Handle(new GetRatingsToSkillPostQuery { SkillId = skillId}, CancellationToken.None);
+            var result = await handler.Handle(new GetRatingsToSkillPostQuery { SkillId = skillId }, CancellationToken.None);
 
             result.ShouldBeOfType<RatingsPostVm>();
             result.RatingsPost.ShouldBeOfType<List<RatingPostDto>>();

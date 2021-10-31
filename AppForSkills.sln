@@ -27,11 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.UnitTests", "Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Integration.Tests", "WebApi.Integration.Tests\WebApi.Integration.Tests.csproj", "{A3D4DED6-43D3-4578-B914-D707305FD4B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppForSkills.Server", "AppForSkills\Server\AppForSkills.Server.csproj", "{8061AAB2-EC6A-4283-A1C6-036A8261F3CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppForSkills.Server", "AppForSkills\Server\AppForSkills.Server.csproj", "{8061AAB2-EC6A-4283-A1C6-036A8261F3CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppForSkills.Client", "AppForSkills\Client\AppForSkills.Client.csproj", "{3D47015C-04BF-433D-A67D-33A5CDFCDFFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppForSkills.Client", "AppForSkills\Client\AppForSkills.Client.csproj", "{3D47015C-04BF-433D-A67D-33A5CDFCDFFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppForSkills.Shared", "AppForSkills\Shared\AppForSkills.Shared.csproj", "{FC1125B2-72D6-421D-AE27-56A9566FC773}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppForSkills.Shared", "AppForSkills\Shared\AppForSkills.Shared.csproj", "{FC1125B2-72D6-421D-AE27-56A9566FC773}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
