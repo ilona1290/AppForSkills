@@ -30,7 +30,7 @@ namespace WebApi.Integration.Tests.Controllers.Users
                 Description = "Zdjęcie Wieży Eiffla"
             };
 
-            var path = "ImagesToTest/Wieza_Eiffla_2.jpg";
+            var path = "ImagesToTest\\Wieza_Eiffla_2.jpg";
             var filename = "Wieza_Eiffla_2.jpg";
             var httpContent = new MultipartFormDataContent();
             var fileContent = new ByteArrayContent(File.ReadAllBytes(path));

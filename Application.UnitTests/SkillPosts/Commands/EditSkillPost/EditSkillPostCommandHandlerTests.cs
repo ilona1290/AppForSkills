@@ -33,7 +33,7 @@ namespace Application.UnitTests.SkillPosts.Commands.EditSkillPost
             var extensionMock = new Mock<IPath>();
             extensionMock.Setup(s => s.GetExtension(skill.FileName)).Returns(".jpg");
 
-            byte[] newImage = File.ReadAllBytes("ImagesToTest/Wieza_Eiffla_2.jpg");
+            byte[] newImage = File.ReadAllBytes("ImagesToTest\\Wieza_Eiffla_2.jpg");
             mockFileStore.Setup(s => s.FormFileToBytesArray(skill)).Returns(newImage);
 
             var command = new EditSkillPostCommand()
@@ -52,7 +52,7 @@ namespace Application.UnitTests.SkillPosts.Commands.EditSkillPost
 
             var skillPost = await _context.SkillPosts.FirstAsync(x => x.Id == command.Id, CancellationToken.None);
             skillPost.ShouldNotBeNull();
-            skillPost.AddressOfPhotoOrVideo.ShouldBe("Images/Wieza_Eiffla_2.jpg");
+            skillPost.AddressOfPhotoOrVideo.ShouldBe("Images\\Wieza_Eiffla_2.jpg");
         }
     }
 }

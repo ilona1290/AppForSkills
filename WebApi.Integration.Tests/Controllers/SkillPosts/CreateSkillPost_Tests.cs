@@ -30,7 +30,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
                 Description = "Zdjęcie rzymskiego Koloseum"
             };
 
-            var path = "ImagesToTest/koloseum.jpg";
+            var path = "ImagesToTest\\koloseum.jpg";
             var filename = "koloseum.jpg";
             var httpContent = new MultipartFormDataContent();
             var fileContent = new ByteArrayContent(File.ReadAllBytes(path));
