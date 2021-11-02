@@ -1,4 +1,4 @@
-﻿@page "/skillPost"
+﻿@page "/skillPost/{Id:int}"
 @using AppForSkills.Client.Models
 @inject HttpClient Http
 
@@ -18,8 +18,18 @@
             <h5>@skillPost.Views</h5>
             <h5>@skillPost.Rating</h5>
             <p>@skillPost.AddressOfPhotoOrVideo</p>
-            <img src="data:image;base64,@System.Convert.ToBase64String(image)" style="display: block; max-width: 550px; height: auto; " />
+            @if (skillPost.AddressOfPhotoOrVideo.Contains("Image"))
+            {
+                <img src="data:image;base64,@System.Convert.ToBase64String(image)" style="display: block; max-width: 550px; height: auto; " />
+            }
+            else
+            {
+                <video preload="auto" controls="controls" width="800" height="400">
+                    <source src=@Http.GetAsync($"api/posts/{path}/video") type="video/mp4" />
+                </video>
+            }
         }
+
     </Authorized>
     <NotAuthorized>
         <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
@@ -27,19 +37,31 @@
 </AuthorizeView>
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
+
     private SkillPostVm skillPost;
     private byte[] image;
+    private HttpResponseMessage video;
     private string path;
     protected override async Task OnInitializedAsync()
     {
-        skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/12");
-        image = await GetImage();
+        skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
+        path = GetPath();
+        if(skillPost.AddressOfPhotoOrVideo.Contains("Image"))
+        {
+            image = await GetImage();
+        }
+    }
+
+    private string GetPath()
+    {
+        return skillPost.AddressOfPhotoOrVideo.Replace("\\", "%5C");
     }
 
     private async Task<byte[]> GetImage()
     {
-        path = skillPost.AddressOfPhotoOrVideo.Replace("\\", "%5C");
-        image = await Http.GetFromJsonAsync<byte[]>($"api/posts/{path}/download");
+        image = await Http.GetFromJsonAsync<byte[]>($"api/posts/{path}/image");
         return image;
     }
 }

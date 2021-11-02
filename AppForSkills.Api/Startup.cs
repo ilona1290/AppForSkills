@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Claims;
+using System.Web.Http;
 
 namespace AppForSkills.Api
 {
@@ -172,7 +173,6 @@ namespace AppForSkills.Api
                     c.OAuthUsePkce();
                 });
             }
-
 
 
             app.UseHealthChecks("/hc");
