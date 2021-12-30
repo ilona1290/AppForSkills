@@ -29,24 +29,6 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateSkillPost
         {
             var skillPost = _mapper.Map<SkillPost>(request);
 
-            var bytes = _fileStore.FormFileToBytesArray(request.Skill);
-
-            var extension = Path.GetExtension(request.Skill.FileName).Remove(0, 1);
-            if (FileExtension.IsImage(extension))
-            {
-                var fileDir = _fileStore.SafeWriteFile(bytes, request.Skill.FileName, "Images");
-                skillPost.AddressOfPhotoOrVideo = "Images\\" + request.Skill.FileName;
-            }
-            else if (FileExtension.IsVideo(extension))
-            {
-                var fileDir = _fileStore.SafeWriteFile(bytes, request.Skill.FileName, "Videos");
-                skillPost.AddressOfPhotoOrVideo = "Videos\\" + request.Skill.FileName;
-            }
-            else
-            {
-                throw new Exception("Unsupported file format");
-            }
-
             _context.SkillPosts.Add(skillPost);
 
             await _context.SaveChangesAsync(cancellationToken);

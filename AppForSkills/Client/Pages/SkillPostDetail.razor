@@ -2,6 +2,7 @@
 @using AppForSkills.Client.Models
 @inject HttpClient Http
 
+
 <AuthorizeView>
     <Authorized>
         @if (skillPost == null)
@@ -17,15 +18,14 @@
             <h5>@skillPost.Description</h5>
             <h5>@skillPost.Views</h5>
             <h5>@skillPost.Rating</h5>
-            <p>@skillPost.AddressOfPhotoOrVideo</p>
-            @if (skillPost.AddressOfPhotoOrVideo.Contains("Image"))
+            @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
             {
-                <img src="data:image;base64,@System.Convert.ToBase64String(image)" style="display: block; max-width: 550px; height: auto; " />
+                <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 550px; height: auto; " />
             }
-            else
+            else if(skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
             {
-                <video preload="auto" controls="controls" width="800" height="400">
-                    <source src=@Http.GetAsync($"api/posts/{path}/video") type="video/mp4" />
+                <video preload="auto" autoplay controls="controls" width="800" height="400">
+                    <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
                 </video>
             }
         }
@@ -39,30 +39,10 @@
 @code {
     [Parameter]
     public int Id { get; set; }
-
     private SkillPostVm skillPost;
-    private byte[] image;
-    private HttpResponseMessage video;
-    private string path;
     protected override async Task OnInitializedAsync()
     {
         skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
-        path = GetPath();
-        if(skillPost.AddressOfPhotoOrVideo.Contains("Image"))
-        {
-            image = await GetImage();
-        }
-    }
-
-    private string GetPath()
-    {
-        return skillPost.AddressOfPhotoOrVideo.Replace("\\", "%5C");
-    }
-
-    private async Task<byte[]> GetImage()
-    {
-        image = await Http.GetFromJsonAsync<byte[]>($"api/posts/{path}/image");
-        return image;
     }
 }
 

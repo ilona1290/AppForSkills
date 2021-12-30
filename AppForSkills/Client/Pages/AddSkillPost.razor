@@ -1,0 +1,96 @@
+﻿@page "/AddSkillPost"
+@using AppForSkills.Client.Models
+@using System.Text
+@using System.Text.Json
+@inject HttpClient Http
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+
+<AuthorizeView>
+    <Authorized Context="Auth">
+        <h3>Dodaj post</h3>
+
+        <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
+            <DataAnnotationsValidator />
+            <div class="form-row">
+                <label>Tytuł</label>
+                <InputText @bind-Value="@model.Title" class="form-control" />
+                <ValidationMessage For="@(() => model.Title)" />
+            </div>
+            <div class="form-row">
+                <label>Opis</label>
+                <InputTextArea @bind-Value="@model.Description" class="form-control" />
+                <ValidationMessage For="@(() => model.Description)" />
+            </div>
+            <br />
+            <p>Zdjęcie lub video Twojego Skilla:</p>
+            <div class="form-row">
+                <InputFile OnChange="@HandleSelected" />
+                @if (FileUrl != null)
+                {
+                    <div>
+                        @if (FileType == "image/png" || FileType == "image/jpg")
+                        {
+                            <img src="@FileUrl" style="display: block; max-width: 550px; height: auto;" />
+                        }
+                        else if (FileType == "video/mp4")
+                        {
+                            <video preload="auto" autoplay controls="controls" width="800" height="400">
+                                <source src=@FileUrl type="video/mp4" />
+                            </video>
+                        }
+
+                    </div>
+                }
+            </div>
+            <br /><br />
+            <button type="submit" class="btn btn-primary">Zatwierdź</button>
+            <button type="reset" class="btn btn-danger">Wyczyść</button>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    public string FileUrl { get; set; }
+    public string FileType { get; set; }
+    private SkillPostForm model = new SkillPostForm();
+    private EditContext editContext;
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(model);
+    }
+
+    private async void HandleValidSubmit()
+    {
+        var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync("api/posts", content);
+    }
+
+    private void HandleReset()
+    {
+        model = new SkillPostForm();
+        editContext = new EditContext(model);
+    }
+
+    private async Task HandleSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        FileType = file.ContentType;
+        if (file == null)
+            return;
+        using (var ms = file.OpenReadStream(file.Size))
+        {
+            var content = new MultipartFormDataContent();
+            content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+            content.Add(new StreamContent(ms, Convert.ToInt32(file.Size)), FileType, file.Name);
+            var response = await Http.PostAsync("api/upload", content);
+            FileUrl = await response.Content.ReadAsStringAsync();
+            model.Skill = FileUrl;
+        }
+    }
+}

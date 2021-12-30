@@ -57,34 +57,6 @@ namespace AppForSkills.Api.Controllers
             return vm;
         }
 
-        [Route("{path}/image")]
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public byte[] GetImage(string path)
-        {
-            byte[] b = System.IO.File.ReadAllBytes(path);
-            return b;
-        }
-
-
-        [Route("{path}/video")]
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public HttpResponseMessage GetVideo(string path)
-        {
-            var video = new VideoStream(path);
-            Func<Stream, HttpContent, TransportContext, Task> func = video.WriteToStream;
-            var response = new HttpResponseMessage();
-            response.Content = new PushStreamContent(func, new MediaTypeHeaderValue("video/mp4"));
-            return response;
-        }
-
         /// <summary>
         /// Adds a skill.
         /// </summary>
@@ -94,7 +66,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult> AddSkill([FromForm] CreateSkillPostCommand command)
+        public async Task<ActionResult> AddSkill([FromBody] CreateSkillPostCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);
@@ -126,7 +98,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult> AddRating(CreateRatingCommand command)
+        public async Task<ActionResult> AddRating([FromForm]CreateRatingCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);
