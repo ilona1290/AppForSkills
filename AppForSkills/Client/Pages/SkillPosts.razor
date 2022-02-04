@@ -1,0 +1,53 @@
+﻿@page "/skillPosts"
+@using AppForSkills.Client.Models
+@inject HttpClient Http
+
+<a class="btn btn-info" href="AddSkillPost">Dodaj post</a><br /><br />
+@foreach (var skillPost in skillPosts)
+{
+    <div class="row">
+        <div class="col">
+            <h3> Autor:  @skillPost.Username </h3>
+        </div>
+        <div class="col-5">
+            <a class="btn btn-danger" href="skillPost/@skillPost.Id">Szczegóły posta</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h5>@skillPost.Title</h5>
+        </div>
+    </div>
+        @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
+        {
+            <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 650px; height: auto; " />
+        }
+        else if (skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
+        {
+            <video preload="auto" controls="controls" width="800" height="400">
+                <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
+            </video>
+        }
+    <div class="row">
+        <div class="col">
+            <p>Ocen: @skillPost.Rating</p>
+        </div>
+        <div class="col">
+            <p>Komentarzy: @skillPost.Comment</p>
+        </div>
+    </div>
+    <br /><br />
+}
+
+
+
+@code{
+    private List<SkillPostDto> skillPosts { get; set; } = new List<SkillPostDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListSkillPost skills = new ListSkillPost();
+        skills = await Http.GetFromJsonAsync<ListSkillPost>("api/posts");
+        skillPosts = skills.SkillPosts.ToList();
+    }
+}

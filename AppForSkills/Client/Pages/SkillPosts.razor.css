@@ -1,0 +1,16 @@
+﻿body {
+}
+
+.container {
+    position: relative;
+    display: flex;
+}
+
+.autor{
+    font-size:large;
+}
+
+.btn btn-danger
+{
+    background-color:aqua;
+}

@@ -2,47 +2,61 @@
 @using AppForSkills.Client.Models
 @inject HttpClient Http
 
-
-<AuthorizeView>
-    <Authorized>
-        @if (skillPost == null)
-        {
-            <p>Wczytywanie...</p>
-        }
-        else
-        {
-            <h3>Szczegóły posta</h3>
-            <h4>@skillPost.Username</h4>
-            <h5>@skillPost.PublishingDate</h5>
-            <h5>@skillPost.Title</h5>
-            <h5>@skillPost.Description</h5>
-            <h5>@skillPost.Views</h5>
-            <h5>@skillPost.Rating</h5>
-            @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
+<div class="page">
+    <AuthorizeView>
+        <Authorized>
+            @if (skillPost == null)
             {
-                <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 550px; height: auto; " />
+                <p>Wczytywanie...</p>
             }
-            else if(skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
+            else
             {
-                <video preload="auto" autoplay controls="controls" width="800" height="400">
-                    <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
-                </video>
+                <div class="row">
+                    <div>
+                        <h5 class="rating">Ocena: @skillPost.Rating</h5>
+                    </div>
+                </div>
+
+                <h5>Tytuł: @skillPost.Title</h5>
+                <h5>Opis: @skillPost.Description</h5>
+                <h8>Data publikacji: @skillPost.PublishingDate</h8><br />
+                @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
+                {
+                    <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 550px; height: auto; " />
+                }
+                else if (skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
+                {
+                    <video preload="auto" controls="controls" width="800" height="400">
+                        <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
+                    </video>
+                }
+                <h4>Autor: @skillPost.Username</h4><br /><br />
+
+                <p>Komentarze: </p>
+                <div class="comments">
+                    @foreach (var comment in skillPost.Comments)
+                    {
+                        <div class="autorCom">@comment.Username </div>
+                        <div class="dateCom">@comment.Date</div><br />
+                        <div>@comment.CommentText</div> 
+                    }
+                </div>
             }
+
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+    @code {
+        [Parameter]
+        public int Id { get; set; }
+        private SkillPostVm skillPost;
+        protected override async Task OnInitializedAsync()
+        {
+            skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
         }
-
-    </Authorized>
-    <NotAuthorized>
-        <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
-    </NotAuthorized>
-</AuthorizeView>
-
-@code {
-    [Parameter]
-    public int Id { get; set; }
-    private SkillPostVm skillPost;
-    protected override async Task OnInitializedAsync()
-    {
-        skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
     }
-}
 
