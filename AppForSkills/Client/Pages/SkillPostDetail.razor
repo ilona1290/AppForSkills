@@ -1,4 +1,4 @@
-﻿@page "/skillPost/{Id:int}"
+﻿@page "/skillPosts/{Id:int}"
 @using AppForSkills.Client.Models
 @using System.Text.Json
 @using System.Text
@@ -17,7 +17,22 @@
                 <div class="row">
                     <div>
                         <h5 class="rating">Ocena: @skillPost.Rating</h5>
+                        <a href="/skillPosts/@skillPost.Id/ratings" class="btn btn-warning">Pokaż oceny</a>
+                        <button @onclick="Rate" class="btn btn-danger">Oceń</button>
+                        <div class="buttons">
+                            @if (ShowRatingButtons)
+                            {
+                                <button class="btn btn-success" @onclick="() => AddRate(1)">1</button>
+                                <button class="btn btn-success" @onclick="() => AddRate(2)">2</button>
+                                <button class="btn btn-success" @onclick="() => AddRate(3)">3</button>
+                                <button class="btn btn-success" @onclick="() => AddRate(4)">4</button>
+                                <button class="btn btn-success" @onclick="() => AddRate(5)">5</button>
+                            }
+                        </div>
+                        <a href="/skillPosts" class="back">Powrót</a>
                     </div>
+                    
+                   
                 </div>
 
                 <h5>Tytuł: @skillPost.Title</h5>
@@ -43,7 +58,7 @@
                         <ValidationMessage For="@(() => model.CommentText)" />
                     </div>
                     <button type="submit" class="btn btn-primary">Dodaj</button>
-                    <button type="reset" class="btn btn-danger">Wyczyść</button>
+                    <button type="reset" class="btn btn-dark">Wyczyść</button>
                 </EditForm>
                 <br /><br />
                 <h4>Komentarze: </h4>
@@ -66,8 +81,8 @@
                                     <InputTextArea @bind-Value="@modelToAnswer.CommentText" class="form-control"/>
                                     <ValidationMessage For="@(() => modelToAnswer.CommentText)" />
                                     <button type="submit" class="btn btn-primary">Dodaj</button>
-                                    <button type="reset" class="btn btn-danger">Wyczyść</button>
-                                    <button @onclick="() => Answer(comment)" class="btn btn-dark">Anuluj</button>
+                                    <button type="reset" class="btn btn-dark">Wyczyść</button>
+                                    <button @onclick="() => Answer(comment)" class="btn btn-light">Anuluj</button>
                                 </div><br />
                             </EditForm>
                         }
@@ -102,8 +117,10 @@
     private List<CommentDto> Comments = new List<CommentDto>();
     private CommentForm model = new CommentForm();
     private CommentForm modelToAnswer = new CommentForm();
+    private RatingForm modelToRating = new RatingForm();
     private EditContext editContext;
     private EditContext editContextToAnswer;
+    private bool ShowRatingButtons { get; set; } = false;
     protected override async Task OnInitializedAsync()
     {
         skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
@@ -129,7 +146,7 @@
         var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/posts/{Id}/comments", content);
-        NavigationManager.NavigateTo($"/skillPost/{Id}", forceLoad: true);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
     }
 
     private async void HandleValidSubmitAnswerComment(CommentDto com)
@@ -139,7 +156,17 @@
         var modelJson = JsonSerializer.Serialize(modelToAnswer, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/posts/{Id}/comments", content);
-        NavigationManager.NavigateTo($"/skillPost/{Id}", forceLoad: true);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    private async void AddRate(int rate)
+    {
+        modelToRating.SkillPostId = Id;
+        modelToRating.Value = rate;
+        var modelJson = JsonSerializer.Serialize(modelToRating, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/posts/{Id}", content);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
     }
 
     private void HandleReset()
@@ -154,6 +181,7 @@
         editContextToAnswer = new EditContext(modelToAnswer);
     }
 
+
     private void Answer(CommentDto com)
     {
         if(!com.ShowAnswerField)
@@ -164,6 +192,12 @@
         {
             com.ShowAnswerField = false;
         }
+    }
+
+    private void Rate()
+    {
+        if (!ShowRatingButtons) ShowRatingButtons = true;
+        else ShowRatingButtons = false;
     }
 
 }

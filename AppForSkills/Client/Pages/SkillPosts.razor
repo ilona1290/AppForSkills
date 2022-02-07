@@ -10,7 +10,7 @@
             <h3> Autor:  @skillPost.Username </h3>
         </div>
         <div class="col-5">
-            <a class="btn btn-danger" href="skillPost/@skillPost.Id">Szczegóły posta</a>
+            <a class="btn btn-danger" href="skillPosts/@skillPost.Id">Szczegóły posta</a>
         </div>
     </div>
     <div class="row">
@@ -46,8 +46,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ListSkillPost skills = new ListSkillPost();
-        skills = await Http.GetFromJsonAsync<ListSkillPost>("api/posts");
+        ListSkillPosts skills = new ListSkillPosts();
+        skills = await Http.GetFromJsonAsync<ListSkillPosts>("api/posts");
         skillPosts = skills.SkillPosts.ToList();
     }
 }

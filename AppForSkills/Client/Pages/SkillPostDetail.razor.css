@@ -3,13 +3,40 @@
 
 .rating {
     position: absolute;
-    right: 10%;
+    right: 40%;
     font-size: 30px;
 }
 
-.addComment{
-   margin-bottom: 20px;
-   font-size:20px;
+.btn-warning{
+    position: absolute;
+    right: 30%;
+}
+
+.btn-danger{
+    position: absolute;
+    right: 25%;
+}
+
+.buttons{
+    position: absolute;
+    right: 13%;
+}
+
+.back {
+    position: absolute;
+    right: 5%;
+    background-color: blueviolet;
+    border: 1px solid blueviolet;
+    border-radius: 5px;
+    color: #fff;
+    margin-right: 10px;
+    padding: 10px 10px 10px 10px;
+    text-decoration: none;
+}
+
+.addComment {
+    margin-bottom: 20px;
+    font-size: 20px;
 }
 
 .addAnswerComment {

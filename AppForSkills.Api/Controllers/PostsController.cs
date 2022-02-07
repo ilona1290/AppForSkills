@@ -98,7 +98,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult> AddRating([FromForm]CreateRatingCommand command)
+        public async Task<ActionResult> AddRating(CreateRatingCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);

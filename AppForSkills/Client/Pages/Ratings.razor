@@ -1,0 +1,39 @@
+﻿@page "/skillPosts/{Id:int}/ratings"
+@using AppForSkills.Client.Models
+@inject HttpClient Http
+
+    <div class="row">
+        <div class="col">
+            <h3>Oceny</h3>
+        </div>
+        <div class="col-3">
+            <a href="/skillPosts/@Id" class="btn btn-danger">Powrót</a>
+        </div>
+    </div>
+
+
+
+@foreach (var rating in ratings)
+{
+    <div class="ratings">
+        <div class="autorRat">@rating.Username </div>
+        <div class="dateRat">@rating.Date</div><br />
+        @for (int i = 0; i < rating.Value; i++)
+        {
+            <span>&#11088;</span>
+        }
+    </div>
+    <br />
+
+}
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private List<RatingDto> ratings { get; set; } = new List<RatingDto>();
+    protected override async Task OnInitializedAsync()
+    {
+        ListRatings ratingsToPost = new ListRatings();
+        ratingsToPost = await Http.GetFromJsonAsync<ListRatings>($"api/posts/{Id}/ratings");
+        ratings = ratingsToPost.RatingsPost.ToList();
+    }
+}

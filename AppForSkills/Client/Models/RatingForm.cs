@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace AppForSkills.Client.Models
 {
-    public class ListSkillPost
+    public class RatingForm
     {
-        public ICollection<SkillPostDto> SkillPosts { get; set; }
+        public int Value { get; set; }
+        public int SkillPostId { get; set; }
     }
 }
