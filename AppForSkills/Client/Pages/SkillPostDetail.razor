@@ -1,10 +1,13 @@
 ﻿@page "/skillPost/{Id:int}"
 @using AppForSkills.Client.Models
+@using System.Text.Json
+@using System.Text
+@inject NavigationManager NavigationManager
 @inject HttpClient Http
 
 <div class="page">
     <AuthorizeView>
-        <Authorized>
+        <Authorized Context="Auth">
             @if (skillPost == null)
             {
                 <p>Wczytywanie...</p>
@@ -32,15 +35,56 @@
                 }
                 <h4>Autor: @skillPost.Username</h4><br /><br />
 
-                <p>Komentarze: </p>
-                <div class="comments">
-                    @foreach (var comment in skillPost.Comments)
+                <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
+                    <DataAnnotationsValidator />
+                    <div class="addComment">
+                        <label>Dodaj komentarz:</label>
+                        <InputTextArea @bind-Value="@model.CommentText" class="form-control" />
+                        <ValidationMessage For="@(() => model.CommentText)" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                    <button type="reset" class="btn btn-danger">Wyczyść</button>
+                </EditForm>
+                <br /><br />
+                <h4>Komentarze: </h4>
+                @foreach (var comment in skillPost.Comments)
+                {
+                    if (Comments.Contains(comment))
                     {
-                        <div class="autorCom">@comment.Username </div>
-                        <div class="dateCom">@comment.Date</div><br />
-                        <div>@comment.CommentText</div> 
+                        <div class="comments">
+                            <div class="autorCom">@comment.Username </div>
+                            <div class="dateCom">@comment.Date</div><br />
+                            <div>@comment.CommentText</div>
+                            <button @onclick="() => Answer(comment)" class="answerLink">Odpowiedz</button>
+                        </div><br />
+                        @if (comment.ShowAnswerField)
+                        {
+                            <EditForm EditContext="@editContextToAnswer" OnValidSubmit="() => HandleValidSubmitAnswerComment(comment)" @onreset="@HandleResetToAnswer">
+                                <DataAnnotationsValidator />
+                                <div class="addAnswerComment">
+                                    <label>Odpowiedz:</label>
+                                    <InputTextArea @bind-Value="@modelToAnswer.CommentText" class="form-control"/>
+                                    <ValidationMessage For="@(() => modelToAnswer.CommentText)" />
+                                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                                    <button type="reset" class="btn btn-danger">Wyczyść</button>
+                                    <button @onclick="() => Answer(comment)" class="btn btn-dark">Anuluj</button>
+                                </div><br />
+                            </EditForm>
+                        }
+                        @foreach (var answerCom in AnswersToComment)
+                        {
+                            if (answerCom.ParentCommentId == comment.Id)
+                            {
+                                <div class="answerToCom">
+                                    <div class="autorCom">@answerCom.Username </div>
+                                    <div class="dateCom">@answerCom.Date</div><br />
+                                    <div>@answerCom.CommentText</div>
+                                </div><br />
+                            }
+                        }
                     }
-                </div>
+                }
+
             }
 
         </Authorized>
@@ -50,13 +94,77 @@
     </AuthorizeView>
 </div>
 
-    @code {
-        [Parameter]
-        public int Id { get; set; }
-        private SkillPostVm skillPost;
-        protected override async Task OnInitializedAsync()
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private SkillPostVm skillPost;
+    private List<CommentDto> AnswersToComment = new List<CommentDto>();
+    private List<CommentDto> Comments = new List<CommentDto>();
+    private CommentForm model = new CommentForm();
+    private CommentForm modelToAnswer = new CommentForm();
+    private EditContext editContext;
+    private EditContext editContextToAnswer;
+    protected override async Task OnInitializedAsync()
+    {
+        skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
+        @foreach (var comment in skillPost.Comments)
         {
-            skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
+            if (comment.ParentCommentId != null)
+            {
+                AnswersToComment.Add(comment);
+            }
+            else
+            {
+                Comments.Add(comment);
+            }
+        }
+        editContext = new EditContext(model);
+        editContextToAnswer = new EditContext(modelToAnswer);
+    }
+
+    private async void HandleValidSubmit()
+    {
+        model.SkillPostId = Id;
+        model.ParentCommentId = null;
+        var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/posts/{Id}/comments", content);
+        NavigationManager.NavigateTo($"/skillPost/{Id}", forceLoad: true);
+    }
+
+    private async void HandleValidSubmitAnswerComment(CommentDto com)
+    {
+        modelToAnswer.SkillPostId = Id;
+        modelToAnswer.ParentCommentId = com.Id;
+        var modelJson = JsonSerializer.Serialize(modelToAnswer, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/posts/{Id}/comments", content);
+        NavigationManager.NavigateTo($"/skillPost/{Id}", forceLoad: true);
+    }
+
+    private void HandleReset()
+    {
+        model = new CommentForm();
+        editContext = new EditContext(model);
+    }
+
+    private void HandleResetToAnswer()
+    {
+        modelToAnswer = new CommentForm();
+        editContextToAnswer = new EditContext(modelToAnswer);
+    }
+
+    private void Answer(CommentDto com)
+    {
+        if(!com.ShowAnswerField)
+        {
+            com.ShowAnswerField = true;
+        }
+        else
+        {
+            com.ShowAnswerField = false;
         }
     }
+
+}
 

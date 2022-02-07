@@ -7,6 +7,17 @@
     font-size: 30px;
 }
 
+.addComment{
+   margin-bottom: 20px;
+   font-size:20px;
+}
+
+.addAnswerComment {
+    margin-left: 5%;
+    padding-left: 5px;
+    font-size: 20px;
+}
+
 .comments {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -17,16 +28,37 @@
     padding-left: 5px;
 }
 
+.answerToCom {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    background-image: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(37,126,208,0.4875700280112045) 15%, rgba(0,212,255,0.2578781512605042) 100%);
+    margin-right: 40%;
+    margin-left:5%;
+    padding-left: 5px;
+}
+
 .autorCom {
     font-size: 20px;
-    font-weight:bold;
-    padding-right:10px;
-    display:inline-block;
+    font-weight: bold;
+    padding-right: 10px;
+    display: inline-block;
 }
 
 .dateCom{
     font-size: 13px;
     display:inline-block;
+}
+
+.answerLink {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*input has OS specific font-family*/
+    color: #3ca4ff;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 

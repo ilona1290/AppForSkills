@@ -69,6 +69,7 @@
         var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync("api/posts", content);
+        Navigation.NavigateTo("/skillPosts");
     }
 
     private void HandleReset()
