@@ -26,3 +26,51 @@
 .back{
     right: 40%;
 }
+
+.edit {
+    position: absolute;
+    right: 48.5%;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.delete{
+    position: absolute;
+    right:45%;
+    margin-top:5px;
+    display: inline-block;
+}
+
+.ediBut {
+    padding: 7px;
+    color: aliceblue;
+    background-color: blue;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+.ediBut:hover {
+    filter: brightness(90%);
+}
+
+.delBut {
+    padding: 7px;
+    color: aliceblue;
+    background-color: red;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+.delBut:hover {
+    filter: brightness(90%);
+}
+
+.buttons {
+    margin-left: 71.5%;
+    display: inline-block;
+    margin-bottom: 10px;
+}

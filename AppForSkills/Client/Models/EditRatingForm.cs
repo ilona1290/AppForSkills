@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace AppForSkills.Client.Models
 {
-    public class RatingDto
+    public class EditRatingForm
     {
         public int Id { get; set; }
-        public string Username { get; set; }
-        public DateTime Date { get; set; }
         public int Value { get; set; }
-        public bool ShowRatingButtons { get; set; } = false;
     }
 }
