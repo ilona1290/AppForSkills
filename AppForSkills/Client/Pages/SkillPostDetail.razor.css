@@ -78,7 +78,13 @@
     display:inline-block;
 }
 
-.answerLink {
+
+.modCom {
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.modComBut {
     background: none !important;
     border: none;
     padding: 0 !important;

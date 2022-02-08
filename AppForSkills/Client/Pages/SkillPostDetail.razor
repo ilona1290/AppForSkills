@@ -3,6 +3,7 @@
 @using System.Text.Json
 @using System.Text
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject HttpClient Http
 
 <div class="page">
@@ -31,8 +32,8 @@
                         </div>
                         <a href="/skillPosts" class="back">Powrót</a>
                     </div>
-                    
-                   
+
+
                 </div>
 
                 <h5>Tytuł: @skillPost.Title</h5>
@@ -68,9 +69,33 @@
                     {
                         <div class="comments">
                             <div class="autorCom">@comment.Username </div>
-                            <div class="dateCom">@comment.Date</div><br />
+                            <div class="dateCom">@comment.Date</div>
                             <div>@comment.CommentText</div>
-                            <button @onclick="() => Answer(comment)" class="answerLink">Odpowiedz</button>
+                            <button @onclick="() => Answer(comment)" class="modComBut">Odpowiedz</button>
+                            @if(comment.Username == user)
+                            {
+                                <div class="modCom">
+                                    <button @onclick="() => CreateModelEdit(comment)" class="modComBut">Edytuj</button>
+                                </div>
+                                <div class="modCom">
+                                    <button @onclick="() => Delete(comment.Id)" class="modComBut">Usuń</button>
+                                </div>
+                                @if (comment.ShowEditComField)
+                                 {
+                                    <EditForm EditContext="@contextToEditCom" OnValidSubmit="EditComment" @onreset="@HandleResetEditComment">
+                                        <DataAnnotationsValidator />
+                                        <br />
+                                        <div class="addAnswerComment">
+                                            <label>Edytuj:</label>
+                                            <InputTextArea @bind-Value="@modelToEdit.CommentText" class="form-control" />
+                                            <ValidationMessage For="@(() => modelToEdit.CommentText)" />
+                                            <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                                            <button type="reset" class="btn btn-dark">Wyczyść</button>
+                                            <button @onclick="() => Back(comment)" class="btn btn-light">Anuluj</button>
+                                        </div><br />
+                                    </EditForm>
+                                 }
+                            }
                         </div><br />
                         @if (comment.ShowAnswerField)
                         {
@@ -78,7 +103,7 @@
                                 <DataAnnotationsValidator />
                                 <div class="addAnswerComment">
                                     <label>Odpowiedz:</label>
-                                    <InputTextArea @bind-Value="@modelToAnswer.CommentText" class="form-control"/>
+                                    <InputTextArea @bind-Value="@modelToAnswer.CommentText" class="form-control" />
                                     <ValidationMessage For="@(() => modelToAnswer.CommentText)" />
                                     <button type="submit" class="btn btn-primary">Dodaj</button>
                                     <button type="reset" class="btn btn-dark">Wyczyść</button>
@@ -94,7 +119,46 @@
                                     <div class="autorCom">@answerCom.Username </div>
                                     <div class="dateCom">@answerCom.Date</div><br />
                                     <div>@answerCom.CommentText</div>
+                                    <button @onclick="() => Answer(answerCom)" class="modComBut">Odpowiedz</button>
+                                    @if(comment.Username == user)
+                                    {
+                                        <div class="modCom">
+                                            <button @onclick="() => CreateModelEdit(answerCom)" class="modComBut">Edytuj</button>
+                                        </div>
+                                        <div class="modCom">
+                                            <button @onclick="() => Delete(answerCom.Id)" class="modComBut">Usuń</button>
+                                        </div><br />
+                                        @if (answerCom.ShowEditComField)
+                                         {
+                                            <EditForm EditContext="@contextToEditCom" OnValidSubmit="EditAnswerComment" @onreset="@HandleResetEditAnswerComment">
+                                                <DataAnnotationsValidator />
+                                                <br />
+                                                <div class="addAnswerComment">
+                                                    <label>Edytuj:</label>
+                                                    <InputTextArea @bind-Value="@modelToEditAnswer.CommentText" class="form-control" />
+                                                    <ValidationMessage For="@(() => modelToEditAnswer.CommentText)" />
+                                                    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                                                    <button type="reset" class="btn btn-dark">Wyczyść</button>
+                                                    <button @onclick="() => Back(answerCom)" class="btn btn-light">Anuluj</button>
+                                                </div><br />
+                                            </EditForm>
+                                         }
+                                    }
                                 </div><br />
+                                @if (answerCom.ShowAnswerField)
+                                {
+                                    <EditForm EditContext="@editContextToAnswerAnswer" OnValidSubmit="() => HandleValidSubmitAnswerAnswerComment(comment)" @onreset="@HandleResetToAnswerAnswer">
+                                        <DataAnnotationsValidator />
+                                        <div class="addAnswerComment">
+                                            <label>Odpowiedz:</label>
+                                            <InputTextArea @bind-Value="@modelToAnswerAnswer.CommentText" class="form-control" />
+                                            <ValidationMessage For="@(() => modelToAnswerAnswer.CommentText)" />
+                                            <button type="submit" class="btn btn-primary">Dodaj</button>
+                                            <button type="reset" class="btn btn-dark">Wyczyść</button>
+                                            <button @onclick="() => Answer(answerCom)" class="btn btn-light">Anuluj</button>
+                                        </div><br />
+                                    </EditForm>
+                                }
                             }
                         }
                     }
@@ -113,13 +177,20 @@
     [Parameter]
     public int Id { get; set; }
     private SkillPostVm skillPost;
+    private string user { get; set; }
     private List<CommentDto> AnswersToComment = new List<CommentDto>();
     private List<CommentDto> Comments = new List<CommentDto>();
     private CommentForm model = new CommentForm();
     private CommentForm modelToAnswer = new CommentForm();
+    private CommentForm modelToAnswerAnswer = new CommentForm();
+    private EditCommentForm modelToEdit = new EditCommentForm();
+    private EditCommentForm modelToEditAnswer = new EditCommentForm();
     private RatingForm modelToRating = new RatingForm();
     private EditContext editContext;
     private EditContext editContextToAnswer;
+    private EditContext editContextToAnswerAnswer;
+    private EditContext contextToEditCom;
+    private EditContext contextToEditAnswerCom;
     private bool ShowRatingButtons { get; set; } = false;
     protected override async Task OnInitializedAsync()
     {
@@ -137,6 +208,9 @@
         }
         editContext = new EditContext(model);
         editContextToAnswer = new EditContext(modelToAnswer);
+        editContextToAnswerAnswer = new EditContext(modelToAnswerAnswer);
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        user = authState.User.Identity.Name;
     }
 
     private async void HandleValidSubmit()
@@ -154,6 +228,16 @@
         modelToAnswer.SkillPostId = Id;
         modelToAnswer.ParentCommentId = com.Id;
         var modelJson = JsonSerializer.Serialize(modelToAnswer, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/posts/{Id}/comments", content);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    private async void HandleValidSubmitAnswerAnswerComment(CommentDto com)
+    {
+        modelToAnswerAnswer.SkillPostId = Id;
+        modelToAnswerAnswer.ParentCommentId = com.Id;
+        var modelJson = JsonSerializer.Serialize(modelToAnswerAnswer, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/posts/{Id}/comments", content);
         NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
@@ -181,10 +265,27 @@
         editContextToAnswer = new EditContext(modelToAnswer);
     }
 
+    private void HandleResetToAnswerAnswer()
+    {
+        modelToAnswerAnswer = new CommentForm();
+        editContextToAnswerAnswer = new EditContext(modelToAnswerAnswer);
+    }
+
+    private void HandleResetEditComment()
+    {
+        modelToEdit.CommentText = "";
+        contextToEditCom = new EditContext(modelToEdit);
+    }
+
+    private void HandleResetEditAnswerComment()
+    {
+        modelToEditAnswer.CommentText = "";
+        contextToEditCom = new EditContext(modelToEditAnswer);
+    }
 
     private void Answer(CommentDto com)
     {
-        if(!com.ShowAnswerField)
+        if (!com.ShowAnswerField)
         {
             com.ShowAnswerField = true;
         }
@@ -192,6 +293,15 @@
         {
             com.ShowAnswerField = false;
         }
+        if (com.ParentCommentId != null)
+        {
+            AddUsernameToAnswerComment(modelToAnswerAnswer, com.Username);
+        }
+    }
+
+    private void AddUsernameToAnswerComment(CommentForm model, string username)
+    {
+        model.CommentText = "@" + username;
     }
 
     private void Rate()
@@ -200,5 +310,52 @@
         else ShowRatingButtons = false;
     }
 
+    private void CreateModelEdit(CommentDto com)
+    {
+        if (!com.ShowEditComField)
+        {
+            com.ShowEditComField = true;
+            if(com.ParentCommentId == null)
+            {
+                modelToEdit.Id = com.Id;
+                modelToEdit.CommentText = com.CommentText;
+                contextToEditCom = new EditContext(modelToEdit);
+            }
+            else
+            {
+                modelToEditAnswer.Id = com.Id;
+                modelToEditAnswer.CommentText = com.CommentText;
+                contextToEditAnswerCom = new EditContext(modelToEditAnswer);
+            }
+        }
+        else com.ShowEditComField = false;
+    }
+
+    private async void EditComment()
+    {
+        var modelJson = JsonSerializer.Serialize(modelToEdit, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PutAsync($"api/posts/{Id}/comments/{modelToEdit.Id}", content);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    private async void EditAnswerComment()
+    {
+        var modelJson = JsonSerializer.Serialize(modelToEditAnswer, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PutAsync($"api/posts/{Id}/comments/{modelToEditAnswer.Id}", content);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    private void Back(CommentDto com)
+    {
+        com.ShowEditComField = false;
+    }
+
+    private async void Delete(int idCom)
+    {
+        await Http.DeleteAsync($"api/posts/{Id}/comments/{idCom}");
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
 }
 
