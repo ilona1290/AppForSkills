@@ -49,11 +49,6 @@
             Gives like to post in discussion.
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.DeleteLike(System.Int32)">
-            <summary>
-            Deletes like.
-            </summary>
-        </member>
         <member name="M:AppForSkills.Api.Controllers.DiscussionsController.ReportPostInDiscussion(System.Int32)">
             <summary>
             Reports post in discussion.
@@ -111,6 +106,23 @@
             Deletes comment from user skill.
             </summary>
             <param name="idComment">Id of comment, which user wants to remove</param>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.GetLikesToCommentAsync(System.Int32)">
+            <summary>
+            Returns all likes to comment.
+            <param name="idComment">Id of comment, which likes user wants to get</param>
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.GiveLikeToComment(AppForSkills.Application.Likes.Commands.GiveLike.GiveLikeCommand)">
+            <summary>
+            Give like to comment.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.DislikeComment(System.Int32)">
+            <summary>
+            Deletes like from comment.
+            </summary>
+            <param name="idLike">Id of like, which user wants to remove</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.RatingsController.GetRankingAboutUser(System.String)">
             <summary>

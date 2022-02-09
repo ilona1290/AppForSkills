@@ -2,7 +2,7 @@
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 
-namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
+namespace AppForSkills.Application.Likes.Queries.GetLikes
 {
     public class LikeDto : IMapFrom<Like>
     {

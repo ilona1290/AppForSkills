@@ -14,7 +14,7 @@ namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
         public DateTime Date { get; set; }
         public string PostText { get; set; }
         public int? ParentPostId { get; set; }
-        public ICollection<LikeDto> Likes { get; set; }
+        public ICollection<LikeCommentDto> Likes { get; set; }
 
         public void Mapping(Profile profile)
         {

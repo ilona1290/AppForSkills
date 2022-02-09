@@ -71,6 +71,17 @@
                             <div class="autorCom">@comment.Username </div>
                             <div class="dateCom">@comment.Date</div>
                             <div>@comment.CommentText</div>
+                            @if (IfUserGaveLike(comment) == null)
+                            {
+                                <input type="checkbox" @onclick="() => Like(comment)"/>
+                            }
+                            else
+                            {
+                                <input type="checkbox" checked @onclick="() => Dislike(comment, IfUserGaveLike(comment))" />
+                            }
+                            <div class="like">@comment.Likes.Count</div>
+
+
                             <button @onclick="() => Answer(comment)" class="modComBut">Odpowiedz</button>
                             @if(comment.Username == user)
                             {
@@ -119,6 +130,15 @@
                                     <div class="autorCom">@answerCom.Username </div>
                                     <div class="dateCom">@answerCom.Date</div><br />
                                     <div>@answerCom.CommentText</div>
+                                    @if (IfUserGaveLike(answerCom) == null)
+                                    {
+                                        <input type="checkbox" @onclick="() => Like(answerCom)"/>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" checked @onclick="() => Dislike(answerCom, IfUserGaveLike(answerCom))" />
+                                    }
+                                    <div class="like">@answerCom.Likes.Count</div>
                                     <button @onclick="() => Answer(answerCom)" class="modComBut">Odpowiedz</button>
                                     @if(comment.Username == user)
                                     {
@@ -192,6 +212,8 @@
     private EditContext contextToEditCom;
     private EditContext contextToEditAnswerCom;
     private bool ShowRatingButtons { get; set; } = false;
+    private GiveLike giveLike = new GiveLike();
+    private List<LikeDto> likes { get; set; } = new List<LikeDto>();
     protected override async Task OnInitializedAsync()
     {
         skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
@@ -205,6 +227,7 @@
             {
                 Comments.Add(comment);
             }
+            comment.AmountOfLikes = comment.Likes.Count;
         }
         editContext = new EditContext(model);
         editContextToAnswer = new EditContext(modelToAnswer);
@@ -356,6 +379,55 @@
     {
         await Http.DeleteAsync($"api/posts/{Id}/comments/{idCom}");
         NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    private async void Like(CommentDto com)
+    {
+        giveLike.CommentId = com.Id;
+        giveLike.User = user;
+        LikeDto like = new LikeDto() { Username = user };
+        com.Likes.Add(like);
+        var modelJson = JsonSerializer.Serialize(giveLike, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/posts/{Id}/comments/likes", content);
+    }
+
+    private async void Dislike(CommentDto com, LikeDto like)
+    {
+        LikeDto likeToRemove = new LikeDto();
+        int IdLikeToRemove = 0;
+        foreach (var like1 in com.Likes)
+        {
+            if (like1.Username == user)
+            {
+                likeToRemove = like1;
+                break;
+            }
+        }
+        com.Likes.Remove(likeToRemove);
+        ListLikes likes1 = new ListLikes();
+        likes1 = await Http.GetFromJsonAsync<ListLikes>($"api/posts/{Id}/comments/{com.Id}/likes");
+        likes = likes1.Likes.ToList();
+        foreach (var likeComment in likes)
+        {
+            if (likeComment.Username == user)
+            {
+                IdLikeToRemove = likeComment.Id;
+                break;
+            }
+        }
+        await Http.DeleteAsync($"api/posts/{Id}/comments/likes/{IdLikeToRemove}");
+
+    }
+
+    private LikeDto IfUserGaveLike(CommentDto com)
+    {
+
+        foreach (var like in com.Likes)
+        {
+            if (like.Username == user) return like;
+        }
+        return null;
     }
 }
 

@@ -31,8 +31,23 @@ namespace AppForSkills.Application.SkillPosts.Commands.DeleteComment
                     "Give another id.");
             }
 
+            if (comment.Likes != null)
+            {
+                foreach (var like in comment.Likes)
+                {
+                    _context.Likes.Remove(like);
+                }
+            }
+
             foreach (var com in comments)
             {
+                if (com.Likes != null)
+                {
+                    foreach (var like in com.Likes)
+                    {
+                        _context.Likes.Remove(like);
+                    }
+                }
                 _context.Comments.Remove(com);
             }
 

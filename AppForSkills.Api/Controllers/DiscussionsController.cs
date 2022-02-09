@@ -162,7 +162,7 @@ namespace AppForSkills.Api.Controllers
             return Ok();
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Deletes like.
         /// </summary>
         [Route("{id}/posts/{idPost}/unlike")]
@@ -176,7 +176,7 @@ namespace AppForSkills.Api.Controllers
         {
             await Mediator.Send(new UnlikeCommand() { LikeId = idLike });
             return Ok();
-        }
+        }*/
 
         /// <summary>
         /// Reports post in discussion.
