@@ -79,9 +79,7 @@
                             {
                                 <input type="checkbox" checked @onclick="() => Dislike(comment, IfUserGaveLike(comment))" />
                             }
-                            <div class="like">@comment.Likes.Count</div>
-
-
+                            <div class="like"><a href="/skillPosts/@skillPost.Id/comments/@comment.Id/likes" class="linkLike">@comment.Likes.Count</a></div>
                             <button @onclick="() => Answer(comment)" class="modComBut">Odpowiedz</button>
                             @if(comment.Username == user)
                             {
@@ -138,9 +136,9 @@
                                     {
                                         <input type="checkbox" checked @onclick="() => Dislike(answerCom, IfUserGaveLike(answerCom))" />
                                     }
-                                    <div class="like">@answerCom.Likes.Count</div>
+                                    <div class="like"><a href="/skillPosts/@skillPost.Id/comments/@answerCom.Id/likes" class="linkLike">@answerCom.Likes.Count</a></div>
                                     <button @onclick="() => Answer(answerCom)" class="modComBut">Odpowiedz</button>
-                                    @if(comment.Username == user)
+                                    @if(answerCom.Username == user)
                                     {
                                         <div class="modCom">
                                             <button @onclick="() => CreateModelEdit(answerCom)" class="modComBut">Edytuj</button>
@@ -150,7 +148,7 @@
                                         </div><br />
                                         @if (answerCom.ShowEditComField)
                                          {
-                                            <EditForm EditContext="@contextToEditCom" OnValidSubmit="EditAnswerComment" @onreset="@HandleResetEditAnswerComment">
+                                            <EditForm EditContext="@contextToEditAnswerCom" OnValidSubmit="EditAnswerComment" @onreset="@HandleResetEditAnswerComment">
                                                 <DataAnnotationsValidator />
                                                 <br />
                                                 <div class="addAnswerComment">
@@ -227,7 +225,6 @@
             {
                 Comments.Add(comment);
             }
-            comment.AmountOfLikes = comment.Likes.Count;
         }
         editContext = new EditContext(model);
         editContextToAnswer = new EditContext(modelToAnswer);

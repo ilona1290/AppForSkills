@@ -11,7 +11,6 @@ namespace AppForSkills.Client.Models
         public DateTime Date { get; set; }
         public int? ParentCommentId { get; set; }
         public ICollection<LikeDto> Likes { get; set; }
-        public int AmountOfLikes { get; set; }
         public bool ShowAnswerField { get; set; } = false;
         public bool ShowEditComField { get; set; } = false;
     }

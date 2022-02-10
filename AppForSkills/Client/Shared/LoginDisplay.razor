@@ -3,7 +3,9 @@
 
 <AuthorizeView>
     <Authorized>
-        Cześć, @context.User.Identity.Name!
+        <div class="welcome">
+            Cześć, @context.User.Identity.Name!   
+        </div>
         <button class="btn btn-success" @onclick="BeginSignOut">Wyloguj</button>
     </Authorized>
     <NotAuthorized>

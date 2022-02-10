@@ -6,11 +6,10 @@
     display: flex;
 }
 
-.autor{
-    font-size:large;
+.ratings {
+    color: white;
 }
 
-.btn btn-danger
-{
-    background-color:aqua;
+.comments {
+    color: white;
 }
