@@ -1,0 +1,49 @@
+﻿@page "/discussions/AddDiscussion"
+@using AppForSkills.Client.Models
+@using System.Text
+@using System.Text.Json
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<AuthorizeView>
+    <Authorized Context="Auth">
+        <h3>Rozpocznij dyskusję<br /></h3>
+        <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
+            <DataAnnotationsValidator />
+            <div class="form-row">
+                <label>Temat</label>
+                <InputText @bind-Value="@model.FirstPost" class="form-control" />
+                <ValidationMessage For="@(() => model.FirstPost)" />
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Zatwierdź</button>
+            <button type="reset" class="btn btn-danger">Wyczyść</button>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+    private DiscussionForm model = new DiscussionForm();
+    private EditContext editContext;
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(model);
+    }
+
+    private async void HandleValidSubmit()
+    {
+        var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync("api/discussions", content);
+        Navigation.NavigateTo("/discussions");
+    }
+
+    private void HandleReset()
+    {
+        model = new DiscussionForm();
+        editContext = new EditContext(model);
+    }
+}

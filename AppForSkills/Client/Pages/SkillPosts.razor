@@ -2,42 +2,51 @@
 @using AppForSkills.Client.Models
 @inject HttpClient Http
 
-<a class="btn btn-info" href="/skillPosts/AddSkillPost">Dodaj post</a><br /><br />
-@foreach (var skillPost in skillPosts)
-{
-    <div class="row">
-        <div class="col">
-            <h3> Autor:  @skillPost.Username </h3>
-        </div>
-        <div class="col-5">
-            <a class="btn btn-danger" href="skillPosts/@skillPost.Id">Szczegóły posta</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h5>@skillPost.Title</h5>
-        </div>
-    </div>
-        @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
-        {
-            <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 650px; height: auto; " />
-        }
-        else if (skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
-        {
-            <video preload="auto" controls="controls" width="800" height="400">
-                <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
-            </video>
-        }
-    <div class="row">
-        <div class="col">
-            <a href="/skillPosts/@skillPost.Id/ratings" class="ratings"><h3>Ocen: @skillPost.Rating</h3></a>
-        </div>
-        <div class="col">
-            <a href="skillPosts/@skillPost.Id" class="comments"><h3>Komentarzy: @skillPost.Comment</h3></a>
-        </div>
-    </div>
-    <br /><br />
-}
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            <a class="btn btn-info" href="/skillPosts/AddSkillPost">Dodaj post</a><br /><br />
+            @foreach (var skillPost in skillPosts)
+            {
+                <div class="row">
+                    <div class="col">
+                        <h3> Autor:  @skillPost.Username </h3>
+                    </div>
+                    <div class="col-5">
+                        <a class="btn btn-danger" href="skillPosts/@skillPost.Id">Szczegóły posta</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h5>@skillPost.Title</h5>
+                    </div>
+                </div>
+                @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
+                {
+                    <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 650px; height: auto; " />
+                }
+                else if (skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
+                {
+                    <video preload="auto" controls="controls" width="800" height="400">
+                        <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
+                    </video>
+                }
+                <div class="row">
+                    <div class="col">
+                        <a href="/skillPosts/@skillPost.Id/ratings" class="ratings"><h3>Ocen: @skillPost.Rating</h3></a>
+                    </div>
+                    <div class="col">
+                        <a href="skillPosts/@skillPost.Id" class="comments"><h3>Komentarzy: @skillPost.Comment</h3></a>
+                    </div>
+                </div>
+                <br /><br />
+            }
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
 
 
 
