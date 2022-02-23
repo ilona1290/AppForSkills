@@ -13,5 +13,6 @@ namespace AppForSkills.Client.Models
         public int Posts { get; set; }
         public int Likes { get; set; }
         public int Users { get; set; }
+        public bool ShowEditDiscField { get; set; } = false;
     }
 }
