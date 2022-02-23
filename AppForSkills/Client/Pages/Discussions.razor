@@ -1,0 +1,28 @@
+﻿@page "/discussions"
+@using AppForSkills.Client.Models
+@inject HttpClient Http
+
+<a class="btn btn-primary" href="discussions/AddDiscussion">Rozpocznij dyskusję</a><br /><br />
+
+@foreach (var discussion in discussions)
+{
+    <div class="discussions">
+        <h4 class="autorDisc"> Rozpoczynający dyskusję: @discussion.Username</h4>
+        <div class="buttonDisc"><a class="btn btn-danger" href="discussions/@discussion.Id">Dołącz</a></div>
+        <h4>@discussion.FirstPost</h4>
+        <h4 class="numlikes">&#128077; @discussion.Likes</h4>
+        <h4 class="numPosts">&#128488; @discussion.Posts</h4>
+        <h4 class="numUsers"> &#128483;&#65039;@discussion.Users</h4>
+    </div>
+    <br />
+}
+@code {
+    private List<DiscussionDto> discussions { get; set; } = new List<DiscussionDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListDiscussions listDisc = new ListDiscussions();
+        listDisc = await Http.GetFromJsonAsync<ListDiscussions>("api/discussions");
+        discussions = listDisc.Discussions.ToList();
+    }
+}
