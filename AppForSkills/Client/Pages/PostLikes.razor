@@ -1,0 +1,34 @@
+﻿@page "/discussions/{Id:int}/posts/{IdPost:int}/likes"
+@using AppForSkills.Client.Models
+@inject HttpClient Http
+
+
+<div class="row">
+    <div class="col">
+        <h3>Polubienia</h3>
+    </div>
+    <div class="col-3">
+        <a href="/discussions/@Id" class="btn btn-danger">Powrót</a>
+    </div>
+</div>
+
+@foreach (var like in likes)
+{
+    <div class="styleLike">
+        <div class="autorLik">@like.Username </div>
+    </div>
+    <br />
+}
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    [Parameter]
+    public int IdPost { get; set; }
+    private List<LikeDto> likes { get; set; } = new List<LikeDto>();
+    protected override async Task OnInitializedAsync()
+    {
+        ListLikes listLikes = new ListLikes();
+        listLikes = await Http.GetFromJsonAsync<ListLikes>($"api/discussions/{Id}/posts/{IdPost}/likes");
+        likes = listLikes.Likes.ToList();
+    }
+}

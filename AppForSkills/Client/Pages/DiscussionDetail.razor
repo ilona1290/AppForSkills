@@ -1,0 +1,394 @@
+﻿@page "/discussions/{Id:int}"
+@using AppForSkills.Client.Models
+@using System.Text.Json
+@using System.Text
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpClient Http
+
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            @if (discussion == null)
+            {
+                <p>Wczytywanie...</p>
+            }
+            else
+            {
+                <div class="firstRow">
+                    <h4 class="topic">Użytkownik @@@discussion.Username rozpoczyna temat: @discussion.FirstPost</h4>
+                    <div class="back"><a class="btn btn-success" href="discussions">Powrót</a></div>
+                </div>
+                <h6>Data publikacji: @discussion.PublishingDate</h6><br /> 
+                
+                <EditForm EditContext="@editContextPost" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
+                    <DataAnnotationsValidator />
+                    <div class="addPost">
+                        <label>Odpowiedz:</label>
+                        <InputTextArea @bind-Value="@modelPost.PostText" class="form-control" />
+                        <ValidationMessage For="@(() => modelPost.PostText)" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Odpowiedz</button>
+                    <button type="reset" class="btn btn-dark">Wyczyść</button>
+                </EditForm>
+                <br /><br />
+                <h4>Odpowiedzi w dyskusji: </h4>
+                @foreach (var post in discussion.Posts)
+                {
+                    if (Posts.Contains(post))
+                    {
+                        <div class="posts">
+                            <div class="autorPost">@post.Username </div>
+                            <div class="datePost">@post.Date</div>
+                            @if (post.StatusId == 1)
+                            {
+                                <div>@post.PostText</div>
+                                @if (IfUserGaveLike(post) == null)
+                                {
+                                    <input type="checkbox" @onclick="() => Like(post)" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" checked @onclick="() => Dislike(post, IfUserGaveLike(post))" />
+                                }
+                                <div class="like"><a href="/discussions/@Id/posts/@post.Id/likes" class="linkLike">@post.Likes.Count</a></div>
+                                <button @onclick="() => Answer(post)" class="modPostBut">Odpowiedz</button>
+                            }
+                            else
+                            {
+                                <div>[Usunięto]</div>
+                            }
+                            @if (post.Username == user)
+                            {
+                                @if (post.StatusId == 1)
+                                {
+                                    <div class="modPost">
+                                        <button @onclick="() => CreateModelEdit(post)" class="modPostBut">Edytuj</button>
+                                    </div>
+                                    <div class="modPost">
+                                        <button @onclick="() => Delete(post.Id)" class="modPostBut">Usuń</button>
+                                    </div>
+                                }
+                                @if (post.ShowEditPostField)
+                                {
+                                    <EditForm EditContext="@contextToEditPost" OnValidSubmit="EditPost" @onreset="@HandleResetEditPost">
+                                        <DataAnnotationsValidator />
+                                        <br />
+                                        <div class="addPost">
+                                            <label>Edytuj:</label>
+                                            <InputTextArea @bind-Value="@modelToEditPost.PostText" class="form-control" />
+                                            <ValidationMessage For="@(() => modelToEditPost.PostText)" />
+                                            <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                                            <button type="reset" class="btn btn-dark">Wyczyść</button>
+                                            <button @onclick="() => CreateModelEdit(post)" class="btn btn-light">Anuluj</button>
+                                        </div><br />
+                                    </EditForm>
+                                }
+                            }
+                        </div><br />
+                        @if (post.ShowAnswerField)
+                        {
+                            <EditForm EditContext="@editContextToAnswer" OnValidSubmit="() => HandleValidSubmitAnswerPost(post)" @onreset="@HandleResetToAnswer">
+                                <DataAnnotationsValidator />
+                                <div class="addAnswerPost">
+                                    <label>Odpowiedz:</label>
+                                    <InputTextArea @bind-Value="@modelToAnswer.PostText" class="form-control" />
+                                    <ValidationMessage For="@(() => modelToAnswer.PostText)" />
+                                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                                    <button type="reset" class="btn btn-dark">Wyczyść</button>
+                                    <button @onclick="() => Answer(post)" class="btn btn-light">Anuluj</button>
+                                </div><br />
+                            </EditForm>
+                        }
+                        @foreach (var answerPost in AnswersToPost)
+                        {
+                            @if (answerPost.ParentPostId == post.Id)
+                            {
+                                <div class="answerToPost">
+                                    <div class="autorPost">@answerPost.Username </div>
+                                    <div class="datePost">@answerPost.Date</div><br />
+                                    @if (answerPost.StatusId == 1)
+                                    {
+                                        <div>@answerPost.PostText</div>
+                                        @if (IfUserGaveLike(answerPost) == null)
+                                        {
+                                            <input type="checkbox" @onclick="() => Like(answerPost)" />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" checked @onclick="() => Dislike(answerPost, IfUserGaveLike(answerPost))" />
+                                        }
+                                        <div class="like"><a href="/discussions/@Id/posts/@answerPost.Id/likes" class="linkLike">@answerPost.Likes.Count</a></div>
+                                        <button @onclick="() => Answer(answerPost)" class="modPostBut">Odpowiedz</button>
+                                    }
+                                    else
+                                    {
+                                        <div>[Usunięto]</div>
+                                    }
+                                    @if (answerPost.Username == user)
+                                    {
+                                        @if (answerPost.StatusId == 1)
+                                        {
+                                            <div class="modPost">
+                                                <button @onclick="() => CreateModelEdit(answerPost)" class="modPostBut">Edytuj</button>
+                                            </div>
+                                            <div class="modPost">
+                                                <button @onclick="() => Delete(answerPost.Id)" class="modPostBut">Usuń</button>
+                                            </div>
+                                        }
+                                        @if (answerPost.ShowEditPostField)
+                                        {
+                                            <EditForm EditContext="@contextToEditAnswerPost" OnValidSubmit="EditAnswerPost" @onreset="@HandleResetEditAnswerPost">
+                                                <DataAnnotationsValidator />
+                                                <br />
+                                                <div class="addPost">
+                                                    <label>Edytuj:</label>
+                                                    <InputTextArea @bind-Value="@modelToEditAnswer.PostText" class="form-control" />
+                                                    <ValidationMessage For="@(() => modelToEditAnswer.PostText)" />
+                                                    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                                                    <button type="reset" class="btn btn-dark">Wyczyść</button>
+                                                    <button @onclick="() => CreateModelEdit(answerPost)" class="btn btn-light">Anuluj</button>
+                                                </div><br />
+                                            </EditForm>
+                                        }
+                                    }
+                                </div><br />
+                                @if (answerPost.ShowAnswerField)
+                                {
+                                    <EditForm EditContext="@editContextToAnswerAnswer" OnValidSubmit="() => HandleValidSubmitAnswerAnswerPost(post)" @onreset="@HandleResetToAnswerAnswer">
+                                        <DataAnnotationsValidator />
+                                        <div class="addAnswerPost">
+                                            <label>Odpowiedz:</label>
+                                            <InputTextArea @bind-Value="@modelToAnswerAnswer.PostText" class="form-control" />
+                                            <ValidationMessage For="@(() => modelToAnswerAnswer.PostText)" />
+                                            <button type="submit" class="btn btn-primary">Dodaj</button>
+                                            <button type="reset" class="btn btn-dark">Wyczyść</button>
+                                            <button @onclick="() => Answer(answerPost)" class="btn btn-light">Anuluj</button>
+                                        </div><br />
+                                    </EditForm>
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private DiscussionVm discussion;
+    private string user { get; set; }
+    private List<PostInDiscussionDto> Posts = new List<PostInDiscussionDto>();
+    private List<PostInDiscussionDto> AnswersToPost = new List<PostInDiscussionDto>();
+    private PostForm modelPost = new PostForm();
+    private PostForm modelToAnswer = new PostForm();
+    private PostForm modelToAnswerAnswer = new PostForm();
+    private EditPostForm modelToEditPost = new EditPostForm();
+    private EditPostForm modelToEditAnswer = new EditPostForm();
+    private EditContext editContextPost;
+    private EditContext editContextToAnswer;
+    private EditContext editContextToAnswerAnswer;
+    private EditContext contextToEditPost;
+    private EditContext contextToEditAnswerPost;
+    private GiveLike giveLike = new GiveLike();
+    private List<LikeDto> likes { get; set; } = new List<LikeDto>();
+    protected override async Task OnInitializedAsync()
+    {
+        discussion = await Http.GetFromJsonAsync<DiscussionVm>($"api/discussions/{Id}");
+        @foreach (var post in discussion.Posts)
+        {
+            if (post.ParentPostId != null)
+            {
+                AnswersToPost.Add(post);
+            }
+            else
+            {
+                Posts.Add(post);
+            }
+        }
+        editContextPost = new EditContext(modelPost);
+        editContextToAnswer = new EditContext(modelToAnswer);
+        editContextToAnswerAnswer = new EditContext(modelToAnswerAnswer);
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        user = authState.User.Identity.Name;
+    }
+
+    private async void HandleValidSubmit()
+    {
+        modelPost.DiscussionId = Id;
+        modelPost.ParentPostId = null;
+        var modelJson = JsonSerializer.Serialize(modelPost, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/discussions/{Id}/posts", content);
+        NavigationManager.NavigateTo($"/discussions/{Id}", forceLoad: true);
+    }
+
+    private async void HandleValidSubmitAnswerPost(PostInDiscussionDto post)
+    {
+        modelToAnswer.DiscussionId = Id;
+        modelToAnswer.ParentPostId = post.Id;
+        var modelJson = JsonSerializer.Serialize(modelToAnswer, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/discussions/{Id}/posts", content);
+        NavigationManager.NavigateTo($"/discussions/{Id}", forceLoad: true);
+    }
+
+    private async void HandleValidSubmitAnswerAnswerPost(PostInDiscussionDto post)
+    {
+        modelToAnswerAnswer.DiscussionId = Id;
+        modelToAnswerAnswer.ParentPostId = post.Id;
+        var modelJson = JsonSerializer.Serialize(modelToAnswerAnswer, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/discussions/{Id}/posts", content);
+        NavigationManager.NavigateTo($"/discussions/{Id}", forceLoad: true);
+    }
+
+    private void HandleReset()
+    {
+        modelPost = new PostForm();
+        editContextPost = new EditContext(modelPost);
+    }
+
+    private void HandleResetToAnswer()
+    {
+        modelToAnswer = new PostForm();
+        editContextToAnswer = new EditContext(modelToAnswer);
+    }
+
+    private void HandleResetToAnswerAnswer()
+    {
+        modelToAnswerAnswer = new PostForm();
+        editContextToAnswerAnswer = new EditContext(modelToAnswerAnswer);
+    }
+
+    private void HandleResetEditPost()
+    {
+        modelToEditPost.PostText = "";
+        contextToEditPost = new EditContext(modelToEditPost);
+    }
+
+    private void HandleResetEditAnswerPost()
+    {
+        modelToEditAnswer.PostText = "";
+        contextToEditAnswerPost = new EditContext(modelToEditAnswer);
+    }
+
+    private void Answer(PostInDiscussionDto post)
+    {
+        if (!post.ShowAnswerField)
+        {
+            post.ShowAnswerField = true;
+        }
+        else
+        {
+            post.ShowAnswerField = false;
+        }
+        if (post.ParentPostId != null)
+        {
+            AddUsernameToAnswerPost(modelToAnswerAnswer, post.Username);
+        }
+    }
+
+    private void AddUsernameToAnswerPost(PostForm model, string username)
+    {
+        model.PostText = "@" + username;
+    }
+
+    private void CreateModelEdit(PostInDiscussionDto post)
+    {
+        if (!post.ShowEditPostField)
+        {
+            post.ShowEditPostField = true;
+            if (post.ParentPostId == null)
+            {
+                modelToEditPost.Id = post.Id;
+                modelToEditPost.PostText = post.PostText;
+                contextToEditPost = new EditContext(modelToEditPost);
+            }
+            else
+            {
+                modelToEditAnswer.Id = post.Id;
+                modelToEditAnswer.PostText = post.PostText;
+                contextToEditAnswerPost = new EditContext(modelToEditAnswer);
+            }
+        }
+        else post.ShowEditPostField = false;
+    }
+
+    private async void EditPost()
+    {
+        var modelJson = JsonSerializer.Serialize(modelToEditPost, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PutAsync($"api/discussions/{Id}/posts/{modelToEditPost.Id}", content);
+        NavigationManager.NavigateTo($"/discussions/{Id}", forceLoad: true);
+    }
+
+    private async void EditAnswerPost()
+    {
+        var modelJson = JsonSerializer.Serialize(modelToEditAnswer, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PutAsync($"api/discussions/{Id}/posts/{modelToEditAnswer.Id}", content);
+        NavigationManager.NavigateTo($"/discussions/{Id}", forceLoad: true);
+    }
+
+    private async void Delete(int idPost)
+    {
+        await Http.DeleteAsync($"api/discussions/{Id}/posts/{idPost}");
+        NavigationManager.NavigateTo($"/discussions/{Id}", forceLoad: true);
+    }
+
+    private async void Like(PostInDiscussionDto post)
+    {
+        giveLike.PostInDiscussionId = post.Id;
+        giveLike.User = user;
+        LikeDto like = new LikeDto() { Username = user };
+        post.Likes.Add(like);
+        var modelJson = JsonSerializer.Serialize(giveLike, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/discussions/{Id}/posts/likes", content);
+    }
+
+    private async void Dislike(PostInDiscussionDto post, LikeDto like)
+    {
+        LikeDto likeToRemove = new LikeDto();
+        int IdLikeToRemove = 0;
+        foreach (var like1 in post.Likes)
+        {
+            if (like1.Username == user)
+            {
+                likeToRemove = like1;
+                break;
+            }
+        }
+        post.Likes.Remove(likeToRemove);
+        ListLikes likes1 = new ListLikes();
+        likes1 = await Http.GetFromJsonAsync<ListLikes>($"api/discussions/{Id}/posts/{post.Id}/likes");
+        likes = likes1.Likes.ToList();
+        foreach (var likeComment in likes)
+        {
+            if (likeComment.Username == user)
+            {
+                IdLikeToRemove = likeComment.Id;
+                break;
+            }
+        }
+        await Http.DeleteAsync($"api/discussions/{Id}/posts/likes/{IdLikeToRemove}");
+
+    }
+
+    private LikeDto IfUserGaveLike(PostInDiscussionDto post)
+    {
+
+        foreach (var like in post.Likes)
+        {
+            if (like.Username == user) return like;
+        }
+        return null;
+    }
+}

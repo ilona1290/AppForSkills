@@ -31,7 +31,7 @@ namespace AppForSkills.Application.Discussions.Commands.DeletePost
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            var posts = await _context.PostsInDiscussion.Where(s => s.StatusId == 1 && s.CreatedBy == post.CreatedBy
+            /*var posts = await _context.PostsInDiscussion.Where(s => s.StatusId == 1 && s.CreatedBy == post.CreatedBy
                 && s.DiscussionId == post.DiscussionId)
                 .ToListAsync(cancellationToken);
 
@@ -46,7 +46,7 @@ namespace AppForSkills.Application.Discussions.Commands.DeletePost
                 discussion.UsersInDiscussion.Remove(user);
                 user.Discussions.Remove(discussion);
             }
-            await _context.SaveChangesAsync(cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);*/
 
             return Unit.Value;
         }
