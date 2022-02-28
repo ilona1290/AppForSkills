@@ -1,0 +1,14 @@
+﻿body {
+}
+
+.mainRow {
+    position: relative;
+    margin-bottom: 2%;
+}
+
+.stats {
+    display: inline-block;
+    margin-right: 1%;
+    padding-top: 1%;
+    position: center;
+}

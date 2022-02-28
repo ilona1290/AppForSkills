@@ -1,0 +1,77 @@
+﻿@page "/users/{Username}"
+@using AppForSkills.Client.Models
+@using AppForSkills.Client.Components
+@using System.Text.Json
+@using System.Text
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpClient Http
+
+<h3>UserDetail</h3>
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            @if (user == null)
+            {
+                <p>Wczytywanie...</p>
+            }
+            else
+            {
+                <h3>@user.Username</h3>
+                <h6>@user.RegistrationDate</h6>
+                <h6>@user.RecentLoginDate</h6>
+                <div class="mainRow">
+                    <div class="stats">
+                        <button @onclick="() => WhichShow(1)"> @user.UserSkills Skills</button>
+                    </div>
+                    <div class="stats">
+                        <button @onclick="() => WhichShow(2)"> @user.UserComments Komentarzy</button>
+                    </div>
+                    <div class="stats">
+                        <button @onclick="() => WhichShow(3)"> @user.GavedRatings Wystawionych ocen</button>
+                    </div>
+                    <div class="stats">
+                        <button @onclick="() => WhichShow(4)"> @user.Discussions Dyskusji</button>
+                    </div>
+                    <div class="stats">
+                        <button @onclick="() => WhichShow(5)"> @user.Achievements Osiągnięć</button>
+                    </div>
+                </div>
+
+                @switch (action)
+                {
+                    case 1:
+                        <Skills SkillPosts="@skillPosts"></Skills>
+                        break;
+                    case 2:
+                        <p>akcja 2</p>
+                        break;
+                }
+            }
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+@code {
+    [Parameter]
+    public string Username { get; set; }
+    private UserInformationVm user;
+    private List<SkillPostDto> skillPosts { get; set; } = new List<SkillPostDto>();
+    private int action;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await Http.GetFromJsonAsync<UserInformationVm>($"api/users/{Username}");
+        ListSkillPosts skills = new ListSkillPosts();
+        skills = await Http.GetFromJsonAsync<ListSkillPosts>($"api/users/{Username}/skills");
+        skillPosts = skills.SkillPosts.ToList();
+    }
+
+    private void WhichShow(int num)
+    {
+        action = num;
+    }
+}
