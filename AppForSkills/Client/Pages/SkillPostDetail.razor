@@ -1,7 +1,9 @@
 ﻿@page "/skillPosts/{Id:int}"
 @using AppForSkills.Client.Models
+@using AppForSkills.Client.Components
 @using System.Text.Json
 @using System.Text
+@inject IModalService modal
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject HttpClient Http
@@ -73,15 +75,15 @@
                             <div>@comment.CommentText</div>
                             @if (IfUserGaveLike(comment) == null)
                             {
-                                <input type="checkbox" @onclick="() => Like(comment)"/>
+                                <input type="checkbox" @onclick="() => Like(comment)" />
                             }
                             else
                             {
                                 <input type="checkbox" checked @onclick="() => Dislike(comment, IfUserGaveLike(comment))" />
                             }
-                            <div class="like"><a href="/skillPosts/@skillPost.Id/comments/@comment.Id/likes" class="linkLike">@comment.Likes.Count</a></div>
+                            <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(comment)))" class="linkLike">@comment.Likes.Count</button></div>
                             <button @onclick="() => Answer(comment)" class="modComBut">Odpowiedz</button>
-                            @if(comment.Username == user)
+                            @if (comment.Username == user)
                             {
                                 <div class="modCom">
                                     <button @onclick="() => CreateModelEdit(comment)" class="modComBut">Edytuj</button>
@@ -90,7 +92,7 @@
                                     <button @onclick="() => Delete(comment.Id)" class="modComBut">Usuń</button>
                                 </div>
                                 @if (comment.ShowEditComField)
-                                 {
+                                {
                                     <EditForm EditContext="@contextToEditCom" OnValidSubmit="EditComment" @onreset="@HandleResetEditComment">
                                         <DataAnnotationsValidator />
                                         <br />
@@ -103,7 +105,7 @@
                                             <button @onclick="() => CreateModelEdit(comment)" class="btn btn-light">Anuluj</button>
                                         </div><br />
                                     </EditForm>
-                                 }
+                                }
                             }
                         </div><br />
                         @if (comment.ShowAnswerField)
@@ -130,15 +132,15 @@
                                     <div>@answerCom.CommentText</div>
                                     @if (IfUserGaveLike(answerCom) == null)
                                     {
-                                        <input type="checkbox" @onclick="() => Like(answerCom)"/>
+                                        <input type="checkbox" @onclick="() => Like(answerCom)" />
                                     }
                                     else
                                     {
                                         <input type="checkbox" checked @onclick="() => Dislike(answerCom, IfUserGaveLike(answerCom))" />
                                     }
-                                    <div class="like"><a href="/skillPosts/@skillPost.Id/comments/@answerCom.Id/likes" class="linkLike">@answerCom.Likes.Count</a></div>
+                                    <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(answerCom)))" class="linkLike">@answerCom.Likes.Count</button></div>
                                     <button @onclick="() => Answer(answerCom)" class="modComBut">Odpowiedz</button>
-                                    @if(answerCom.Username == user)
+                                    @if (answerCom.Username == user)
                                     {
                                         <div class="modCom">
                                             <button @onclick="() => CreateModelEdit(answerCom)" class="modComBut">Edytuj</button>
@@ -147,7 +149,7 @@
                                             <button @onclick="() => Delete(answerCom.Id)" class="modComBut">Usuń</button>
                                         </div><br />
                                         @if (answerCom.ShowEditComField)
-                                         {
+                                        {
                                             <EditForm EditContext="@contextToEditAnswerCom" OnValidSubmit="EditAnswerComment" @onreset="@HandleResetEditAnswerComment">
                                                 <DataAnnotationsValidator />
                                                 <br />
@@ -160,7 +162,7 @@
                                                     <button @onclick="() => CreateModelEdit(answerCom)" class="btn btn-light">Anuluj</button>
                                                 </div><br />
                                             </EditForm>
-                                         }
+                                        }
                                     }
                                 </div><br />
                                 @if (answerCom.ShowAnswerField)
@@ -211,7 +213,8 @@
     private EditContext contextToEditAnswerCom;
     private bool ShowRatingButtons { get; set; } = false;
     private GiveLike giveLike = new GiveLike();
-    private List<LikeDto> likes { get; set; } = new List<LikeDto>();
+    private List<LikeDto> likes = new List<LikeDto>();
+    private ModalParameters modalParameters { get; set; } = new ModalParameters();
     protected override async Task OnInitializedAsync()
     {
         skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
@@ -231,6 +234,12 @@
         editContextToAnswerAnswer = new EditContext(modelToAnswerAnswer);
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         user = authState.User.Identity.Name;
+    }
+
+    private ModalParameters GetParameters(CommentDto com)
+    {
+        modalParameters.Add("likes", com.Likes);
+        return modalParameters;
     }
 
     private async void HandleValidSubmit()
@@ -335,7 +344,7 @@
         if (!com.ShowEditComField)
         {
             com.ShowEditComField = true;
-            if(com.ParentCommentId == null)
+            if (com.ParentCommentId == null)
             {
                 modelToEdit.Id = com.Id;
                 modelToEdit.CommentText = com.CommentText;
