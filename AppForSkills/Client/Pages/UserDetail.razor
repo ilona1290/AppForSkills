@@ -47,6 +47,15 @@
                     case 2:
                         <p>akcja 2</p>
                         break;
+                    case 3:
+                        <UserGavedRatings User="@Username" UserRatings="@userRatings"></UserGavedRatings>
+                        break;
+                    case 4:
+                        <Discussions discussions="@discs"></Discussions>
+                        break;
+                    case 5:
+                        <p>akcja 5</p>
+                        break;
                 }
             }
         </Authorized>
@@ -60,7 +69,9 @@
     public string Username { get; set; }
     private UserInformationVm user;
     private List<SkillPostDto> skillPosts { get; set; } = new List<SkillPostDto>();
-    private int action;
+    private List<DiscussionDto> discs { get; set; } = new List<DiscussionDto>();
+    private List<UserGavedRatingDto> userRatings { get; set; } = new List<UserGavedRatingDto>();
+    private int action = 1;
 
     protected override async Task OnInitializedAsync()
     {
@@ -68,6 +79,14 @@
         ListSkillPosts skills = new ListSkillPosts();
         skills = await Http.GetFromJsonAsync<ListSkillPosts>($"api/users/{Username}/skills");
         skillPosts = skills.SkillPosts.ToList();
+
+        ListGavedRatings listRatings = new ListGavedRatings();
+        listRatings = await Http.GetFromJsonAsync<ListGavedRatings>($"api/users/{Username}/ratings");
+        userRatings = listRatings.Ratings.ToList();
+
+        ListDiscussions listDiscs = new ListDiscussions();
+        listDiscs = await Http.GetFromJsonAsync<ListDiscussions>($"api/users/{Username}/discussions");
+        discs = listDiscs.Discussions.ToList();
     }
 
     private void WhichShow(int num)

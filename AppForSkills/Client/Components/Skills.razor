@@ -1,13 +1,14 @@
 ﻿@using AppForSkills.Client.Models
 @inject HttpClient Http
 
+
 @foreach (var skillPost in SkillPosts)
 {
     <div class="row">
         <div class="col">
             <a href="/users/@skillPost.Username" class="link"><h3> Autor:  @skillPost.Username </h3></a>
         </div>
-        <div class="col-5">
+        <div class="col-9">
             <a class="btn btn-danger" href="skillPosts/@skillPost.Id">Szczegóły posta</a>
         </div>
     </div>
@@ -16,21 +17,23 @@
             <h5>@skillPost.Title</h5>
         </div>
     </div>
-    @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
-    {
-        <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 650px; height: auto; " />
-    }
-    else if (skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
-    {
-        <video preload="auto" controls="controls" width="800" height="400">
-            <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
-        </video>
-    }
+    <a href="skillPosts/@skillPost.Id">
+        @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
+        {
+            <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 500px; height: auto; " />
+        }
+        else if (skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
+        {
+            <video preload="auto" controls="controls" width="500">
+                <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
+            </video>
+        }
+    </a>
     <div class="row">
         <div class="col">
             <a href="/skillPosts/@skillPost.Id/ratings" class="link"><h3>Ocen: @skillPost.Rating</h3></a>
         </div>
-        <div class="col">
+        <div class="col-9">
             <a href="skillPosts/@skillPost.Id" class="link"><h3>Komentarzy: @skillPost.Comment</h3></a>
         </div>
     </div>
