@@ -13,6 +13,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
         public string Username { get; set; }
         public string CommentText { get; set; }
         public DateTime Date { get; set; }
+        public int? MainParentCommentId { get; set; }
         public int? ParentCommentId { get; set; }
         public ICollection<LikeDto> Likes { get; set; }
 

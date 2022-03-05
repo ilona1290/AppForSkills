@@ -2,7 +2,7 @@
 
 namespace AppForSkills.Application.Users.Queries.GetUserComments
 {
-    public class CommentsVm
+    public class UserCommentsVm
     {
         public List<UserCommentDto> Comments { get; set; }
     }

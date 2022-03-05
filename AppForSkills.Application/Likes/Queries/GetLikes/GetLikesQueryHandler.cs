@@ -4,10 +4,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,7 +22,7 @@ namespace AppForSkills.Application.Likes.Queries.GetLikes
 
         public async Task<LikesVm> Handle(GetLikesQuery request, CancellationToken cancellationToken)
         {
-            if(request.CommentId != null)
+            if (request.CommentId != null)
             {
                 var likes = _context.Likes.Where(l => l.CommentId == request.CommentId);
                 var likesDtos = await likes.ProjectTo<LikeDto>(_mapper.ConfigurationProvider)
@@ -36,7 +33,7 @@ namespace AppForSkills.Application.Likes.Queries.GetLikes
                 };
                 return likesVm;
             }
-            else if(request.DiscussionId != null)
+            else if (request.DiscussionId != null)
             {
                 var likes = _context.Likes.Where(l => l.DiscussionId == request.DiscussionId);
                 var likesDtos = await likes.ProjectTo<LikeDto>(_mapper.ConfigurationProvider)
@@ -47,7 +44,7 @@ namespace AppForSkills.Application.Likes.Queries.GetLikes
                 };
                 return likesVm;
             }
-            else if(request.PostInDiscussionId != null)
+            else if (request.PostInDiscussionId != null)
             {
                 var likes = _context.Likes.Where(l => l.PostInDiscussionId == request.PostInDiscussionId);
                 var likesDtos = await likes.ProjectTo<LikeDto>(_mapper.ConfigurationProvider)

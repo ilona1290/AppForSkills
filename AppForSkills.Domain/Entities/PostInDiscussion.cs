@@ -9,6 +9,7 @@ namespace AppForSkills.Domain.Entities
         public int DiscussionId { get; set; }
         public Discussion Discussion { get; set; }
         public ICollection<Like> Likes { get; set; }
+        public int? MainParentPostId { get; set; }
         public int? ParentPostId { get; set; }
         public bool Reported { get; set; } = false;
         public int? UserId { get; set; }

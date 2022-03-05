@@ -29,7 +29,7 @@ namespace Application.UnitTests.User.Queries.GetUserComments
 
             var result = await handler.Handle(new GetUserCommentsQuery { Username = "Podrożnik" }, CancellationToken.None);
 
-            result.ShouldBeOfType<CommentsVm>();
+            result.ShouldBeOfType<UserCommentsVm>();
             result.Comments.ShouldBeOfType<List<UserCommentDto>>();
             result.Comments.Count.ShouldBe(1);
         }

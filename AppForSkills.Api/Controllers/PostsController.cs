@@ -14,11 +14,6 @@ using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace AppForSkills.Api.Controllers
@@ -27,7 +22,7 @@ namespace AppForSkills.Api.Controllers
     [Authorize]
     public class PostsController : BaseController
     {
-        
+
         /// <summary>
         /// Returns all user skills.
         /// </summary>
@@ -201,7 +196,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<LikesVm>> GetLikesToCommentAsync(int idComment)
         {
-            var vm = await Mediator.Send(new GetLikesQuery() { CommentId = idComment, DiscussionId = null, PostInDiscussionId = null});
+            var vm = await Mediator.Send(new GetLikesQuery() { CommentId = idComment, DiscussionId = null, PostInDiscussionId = null });
             return vm;
         }
 
@@ -238,6 +233,6 @@ namespace AppForSkills.Api.Controllers
             return Ok(result);
         }
 
-        
+
     }
 }

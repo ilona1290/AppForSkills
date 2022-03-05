@@ -2,7 +2,6 @@
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace AppForSkills.Application.SkillPosts.Commands.CreateSkillPost
 {

@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppForSkills.Persistance.Migrations
 {
-    public partial class create_database : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,6 +13,7 @@ namespace AppForSkills.Persistance.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    StatusId = table.Column<int>(type: "int", nullable: false),
                     Achievement = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
                 },
@@ -47,6 +48,7 @@ namespace AppForSkills.Persistance.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    StatusId = table.Column<int>(type: "int", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RecentLoginDate = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -54,42 +56,6 @@ namespace AppForSkills.Persistance.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PostsInDiscussion",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PostText = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    DiscussionId = table.Column<int>(type: "int", nullable: false),
-                    ParentPostId = table.Column<int>(type: "int", nullable: true),
-                    Reported = table.Column<bool>(type: "bit", nullable: false),
-                    PostInDiscussionId = table.Column<int>(type: "int", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    StatusId = table.Column<int>(type: "int", nullable: false),
-                    InactivatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Inactivated = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PostsInDiscussion", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PostsInDiscussion_Discussions_DiscussionId",
-                        column: x => x.DiscussionId,
-                        principalTable: "Discussions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PostsInDiscussion_PostsInDiscussion_PostInDiscussionId",
-                        column: x => x.PostInDiscussionId,
-                        principalTable: "PostsInDiscussion",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,6 +107,43 @@ namespace AppForSkills.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PostsInDiscussion",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PostText = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    DiscussionId = table.Column<int>(type: "int", nullable: false),
+                    MainParentPostId = table.Column<int>(type: "int", nullable: true),
+                    ParentPostId = table.Column<int>(type: "int", nullable: true),
+                    Reported = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    StatusId = table.Column<int>(type: "int", nullable: false),
+                    InactivatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Inactivated = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostsInDiscussion", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PostsInDiscussion_Discussions_DiscussionId",
+                        column: x => x.DiscussionId,
+                        principalTable: "Discussions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PostsInDiscussion_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SkillPosts",
                 columns: table => new
                 {
@@ -150,7 +153,7 @@ namespace AppForSkills.Persistance.Migrations
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Views = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -167,7 +170,7 @@ namespace AppForSkills.Persistance.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,9 +181,9 @@ namespace AppForSkills.Persistance.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CommentText = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     SkillPostId = table.Column<int>(type: "int", nullable: false),
+                    MainParentCommentId = table.Column<int>(type: "int", nullable: true),
                     ParentCommentId = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: true),
-                    CommentId = table.Column<int>(type: "int", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -192,12 +195,6 @@ namespace AppForSkills.Persistance.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comments_Comments_CommentId",
-                        column: x => x.CommentId,
-                        principalTable: "Comments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comments_SkillPosts_SkillPostId",
                         column: x => x.SkillPostId,
@@ -282,12 +279,12 @@ namespace AppForSkills.Persistance.Migrations
 
             migrationBuilder.InsertData(
                 table: "Achievements",
-                columns: new[] { "Id", "Description", "Achievement" },
+                columns: new[] { "Id", "Description", "Achievement", "StatusId" },
                 values: new object[,]
                 {
-                    { 1, "Dodano pierwszy post.", "Świerzak" },
-                    { 2, "Rozpoczęto pierwszą dyskusję.", "Początkujący mówca" },
-                    { 3, "Dodano pierwszy post do dyskusji.", "Pierwsze udzielenie się" }
+                    { 1, "Dodano pierwszy post.", "Świerzak", 1 },
+                    { 2, "Rozpoczęto pierwszą dyskusję.", "Początkujący mówca", 1 },
+                    { 3, "Dodano pierwszy post do dyskusji.", "Pierwsze udzielenie się", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -295,18 +292,32 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "Id", "Created", "CreatedBy", "FirstPost", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "StatusId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(5040), "SuperAdmin", "Cześć. W tej części aplikacji będziesz mógł rozpoczynać dyskusje, bądź udzielać się już w istniejących.", null, null, null, null, 1 },
-                    { 2, new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(5394), "Podróżnik", "Jaki kraj chcielibyście odwiedzić?", null, null, null, null, 1 }
+                    { 1, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(6576), "SuperAdmin", "Cześć. W tej części aplikacji będziesz mógł rozpoczynać dyskusje, bądź udzielać się już w istniejących.", null, null, null, null, 1 },
+                    { 2, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(6954), "Podróżnik", "Jaki kraj chcielibyście odwiedzić?", null, null, null, null, 1 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "RecentLoginDate", "RegistrationDate", "Username" },
+                columns: new[] { "Id", "RecentLoginDate", "RegistrationDate", "StatusId", "Username" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "SuperAdmin" },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Podrożnik" },
-                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Turysta12" }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "SuperAdmin" },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Podróżnik" },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Turysta12" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AchievementUser",
+                columns: new[] { "AchievementsId", "UsersWithAchivementId" },
+                values: new object[,]
+                {
+                    { 3, 1 },
+                    { 3, 2 },
+                    { 2, 2 },
+                    { 1, 2 },
+                    { 3, 3 },
+                    { 1, 1 },
+                    { 2, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -314,10 +325,10 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "DiscussionsId", "UsersInDiscussionId" },
                 values: new object[,]
                 {
-                    { 2, 1 },
-                    { 1, 1 },
-                    { 2, 2 },
                     { 1, 2 },
+                    { 2, 2 },
+                    { 1, 1 },
+                    { 2, 1 },
                     { 2, 3 }
                 });
 
@@ -326,22 +337,22 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "Id", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
                 values: new object[,]
                 {
-                    { 4, null, 1, null, "Podróżnik" },
+                    { 6, null, 2, null, "SuperAdmin" },
                     { 5, null, 2, null, "Turysta12" },
-                    { 6, null, 2, null, "SuperAdmin" }
+                    { 4, null, 1, null, "Podróżnik" }
                 });
 
             migrationBuilder.InsertData(
                 table: "PostsInDiscussion",
-                columns: new[] { "Id", "Created", "CreatedBy", "DiscussionId", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "ParentPostId", "PostInDiscussionId", "PostText", "Reported", "StatusId" },
+                columns: new[] { "Id", "Created", "CreatedBy", "DiscussionId", "Inactivated", "InactivatedBy", "MainParentPostId", "Modified", "ModifiedBy", "ParentPostId", "PostText", "Reported", "StatusId", "UserId" },
                 values: new object[,]
                 {
-                    { 4, new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(6936), "Podróżnik", 1, null, null, null, null, null, null, "Jasne.", false, 1 },
-                    { 1, new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(6589), "Turysta12", 2, null, null, null, null, null, null, "Australia", false, 1 },
-                    { 2, new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(6603), "Podróżnik", 2, null, null, null, null, 1, null, "Dlaczego?", false, 1 },
-                    { 3, new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(6926), "Turysta12", 2, null, null, null, null, 2, null, "Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).", false, 1 },
-                    { 5, new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(6939), "SuperAdmin", 2, null, null, null, null, null, null, "Włochy", false, 1 },
-                    { 6, new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(6942), "SuperAdmin", 2, null, null, null, null, 1, null, "Możesz rozwinąć?", false, 1 }
+                    { 5, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8968), "SuperAdmin", 2, null, null, null, null, null, null, "Włochy", false, 1, null },
+                    { 3, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8952), "Turysta12", 2, null, null, null, null, null, 2, "Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).", false, 1, null },
+                    { 2, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8590), "Podróżnik", 2, null, null, null, null, null, 1, "Dlaczego?", false, 1, null },
+                    { 1, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8565), "Turysta12", 2, null, null, null, null, null, null, "Australia", false, 1, null },
+                    { 4, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8964), "Podróżnik", 1, null, null, null, null, null, null, "Jasne.", false, 1, null },
+                    { 6, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8971), "SuperAdmin", 2, null, null, null, null, null, 1, "Możesz rozwinąć?", false, 1, null }
                 });
 
             migrationBuilder.InsertData(
@@ -349,17 +360,17 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "Id", "Address", "Created", "CreatedBy", "Description", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "StatusId", "Title", "UserId", "Views" },
                 values: new object[,]
                 {
-                    { 1, "images/firstPost.jpg", new DateTime(2021, 7, 22, 19, 40, 43, 320, DateTimeKind.Local).AddTicks(3871), null, "Cześć. W tej części aplikacji będziesz mógł zaprezentować pozostałym użytkownikom swoje umiejętności/talenty w formie zdjęcia, bądź filmiku. Dodać do niego tytuł i opis. Każdy użytkownik, może oceniać, komentować dany post. Baw się dobrze!", null, null, null, null, 1, "Start", 1, 0 },
-                    { 2, "images/Eiffel_Tower.jpg", new DateTime(2021, 7, 22, 19, 40, 43, 328, DateTimeKind.Local).AddTicks(6385), "Podrożnik", "Cześć. Autorskie zdjęcie wieży Eiffla", null, null, null, null, 2, "Wieża Eiffla", 2, 0 }
+                    { 1, "images/firstPost.jpg", new DateTime(2022, 3, 4, 23, 5, 19, 197, DateTimeKind.Local).AddTicks(4604), null, "Cześć. W tej części aplikacji będziesz mógł zaprezentować pozostałym użytkownikom swoje umiejętności/talenty w formie zdjęcia, bądź filmiku. Dodać do niego tytuł i opis. Każdy użytkownik, może oceniać, komentować dany post. Baw się dobrze!", null, null, null, null, 1, "Start", 1, 0 },
+                    { 2, "images/Eiffel_Tower.jpg", new DateTime(2022, 3, 4, 23, 5, 19, 201, DateTimeKind.Local).AddTicks(3479), "Podróżnik", "Cześć. Autorskie zdjęcie wieży Eiffla", null, null, null, null, 1, "Wieża Eiffla", 2, 0 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Comments",
-                columns: new[] { "Id", "CommentId", "CommentText", "Created", "CreatedBy", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "ParentCommentId", "SkillPostId", "StatusId", "UserId" },
+                columns: new[] { "Id", "CommentText", "Created", "CreatedBy", "Inactivated", "InactivatedBy", "MainParentCommentId", "Modified", "ModifiedBy", "ParentCommentId", "SkillPostId", "StatusId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, null, "Wow! Super zdjęcie.", new DateTime(2021, 7, 22, 19, 40, 43, 329, DateTimeKind.Local).AddTicks(7819), "Turysta12", null, null, null, null, null, 2, 0, 3 },
-                    { 2, null, "Dzięki.", new DateTime(2021, 7, 22, 19, 40, 43, 329, DateTimeKind.Local).AddTicks(8630), "Podrożnik", null, null, null, null, 1, 2, 0, 2 }
+                    { 1, "Wow! Super zdjęcie.", new DateTime(2022, 3, 4, 23, 5, 19, 202, DateTimeKind.Local).AddTicks(8729), "Turysta12", null, null, null, null, null, null, 2, 1, 3 },
+                    { 2, "Dzięki.", new DateTime(2022, 3, 4, 23, 5, 19, 202, DateTimeKind.Local).AddTicks(9405), "Podrożnik", null, null, null, null, null, 1, 2, 1, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -376,8 +387,8 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "Id", "Created", "CreatedBy", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "SkillPostId", "StatusId", "UserId", "Value" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 7, 22, 19, 40, 43, 329, DateTimeKind.Local).AddTicks(9543), "Turysta12", null, null, null, null, 2, 0, 3, 5 },
-                    { 2, new DateTime(2021, 7, 22, 19, 40, 43, 330, DateTimeKind.Local).AddTicks(419), "SuperAdmin", null, null, null, null, 2, 0, 1, 4 }
+                    { 1, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(357), "Turysta12", null, null, null, null, 2, 1, 3, 5 },
+                    { 2, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(1119), "SuperAdmin", null, null, null, null, 2, 1, 1, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -399,11 +410,6 @@ namespace AppForSkills.Persistance.Migrations
                 name: "IX_AchievementUser_UsersWithAchivementId",
                 table: "AchievementUser",
                 column: "UsersWithAchivementId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_CommentId",
-                table: "Comments",
-                column: "CommentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_SkillPostId",
@@ -441,9 +447,9 @@ namespace AppForSkills.Persistance.Migrations
                 column: "DiscussionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostsInDiscussion_PostInDiscussionId",
+                name: "IX_PostsInDiscussion_UserId",
                 table: "PostsInDiscussion",
-                column: "PostInDiscussionId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ratings_SkillPostId",

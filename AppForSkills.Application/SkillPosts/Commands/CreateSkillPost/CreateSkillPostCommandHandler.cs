@@ -1,11 +1,8 @@
-﻿using AppForSkills.Application.Common.Enums;
-using AppForSkills.Application.Common.Interfaces;
+﻿using AppForSkills.Application.Common.Interfaces;
 using AppForSkills.Application.Exceptions;
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
-using System;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

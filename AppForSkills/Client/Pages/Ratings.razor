@@ -19,34 +19,29 @@
  {
     <div class="ratings">
         <div class="autorRat">@rating.Username </div>
-
         <div class="dateRat">@rating.Date</div>
         @if (user == rating.Username)
         {
-            <div class="edit">
-                <button @onclick="() => Rate(rating)" class="ediBut">Edytuj</button>
-            </div>
-
-            <div class="delete">
-                <button @onclick="() => Delete(rating.Id)" class="delBut">Usuń</button>
-            </div>
+            <div class="buttonRat"><button class="btn btn-danger" @onclick="() => Delete(rating.Id)">Usuń</button></div>
+            @if (rating.ShowRatingButtons)
+            {
+                <div class="buttonRat">
+                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 1)">1</button>
+                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 2)">2</button>
+                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 3)">3</button>
+                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 4)">4</button>
+                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 5)">5</button>
+                </div>
+             }
+            <div class="buttonRat"><button class="btn btn-primary" @onclick="() => Rate(rating)">Edytuj</button></div>
         }
         <br />
         @for (int i = 0; i < rating.Value; i++)
         {
             <span>&#11088;</span>
         }
-        @if (rating.ShowRatingButtons)
-        {
-            <br />
-            <div class="buttons">
-                <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 1)">1</button>
-                <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 2)">2</button>
-                <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 3)">3</button>
-                <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 4)">4</button>
-                <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 5)">5</button>
-            </div>
-         }
+        <br />
+        
     </div>
     <br />
  }

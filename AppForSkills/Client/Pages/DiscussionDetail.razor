@@ -105,7 +105,7 @@
                         }
                         @foreach (var answerPost in AnswersToPost)
                         {
-                            @if (answerPost.ParentPostId == post.Id)
+                            @if (answerPost.MainParentPostId == post.Id)
                             {
                                 <div class="answerToPost">
                                     <div class="autorPost">@answerPost.Username </div>
@@ -158,7 +158,7 @@
                                 </div><br />
                                 @if (answerPost.ShowAnswerField)
                                 {
-                                    <EditForm EditContext="@editContextToAnswerAnswer" OnValidSubmit="() => HandleValidSubmitAnswerAnswerPost(post)" @onreset="@HandleResetToAnswerAnswer">
+                                    <EditForm EditContext="@editContextToAnswerAnswer" OnValidSubmit="() => HandleValidSubmitAnswerAnswerPost(answerPost)" @onreset="@HandleResetToAnswerAnswer">
                                         <DataAnnotationsValidator />
                                         <div class="addAnswerPost">
                                             <label>Odpowiedz:</label>
@@ -231,6 +231,7 @@
     private async void HandleValidSubmit()
     {
         modelPost.DiscussionId = Id;
+        modelPost.MainParentPostId = null;
         modelPost.ParentPostId = null;
         var modelJson = JsonSerializer.Serialize(modelPost, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
@@ -241,6 +242,7 @@
     private async void HandleValidSubmitAnswerPost(PostInDiscussionDto post)
     {
         modelToAnswer.DiscussionId = Id;
+        modelToAnswer.MainParentPostId = post.Id;
         modelToAnswer.ParentPostId = post.Id;
         var modelJson = JsonSerializer.Serialize(modelToAnswer, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
@@ -251,6 +253,7 @@
     private async void HandleValidSubmitAnswerAnswerPost(PostInDiscussionDto post)
     {
         modelToAnswerAnswer.DiscussionId = Id;
+        modelToAnswerAnswer.MainParentPostId = post.MainParentPostId;
         modelToAnswerAnswer.ParentPostId = post.Id;
         var modelJson = JsonSerializer.Serialize(modelToAnswerAnswer, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");

@@ -17,27 +17,30 @@
             }
             else
             {
-                <div class="row">
-                    <div>
-                        <h5 class="rating">Ocena: @skillPost.Rating</h5>
-                        <a href="/skillPosts/@skillPost.Id/ratings" class="btn btn-warning">Pokaż oceny</a>
+                <div class="firstRow">
+                    <h5 class="rating">Ocena: @skillPost.Rating</h5>
+                    <a href="/skillPosts/@skillPost.Id/ratings" class="btn btn-warning">Pokaż oceny</a>
+                    @if (Rated)
+                    {
+                        <button class="btn btn-danger">Już oceniono</button>
+                    }
+                    else
+                    { 
                         <button @onclick="Rate" class="btn btn-danger">Oceń</button>
-                        <div class="buttons">
-                            @if (ShowRatingButtons)
-                            {
-                                <button class="btn btn-success" @onclick="() => AddRate(1)">1</button>
-                                <button class="btn btn-success" @onclick="() => AddRate(2)">2</button>
-                                <button class="btn btn-success" @onclick="() => AddRate(3)">3</button>
-                                <button class="btn btn-success" @onclick="() => AddRate(4)">4</button>
-                                <button class="btn btn-success" @onclick="() => AddRate(5)">5</button>
-                            }
-                        </div>
-                        <a href="/skillPosts" class="back">Powrót</a>
+                    }
+                    <div class="buttons">
+                        @if (ShowRatingButtons)
+                        {
+                            <button class="btn btn-success" @onclick="() => AddRate(1)">1</button>
+                            <button class="btn btn-success" @onclick="() => AddRate(2)">2</button>
+                            <button class="btn btn-success" @onclick="() => AddRate(3)">3</button>
+                            <button class="btn btn-success" @onclick="() => AddRate(4)">4</button>
+                            <button class="btn btn-success" @onclick="() => AddRate(5)">5</button>
+                        }
                     </div>
-
-
-                </div>
-
+                    <a href="/skillPosts" class="back">Powrót</a>
+                </div><br />
+                <br />
                 <h5>Tytuł: @skillPost.Title</h5>
                 <h5>Opis: @skillPost.Description</h5>
                 <h8>Data publikacji: @skillPost.PublishingDate</h8><br />
@@ -124,7 +127,7 @@
                         }
                         @foreach (var answerCom in AnswersToComment)
                         {
-                            if (answerCom.ParentCommentId == comment.Id)
+                            if (answerCom.MainParentCommentId == comment.Id)
                             {
                                 <div class="answerToCom">
                                     <div class="autorCom">@answerCom.Username </div>
@@ -167,7 +170,7 @@
                                 </div><br />
                                 @if (answerCom.ShowAnswerField)
                                 {
-                                    <EditForm EditContext="@editContextToAnswerAnswer" OnValidSubmit="() => HandleValidSubmitAnswerAnswerComment(comment)" @onreset="@HandleResetToAnswerAnswer">
+                                    <EditForm EditContext="@editContextToAnswerAnswer" OnValidSubmit="() => HandleValidSubmitAnswerAnswerComment(answerCom)" @onreset="@HandleResetToAnswerAnswer">
                                         <DataAnnotationsValidator />
                                         <div class="addAnswerComment">
                                             <label>Odpowiedz:</label>
@@ -197,6 +200,7 @@
     [Parameter]
     public int Id { get; set; }
     private SkillPostVm skillPost;
+    private List<RatingDto> ratings { get; set; } = new List<RatingDto>();
     private string user { get; set; }
     private List<CommentDto> AnswersToComment = new List<CommentDto>();
     private List<CommentDto> Comments = new List<CommentDto>();
@@ -212,6 +216,7 @@
     private EditContext contextToEditCom;
     private EditContext contextToEditAnswerCom;
     private bool ShowRatingButtons { get; set; } = false;
+    private bool Rated { get; set; } = false;
     private GiveLike giveLike = new GiveLike();
     private List<LikeDto> likes = new List<LikeDto>();
     private ModalParameters modalParameters { get; set; } = new ModalParameters();
@@ -220,9 +225,10 @@
         skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
         @foreach (var comment in skillPost.Comments)
         {
-            if (comment.ParentCommentId != null)
+            if (comment.MainParentCommentId != null)
             {
                 AnswersToComment.Add(comment);
+                Console.WriteLine(comment.CommentText);
             }
             else
             {
@@ -234,6 +240,24 @@
         editContextToAnswerAnswer = new EditContext(modelToAnswerAnswer);
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         user = authState.User.Identity.Name;
+
+
+        ListRatings ratingsToPost = new ListRatings();
+        ratingsToPost = await Http.GetFromJsonAsync<ListRatings>($"api/posts/{Id}/ratings");
+        ratings = ratingsToPost.RatingsPost.ToList();
+        foreach (var rat in ratings)
+        {
+            if (rat.Username == user)
+            {
+                Rated = true;
+                break;
+            }
+            else
+            {
+                Rated = false;
+            }
+        }
+        Console.WriteLine(Rated);
     }
 
     private ModalParameters GetParameters(CommentDto com)
@@ -245,6 +269,7 @@
     private async void HandleValidSubmit()
     {
         model.SkillPostId = Id;
+        model.MainParentCommentId = null;
         model.ParentCommentId = null;
         var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
@@ -255,6 +280,7 @@
     private async void HandleValidSubmitAnswerComment(CommentDto com)
     {
         modelToAnswer.SkillPostId = Id;
+        modelToAnswer.MainParentCommentId = com.Id;
         modelToAnswer.ParentCommentId = com.Id;
         var modelJson = JsonSerializer.Serialize(modelToAnswer, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
@@ -265,6 +291,7 @@
     private async void HandleValidSubmitAnswerAnswerComment(CommentDto com)
     {
         modelToAnswerAnswer.SkillPostId = Id;
+        modelToAnswerAnswer.MainParentCommentId = com.MainParentCommentId;
         modelToAnswerAnswer.ParentCommentId = com.Id;
         var modelJson = JsonSerializer.Serialize(modelToAnswerAnswer, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");

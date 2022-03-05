@@ -156,7 +156,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CommentsVm>> GetAllCommentsWhichUserGaveAsync(string username)
+        public async Task<ActionResult<UserCommentsVm>> GetAllCommentsWhichUserGaveAsync(string username)
         {
             var vm = await Mediator.Send(new GetUserCommentsQuery() { Username = username });
             return vm;

@@ -26,16 +26,19 @@
                         <button @onclick="() => WhichShow(1)"> @user.UserSkills Skills</button>
                     </div>
                     <div class="stats">
-                        <button @onclick="() => WhichShow(2)"> @user.UserComments Komentarzy</button>
+                        <button @onclick="() => WhichShow(2)"> @userCommentsToSkills.Count Komentarzy do Skill Posts</button>
                     </div>
                     <div class="stats">
-                        <button @onclick="() => WhichShow(3)"> @user.GavedRatings Wystawionych ocen</button>
+                        <button @onclick="() => WhichShow(3)"> @userAnswersToComments.Count Odpowiedzi do komentarzy</button>
                     </div>
                     <div class="stats">
-                        <button @onclick="() => WhichShow(4)"> @user.Discussions Dyskusji</button>
+                        <button @onclick="() => WhichShow(4)"> @user.GavedRatings Wystawionych ocen</button>
                     </div>
                     <div class="stats">
-                        <button @onclick="() => WhichShow(5)"> @user.Achievements Osiągnięć</button>
+                        <button @onclick="() => WhichShow(5)"> @user.Discussions Dyskusji</button>
+                    </div>
+                    <div class="stats">
+                        <button @onclick="() => WhichShow(6)"> @user.Achievements Osiągnięć</button>
                     </div>
                 </div>
 
@@ -45,15 +48,18 @@
                         <Skills SkillPosts="@skillPosts"></Skills>
                         break;
                     case 2:
-                        <p>akcja 2</p>
+                        <UserCommentsToSkills Comments="@userCommentsToSkills"></UserCommentsToSkills>
                         break;
                     case 3:
-                        <UserGavedRatings User="@Username" UserRatings="@userRatings"></UserGavedRatings>
+                        <UserAnswersToComments Comments="@userAnswersToComments"></UserAnswersToComments>
                         break;
                     case 4:
-                        <Discussions discussions="@discs"></Discussions>
+                        <UserGavedRatings UserRatings="@userRatings"></UserGavedRatings>
                         break;
                     case 5:
+                        <Discussions discussions="@discs"></Discussions>
+                        break;
+                    case 6:
                         <p>akcja 5</p>
                         break;
                 }
@@ -69,20 +75,40 @@
     public string Username { get; set; }
     private UserInformationVm user;
     private List<SkillPostDto> skillPosts { get; set; } = new List<SkillPostDto>();
+    private List<UserCommentDto> comments { get; set; } = new List<UserCommentDto>();
     private List<DiscussionDto> discs { get; set; } = new List<DiscussionDto>();
     private List<UserGavedRatingDto> userRatings { get; set; } = new List<UserGavedRatingDto>();
+    private List<UserCommentDto> userCommentsToSkills = new List<UserCommentDto>();
+    private List<UserCommentDto> userAnswersToComments = new List<UserCommentDto>();
     private int action = 1;
 
     protected override async Task OnInitializedAsync()
     {
         user = await Http.GetFromJsonAsync<UserInformationVm>($"api/users/{Username}");
+
         ListSkillPosts skills = new ListSkillPosts();
         skills = await Http.GetFromJsonAsync<ListSkillPosts>($"api/users/{Username}/skills");
         skillPosts = skills.SkillPosts.ToList();
 
+        ListUserComments userCom = new ListUserComments();
+        userCom = await Http.GetFromJsonAsync<ListUserComments>($"api/users/{Username}/comments");
+        comments = userCom.Comments.ToList();
+
         ListGavedRatings listRatings = new ListGavedRatings();
         listRatings = await Http.GetFromJsonAsync<ListGavedRatings>($"api/users/{Username}/ratings");
         userRatings = listRatings.Ratings.ToList();
+
+        foreach (var com in comments)
+        {
+            if(com.MainParentCommentId == null)
+            {
+                userCommentsToSkills.Add(com);
+            }
+            else
+            {
+                userAnswersToComments.Add(com);
+            }
+        }
 
         ListDiscussions listDiscs = new ListDiscussions();
         listDiscs = await Http.GetFromJsonAsync<ListDiscussions>($"api/users/{Username}/discussions");

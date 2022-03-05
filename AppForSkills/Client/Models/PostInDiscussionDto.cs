@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AppForSkills.Client.Models
 {
@@ -11,6 +9,7 @@ namespace AppForSkills.Client.Models
         public string Username { get; set; }
         public DateTime Date { get; set; }
         public string PostText { get; set; }
+        public int? MainParentPostId { get; set; }
         public int? ParentPostId { get; set; }
         public ICollection<LikeDto> Likes { get; set; }
         public int StatusId { get; set; }

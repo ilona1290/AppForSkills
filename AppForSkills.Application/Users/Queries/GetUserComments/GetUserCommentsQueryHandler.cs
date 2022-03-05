@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
+using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AppForSkills.Application.Users.Queries.GetUserComments
 {
-    public class GetUserCommentsQueryHandler : IRequestHandler<GetUserCommentsQuery, CommentsVm>
+    public class GetUserCommentsQueryHandler : IRequestHandler<GetUserCommentsQuery, UserCommentsVm>
     {
         private readonly IAppForSkillsDbContext _context;
         private readonly IMapper _mapper;
@@ -19,10 +20,10 @@ namespace AppForSkills.Application.Users.Queries.GetUserComments
             _mapper = mapper;
         }
 
-        public async Task<CommentsVm> Handle(GetUserCommentsQuery request, CancellationToken cancellationToken)
+        public async Task<UserCommentsVm> Handle(GetUserCommentsQuery request, CancellationToken cancellationToken)
         {
-            var comments = _context.Comments.Where(c => c.StatusId == 1 && c.CreatedBy == request.Username)
-                .OrderByDescending(c => c.Created);
+            var comments = _context.Comments.Where(c => c.StatusId == 1 && c.CreatedBy == request.Username).Include(r => r.Likes)
+                .OrderByDescending(s => s.Created);
 
             var commentsDtos = await comments.ProjectTo<UserCommentDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
@@ -31,12 +32,14 @@ namespace AppForSkills.Application.Users.Queries.GetUserComments
             {
                 if (comment.ParentCommentId != null)
                 {
-                    comment.ParentCommentText = _context.Comments.FirstOrDefault(c => c.Id == comment.ParentCommentId)
-                        .CommentText;
+                    var parentComment = await _context.Comments.Where(s => s.StatusId == 1 && s.Id == comment.ParentCommentId)
+                        .FirstOrDefaultAsync(cancellationToken);
+                    var parentCommentVm = _mapper.Map<CommentDto>(parentComment);
+                    comment.ParentComment = parentCommentVm;
                 }
             }
 
-            var commentsVm = new CommentsVm
+            var commentsVm = new UserCommentsVm
             {
                 Comments = commentsDtos
             };
