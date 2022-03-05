@@ -1,8 +1,6 @@
 ﻿@using AppForSkills.Client.Models
 @inject HttpClient Http
 
-<h3>Użytkownik @User ocenił post</h3><br />
-
 @foreach (var rating in UserRatings)
 {
     <div>
@@ -29,6 +27,4 @@
 @code {
     [Parameter]
     public List<UserGavedRatingDto> UserRatings { get; set; } = new List<UserGavedRatingDto>();
-    [Parameter]
-    public string User { get; set; }
 }

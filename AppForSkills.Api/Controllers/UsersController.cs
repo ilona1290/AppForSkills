@@ -8,6 +8,7 @@ using AppForSkills.Application.Users.Commands.CreateUser;
 using AppForSkills.Application.Users.Commands.UpdateLoginDate;
 using AppForSkills.Application.Users.Queries.GetUserAchievements;
 using AppForSkills.Application.Users.Queries.GetUserComments;
+using AppForSkills.Application.Users.Queries.GetUserDiscussionPosts;
 using AppForSkills.Application.Users.Queries.GetUserDiscussions;
 using AppForSkills.Application.Users.Queries.GetUserInformation;
 using AppForSkills.Application.Users.Queries.GetUserRatings;
@@ -147,7 +148,7 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Returns all comments, which user gave to other users. 
+        /// Returns all comments, which user gave. 
         /// </summary>
         [Route("{username}/comments")]
         [HttpGet]
@@ -191,6 +192,22 @@ namespace AppForSkills.Api.Controllers
         public async Task<ActionResult<DiscussionsVm>> GetDiscussionsWithUserAsync(string username)
         {
             var vm = await Mediator.Send(new GetUserDiscussionsQuery() { Username = username });
+            return vm;
+        }
+
+        /// <summary>
+        /// Returns all discussion posts, which user gave. 
+        /// </summary>
+        [Route("{username}/discussionPosts")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult<UserDiscussionPostsVm>> GetAllDiscussionPostsWhichUserGaveAsync(string username)
+        {
+            var vm = await Mediator.Send(new GetUserDiscussionPostsQuery() { Username = username });
             return vm;
         }
 

@@ -1,8 +1,6 @@
 ﻿@using AppForSkills.Client.Models
 @inject IModalService modal
 
-<h3>Użytkownik @User skomentował post</h3><br />
-
 @foreach (var comment in Comments)
 {
     <a href="skillPosts/@comment.SkillId">
@@ -30,8 +28,6 @@
 @code {
     [Parameter]
     public List<UserCommentDto> Comments { get; set; } = new List<UserCommentDto>();
-    [Parameter]
-    public string User { get; set; }
     private ModalParameters modalParameters { get; set; } = new ModalParameters();
 
     private ModalParameters GetParameters(UserCommentDto com)
