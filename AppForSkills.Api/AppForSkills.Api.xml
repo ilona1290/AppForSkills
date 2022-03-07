@@ -82,6 +82,16 @@
             Adds a skill.
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.EditUserSkill(AppForSkills.Application.SkillPosts.Commands.EditSkillPost.EditSkillPostCommand)">
+            <summary>
+            Edits selected user posts. 
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.PostsController.DeleteUserSkill(System.Int32)">
+            <summary>
+            Deletes selected user posts. 
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.GetAllRatingsAsync(System.Int32)">
             <summary>
             Returns all ratings to skill.
@@ -165,16 +175,6 @@
         <member name="M:AppForSkills.Api.Controllers.UsersController.GetUserSkillAsync(System.Int32)">
             <summary>
             Returns selected user posts. 
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.EditUserSkill(AppForSkills.Application.SkillPosts.Commands.EditSkillPost.EditSkillPostCommand)">
-            <summary>
-            Edits selected user posts. 
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.DeleteUserSkill(System.Int32)">
-            <summary>
-            Deletes selected user posts. 
             </summary>
         </member>
         <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllRatingsWhichUserGaveAsync(System.String)">

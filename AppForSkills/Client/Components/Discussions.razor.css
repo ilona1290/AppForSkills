@@ -19,9 +19,17 @@
 }
 
 .buttonDisc {
-    padding-top: 1%;
+    padding-bottom: 2%;
     float: right;
     margin-right: 1%;
+}
+
+.link {
+    color: white;
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    cursor: pointer;
 }
 
 .numlikes {

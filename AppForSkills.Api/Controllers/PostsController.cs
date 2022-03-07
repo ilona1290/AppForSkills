@@ -6,8 +6,10 @@ using AppForSkills.Application.SkillPosts.Commands.CreateRating;
 using AppForSkills.Application.SkillPosts.Commands.CreateSkillPost;
 using AppForSkills.Application.SkillPosts.Commands.DeleteComment;
 using AppForSkills.Application.SkillPosts.Commands.DeleteRating;
+using AppForSkills.Application.SkillPosts.Commands.DeleteSkillPost;
 using AppForSkills.Application.SkillPosts.Commands.EditComment;
 using AppForSkills.Application.SkillPosts.Commands.EditRating;
+using AppForSkills.Application.SkillPosts.Commands.EditSkillPost;
 using AppForSkills.Application.SkillPosts.Queries.GetRatingsToSkillPost;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
@@ -67,6 +69,38 @@ namespace AppForSkills.Api.Controllers
         public async Task<ActionResult> AddSkill([FromBody] CreateSkillPostCommand command)
         {
             var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Edits selected user posts. 
+        /// </summary>
+        [Route("{id}")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> EditUserSkill(EditSkillPostCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Deletes selected user posts. 
+        /// </summary>
+        [Route("{id}")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> DeleteUserSkill(int id)
+        {
+            var result = await Mediator.Send(new DeleteSkillPostCommand() { SkillPostId = id });
             return Ok(result);
         }
 

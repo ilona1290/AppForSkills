@@ -19,7 +19,7 @@
             else
             {
                 <div class="firstRow">
-                    <h4 class="topic">Użytkownik @@@discussion.Username rozpoczyna temat: @discussion.FirstPost</h4>
+                    <h4 class="topic">Użytkownik <a class="link" href="/users/@discussion.Username">@@@discussion.Username </a> rozpoczyna temat: @discussion.FirstPost</h4>
                     <div class="back"><a class="btn btn-success" href="discussions">Powrót</a></div>
                 </div>
                 <h6>Data publikacji: @discussion.PublishingDate</h6><br />
@@ -41,7 +41,7 @@
                     if (Posts.Contains(post))
                     {
                         <div class="posts">
-                            <div class="autorPost">@post.Username </div>
+                            <a href="/users/@post.Username" class="link"><div class="autorPost">@post.Username </div></a>
                             <div class="datePost">@post.Date</div>
                             @if (post.StatusId == 1)
                             {
@@ -54,7 +54,7 @@
                                 {
                                     <input type="checkbox" checked @onclick="() => Dislike(post, IfUserGaveLike(post))" />
                                 }
-                                <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(post)))" class="linkLike">@post.Likes.Count</button></div>
+                                <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(post)))" class="link">@post.Likes.Count</button></div>
                                 <button @onclick="() => Answer(post)" class="modPostBut">Odpowiedz</button>
                             }
                             else
@@ -108,7 +108,7 @@
                             @if (answerPost.MainParentPostId == post.Id)
                             {
                                 <div class="answerToPost">
-                                    <div class="autorPost">@answerPost.Username </div>
+                                    <a href="/users/@answerPost.Username" class="link"><div class="autorPost">@answerPost.Username </div></a>
                                     <div class="datePost">@answerPost.Date</div><br />
                                     @if (answerPost.StatusId == 1)
                                     {
@@ -121,7 +121,7 @@
                                         {
                                             <input type="checkbox" checked @onclick="() => Dislike(answerPost, IfUserGaveLike(answerPost))" />
                                         }
-                                        <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(answerPost)))" class="linkLike">@answerPost.Likes.Count</button></div>
+                                        <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(answerPost)))" class="link">@answerPost.Likes.Count</button></div>
                                         <button @onclick="() => Answer(answerPost)" class="modPostBut">Odpowiedz</button>
                                     }
                                     else

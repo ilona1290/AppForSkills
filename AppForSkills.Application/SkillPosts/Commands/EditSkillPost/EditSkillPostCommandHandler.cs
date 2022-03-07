@@ -13,12 +13,10 @@ namespace AppForSkills.Application.SkillPosts.Commands.EditSkillPost
     public class EditSkillPostCommandHandler : IRequestHandler<EditSkillPostCommand>
     {
         private readonly IAppForSkillsDbContext _context;
-        private readonly IFileStore _fileStore;
 
-        public EditSkillPostCommandHandler(IAppForSkillsDbContext context, IFileStore fileStore)
+        public EditSkillPostCommandHandler(IAppForSkillsDbContext context)
         {
             _context = context;
-            _fileStore = fileStore;
         }
 
         public async Task<Unit> Handle(EditSkillPostCommand request, CancellationToken cancellationToken)
@@ -31,32 +29,9 @@ namespace AppForSkills.Application.SkillPosts.Commands.EditSkillPost
                     "Give another id.");
             }
 
-            var bytes = _fileStore.FormFileToBytesArray(request.Skill);
-
-            var fileExisted = File.ReadAllBytes(skillPost.AddressOfPhotoOrVideo);
-            var theSame = bytes.SequenceEqual(fileExisted);
-            if (!theSame)
-            {
-                File.Delete(skillPost.AddressOfPhotoOrVideo);
-                var extension = Path.GetExtension(request.Skill.FileName).Remove(0, 1);
-                if (FileExtension.IsImage(extension))
-                {
-                    var fileDir = _fileStore.SafeWriteFile(bytes, request.Skill.FileName, "Images");
-                    skillPost.AddressOfPhotoOrVideo = "Images\\" + request.Skill.FileName;
-                }
-                else if (FileExtension.IsVideo(extension))
-                {
-                    var fileDir = _fileStore.SafeWriteFile(bytes, request.Skill.FileName, "Videos");
-                    skillPost.AddressOfPhotoOrVideo = "Videos\\" + request.Skill.FileName;
-                }
-                else
-                {
-                    new Exception("Unsupported file format");
-                }
-            }
-
             skillPost.Title = request.Title;
             skillPost.Description = request.Description;
+            skillPost.AddressOfPhotoOrVideo = request.Skill;
 
             await _context.SaveChangesAsync(cancellationToken);
 

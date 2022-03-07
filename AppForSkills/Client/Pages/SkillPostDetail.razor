@@ -43,7 +43,7 @@
                 <br />
                 <h5>Tytuł: @skillPost.Title</h5>
                 <h5>Opis: @skillPost.Description</h5>
-                <h8>Data publikacji: @skillPost.PublishingDate</h8><br />
+                <h6>Data publikacji: @skillPost.PublishingDate</h6><br />
                 @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
                 {
                     <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 550px; height: auto; " />
@@ -54,7 +54,7 @@
                         <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
                     </video>
                 }
-                <h4>Autor: @skillPost.Username</h4><br /><br />
+                <a href="/users/@skillPost.Username" class="link"><h4>Autor: @skillPost.Username</h4><br /><br /></a>
 
                 <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
                     <DataAnnotationsValidator />
@@ -73,7 +73,7 @@
                     if (Comments.Contains(comment))
                     {
                         <div class="comments">
-                            <div class="autorCom">@comment.Username </div>
+                            <a href="/users/@skillPost.Username" class="link"><div class="autorCom">@comment.Username </div></a>
                             <div class="dateCom">@comment.Date</div>
                             <div>@comment.CommentText</div>
                             @if (IfUserGaveLike(comment) == null)
@@ -84,7 +84,7 @@
                             {
                                 <input type="checkbox" checked @onclick="() => Dislike(comment, IfUserGaveLike(comment))" />
                             }
-                            <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(comment)))" class="linkLike">@comment.Likes.Count</button></div>
+                            <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(comment)))" class="link">@comment.Likes.Count</button></div>
                             <button @onclick="() => Answer(comment)" class="modComBut">Odpowiedz</button>
                             @if (comment.Username == user)
                             {
@@ -130,7 +130,7 @@
                             if (answerCom.MainParentCommentId == comment.Id)
                             {
                                 <div class="answerToCom">
-                                    <div class="autorCom">@answerCom.Username </div>
+                                    <a href="/users/@skillPost.Username" class="link"><div class="autorCom">@answerCom.Username </div></a>
                                     <div class="dateCom">@answerCom.Date</div><br />
                                     <div>@answerCom.CommentText</div>
                                     @if (IfUserGaveLike(answerCom) == null)
@@ -141,7 +141,7 @@
                                     {
                                         <input type="checkbox" checked @onclick="() => Dislike(answerCom, IfUserGaveLike(answerCom))" />
                                     }
-                                    <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(answerCom)))" class="linkLike">@answerCom.Likes.Count</button></div>
+                                    <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(answerCom)))" class="link">@answerCom.Likes.Count</button></div>
                                     <button @onclick="() => Answer(answerCom)" class="modComBut">Odpowiedz</button>
                                     @if (answerCom.Username == user)
                                     {

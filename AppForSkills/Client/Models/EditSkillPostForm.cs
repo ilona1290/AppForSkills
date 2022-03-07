@@ -1,9 +1,11 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace AppForSkills.Application.SkillPosts.Commands.EditSkillPost
+namespace AppForSkills.Client.Models
 {
-    public class EditSkillPostCommand : IRequest
+    public class EditSkillPostForm
     {
         public int Id { get; set; }
         public string Title { get; set; }

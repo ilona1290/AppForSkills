@@ -100,38 +100,6 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Edits selected user posts. 
-        /// </summary>
-        [Route("{username}/skills/{id}")]
-        [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<ActionResult> EditUserSkill([FromForm] EditSkillPostCommand command)
-        {
-            var result = await Mediator.Send(command);
-            return Ok(result);
-        }
-
-        /// <summary>
-        /// Deletes selected user posts. 
-        /// </summary>
-        [Route("{username}/skills/{id}")]
-        [HttpDelete]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<ActionResult> DeleteUserSkill(int id)
-        {
-            var result = await Mediator.Send(new DeleteSkillPostCommand() { SkillPostId = id });
-            return Ok(result);
-        }
-
-        /// <summary>
         /// Returns all ratings, which user gave to other users. 
         /// </summary>
         [Route("{username}/ratings")]

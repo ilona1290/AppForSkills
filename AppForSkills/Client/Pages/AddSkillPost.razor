@@ -22,11 +22,12 @@
                 <ValidationMessage For="@(() => model.Description)" />
             </div>
             <br />
-            <p>Zdjęcie lub video Twojego Skilla:</p>
-            <div class="form-row">
+            <p>Zdjęcie lub video Twojego Skilla: </p>
+            <div>
                 <InputFile OnChange="@HandleSelected" />
                 @if (FileUrl != null)
                 {
+                    <br /><br />
                     <div>
                         @if (FileType == "image/png" || FileType == "image/jpg")
                         {
