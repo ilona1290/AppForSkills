@@ -32,9 +32,13 @@ namespace WebApi.Integration.Tests.Controllers.Users
             var response = await client.PostAsync($"/api/users/create-user", await Utilities.SendObjectAsContent(user));
             response.EnsureSuccessStatusCode();
 
-            var responseAfterCreate = await client.GetAsync($"/api/users/{user.Username}");
-            responseAfterCreate.EnsureSuccessStatusCode();
-            var vm = await Utilities.GetResponseContent<UserInformationVm>(responseAfterCreate);
+            var id = await Utilities.GetResponseContent<int>(response);
+
+            id.ShouldBe(6);
+
+            var responseAfterUpdate = await client.GetAsync($"/api/users/{user.Username}");
+            responseAfterUpdate.EnsureSuccessStatusCode();
+            var vm = await Utilities.GetResponseContent<UserInformationVm>(responseAfterUpdate);
             vm.Username.ShouldBe(user.Username);
         }
     }

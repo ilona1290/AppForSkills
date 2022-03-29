@@ -22,33 +22,15 @@ namespace WebApi.Integration.Tests.Controllers.Users
         public async Task GivenSkillPostWithDiffrentImage_Update()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            var username = "Podróżnik";
             var skillPost = new EditSkillPostCommand()
             {
                 Id = 2,
                 Title = "Wieża Eiffla",
-                Description = "Zdjęcie Wieży Eiffla"
+                Description = "Zdjęcie Wieży Eiffla",
+                Skill = "https://app.blob.core.windows.net/upload-container/picture1.jpg"
             };
 
-            var path = "ImagesToTest\\Wieza_Eiffla_2.jpg";
-            var filename = "Wieza_Eiffla_2.jpg";
-            var httpContent = new MultipartFormDataContent();
-            var fileContent = new ByteArrayContent(File.ReadAllBytes(path));
-            fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
-
-            // Add Skill property with file content
-            httpContent.Add(fileContent, "Skill", filename);
-
-            // Add Title property with its value
-            httpContent.Add(new StringContent(skillPost.Title), "Title");
-
-            // Add Description property with its value.
-            httpContent.Add(new StringContent(skillPost.Description), "Description");
-
-            // Add Id property with its value.
-            httpContent.Add(new StringContent(skillPost.Id.ToString()), "Id");
-
-            HttpResponseMessage response = await client.PutAsync($"/api/users/{username}/skills/{skillPost.Id}", httpContent);
+            HttpResponseMessage response = await client.PutAsync($"/api/posts/{skillPost.Id}", await Utilities.SendObjectAsContent(skillPost));
 
             response.EnsureSuccessStatusCode();
         }

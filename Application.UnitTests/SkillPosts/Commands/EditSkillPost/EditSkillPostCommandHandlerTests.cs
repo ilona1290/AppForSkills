@@ -23,36 +23,21 @@ namespace Application.UnitTests.SkillPosts.Commands.EditSkillPost
         [Fact]
         public async Task Handle_GivenValidRequest_ShouldEditWithChangingImageSkillPost()
         {
-            var mockFileStore = new Mock<IFileStore>();
-            var fileStore = mockFileStore.Object;
-
-            var mockFile = new Mock<IFormFile>();
-            mockFile.Setup(m => m.FileName).Returns("Wieza_Eiffla_2.jpg");
-            var skill = mockFile.Object;
-
-            var extensionMock = new Mock<IPath>();
-            extensionMock.Setup(s => s.GetExtension(skill.FileName)).Returns(".jpg");
-
-            byte[] newImage = File.ReadAllBytes("ImagesToTest\\Wieza_Eiffla_2.jpg");
-            mockFileStore.Setup(s => s.FormFileToBytesArray(skill)).Returns(newImage);
-
             var command = new EditSkillPostCommand()
             {
                 Id = 2,
                 Title = "Zdjęcie Wieży Eiffla",
                 Description = "Przesyłam wykonane przeze mnie zdjęcie Wieży Eiffla",
-                Skill = skill
+                Skill = "https://app.blob.core.windows.net/upload-container/picture.jpg"
             };
 
-            mockFileStore.Setup(s => s.SafeWriteFile(newImage, skill.FileName, "Images")).Returns("Images");
-
-            var _handler = new EditSkillPostCommandHandler(_context, fileStore);
+            var _handler = new EditSkillPostCommandHandler(_context);
 
             var result = await _handler.Handle(command, CancellationToken.None);
 
             var skillPost = await _context.SkillPosts.FirstAsync(x => x.Id == command.Id, CancellationToken.None);
             skillPost.ShouldNotBeNull();
-            skillPost.AddressOfPhotoOrVideo.ShouldBe("Images\\Wieza_Eiffla_2.jpg");
+            skillPost.AddressOfPhotoOrVideo.ShouldBe("https://app.blob.core.windows.net/upload-container/picture.jpg");
         }
     }
 }

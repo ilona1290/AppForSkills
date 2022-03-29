@@ -22,33 +22,10 @@ namespace AppForSkills.Application.SkillPosts.Commands.DeleteComment
             var comment = await _context.Comments.Where(c => c.StatusId == 1 && c.Id == request.CommentId)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            var comments = await _context.Comments.Where(c => c.StatusId == 1 && c.ParentCommentId == comment.Id)
-                .ToListAsync(cancellationToken);
-
             if (comment == null)
             {
                 throw new WrongIDException("Comment with gaved id could not delete, because not exists in database. " +
                     "Give another id.");
-            }
-
-            if (comment.Likes != null)
-            {
-                foreach (var like in comment.Likes)
-                {
-                    _context.Likes.Remove(like);
-                }
-            }
-
-            foreach (var com in comments)
-            {
-                if (com.Likes != null)
-                {
-                    foreach (var like in com.Likes)
-                    {
-                        _context.Likes.Remove(like);
-                    }
-                }
-                _context.Comments.Remove(com);
             }
 
             _context.Comments.Remove(comment);

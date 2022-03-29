@@ -12,6 +12,7 @@ namespace AppForSkills.Client.Models
         public int? MainParentCommentId { get; set; }
         public int? ParentCommentId { get; set; }
         public ICollection<LikeDto> Likes { get; set; }
+        public int StatusId { get; set; }
         public bool ShowAnswerField { get; set; } = false;
         public bool ShowEditComField { get; set; } = false;
     }

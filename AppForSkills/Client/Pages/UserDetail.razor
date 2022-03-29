@@ -7,8 +7,6 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject HttpClient Http
 
-<h3>UserDetail</h3>
-
 <div class="page">
     <AuthorizeView>
         <Authorized Context="Auth">
@@ -18,9 +16,9 @@
             }
             else
             {
-                <h3>@user.Username</h3>
-                <h6>@user.RegistrationDate</h6>
-                <h6>@user.RecentLoginDate</h6>
+                <h3>Użytkownik: @user.Username</h3>
+                <h6>Data rejestracji: @user.RegistrationDate</h6>
+                <h6>Data ostatniego logowania: @user.RecentLoginDate</h6>
                 <div class="mainRow">
                     <div class="stats">
                         <button class="btn btn-success" @onclick="() => WhichShow(1)"> @user.UserSkills Skills</button>

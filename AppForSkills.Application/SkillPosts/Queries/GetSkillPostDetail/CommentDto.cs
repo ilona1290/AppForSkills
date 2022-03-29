@@ -15,6 +15,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
         public DateTime Date { get; set; }
         public int? MainParentCommentId { get; set; }
         public int? ParentCommentId { get; set; }
+        public int StatusId { get; set; }
         public ICollection<LikeDto> Likes { get; set; }
 
         public void Mapping(Profile profile)

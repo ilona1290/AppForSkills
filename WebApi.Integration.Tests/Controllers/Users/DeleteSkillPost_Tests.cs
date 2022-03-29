@@ -22,8 +22,7 @@ namespace WebApi.Integration.Tests.Controllers.Users
             var client = await _factory.GetAuthenticatedClientAsync();
 
             string skillPostId = "2";
-            string username = "Podróżnik";
-            var response = await client.DeleteAsync($"api/users/{username}/skills/{skillPostId}");
+            var response = await client.DeleteAsync($"api/posts/{skillPostId}");
             response.EnsureSuccessStatusCode();
         }
 
@@ -32,10 +31,9 @@ namespace WebApi.Integration.Tests.Controllers.Users
         {
             var client = await _factory.GetAuthenticatedClientAsync();
             string skillPostId = "100";
-            string username = "Podróżnik";
 
             var error = Should.Throw<WrongIDException>(async () => await client
-                .DeleteAsync($"api/users/{username}/skills/{skillPostId}"));
+                .DeleteAsync($"api/posts/{skillPostId}"));
 
             error.Message.ShouldBe("Skill Post with gaved id could not delete, because not exists in database. " +
                     "Give another id.");

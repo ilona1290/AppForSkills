@@ -1,7 +1,23 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@*<h1>App For Skills</h1>*@
 
-Welcome to your new app.
-<SurveyPrompt Title="How is Blazor working for you?" />
+<AuthorizeView>
+    <Authorized>
+        <div class="welcome">
+            <h3>
+                W zakładce Strona Główna możesz przejrzeć SkillPosty. W zakładce Forum możesz udział wziąć w różnorakich
+                dyskusjach, albo stworzyć nową.
+            </h3>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="welcome">
+            <h3>
+                Aby mieć dostęp do pozostałych zakładek musisz się zalogować, a jeżeli nie masz konta, zarejestruj się.
+                Przycisk do rejestracji jest dostępny po kliknięciu w przycisk zaloguj. 
+            </h3>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
 

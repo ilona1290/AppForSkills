@@ -4,19 +4,18 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
-<h3>Discussions</h3>
 
 @foreach (var discussion in discussions)
 {
     <div class="discussions">
-        <a href="/users/@discussion.Username" class="link"><h4 class="autorDisc"> Rozpoczynający dyskusję: @discussion.Username</h4></a>
+        <a href="/users/@discussion.Username" class="link"><h4 class="font-weight-bold"> Rozpoczynający dyskusję: @discussion.Username</h4></a>
         @if (user == discussion.Username)
         {
             <div class="buttonDisc"><button class="btn btn-danger" @onclick="() => Delete(discussion.Id)">Usuń</button></div>
             <div class="buttonDisc"><button class="btn btn-primary" @onclick="() => CreateModelEdit(discussion)">Edytuj</button></div>
         }
         <div class="buttonDisc"><a class="btn btn-success" href="discussions/@discussion.Id">Dołącz</a></div>
-        <a href="discussions/@discussion.Id">
+        <a href="discussions/@discussion.Id" class="link">
             <h4>@discussion.FirstPost</h4>
             <h4 class="numlikes">&#128077; @discussion.Likes</h4>
             <h4 class="numPosts">&#128488; @discussion.Posts</h4>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AppForSkills.Application.Users.Commands.CreateUser
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
     {
         private readonly IAppForSkillsDbContext _context;
         private readonly IMapper _mapper;
@@ -18,7 +18,7 @@ namespace AppForSkills.Application.Users.Commands.CreateUser
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var user = _mapper.Map<User>(request);
 
@@ -28,7 +28,7 @@ namespace AppForSkills.Application.Users.Commands.CreateUser
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return user.Id;
         }
     }
 }

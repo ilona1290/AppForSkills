@@ -75,25 +75,35 @@
                         <div class="comments">
                             <a href="/users/@skillPost.Username" class="link"><div class="autorCom">@comment.Username </div></a>
                             <div class="dateCom">@comment.Date</div>
-                            <div>@comment.CommentText</div>
-                            @if (IfUserGaveLike(comment) == null)
+                            @if (comment.StatusId == 1)
                             {
-                                <input type="checkbox" @onclick="() => Like(comment)" />
+                                <div>@comment.CommentText</div>
+                                @if (IfUserGaveLike(comment) == null)
+                                {
+                                    <input type="checkbox" @onclick="() => Like(comment)" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" checked @onclick="() => Dislike(comment, IfUserGaveLike(comment))" />
+                                }
+                                <div class="like"><button @onclick="@(() => modal.Show<Likes>("Polubienia", GetParameters(comment)))" class="link">@comment.Likes.Count</button></div>
+                                <button @onclick="() => Answer(comment)" class="modComBut">Odpowiedz</button>
                             }
                             else
                             {
-                                <input type="checkbox" checked @onclick="() => Dislike(comment, IfUserGaveLike(comment))" />
+                                <div>[Usunięto]</div>
                             }
-                            <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(comment)))" class="link">@comment.Likes.Count</button></div>
-                            <button @onclick="() => Answer(comment)" class="modComBut">Odpowiedz</button>
                             @if (comment.Username == user)
                             {
-                                <div class="modCom">
-                                    <button @onclick="() => CreateModelEdit(comment)" class="modComBut">Edytuj</button>
-                                </div>
-                                <div class="modCom">
-                                    <button @onclick="() => Delete(comment.Id)" class="modComBut">Usuń</button>
-                                </div>
+                                @if (comment.StatusId == 1)
+                                { 
+                                    <div class="modCom">
+                                        <button @onclick="() => CreateModelEdit(comment)" class="modComBut">Edytuj</button>
+                                    </div>
+                                    <div class="modCom">
+                                        <button @onclick="() => Delete(comment.Id)" class="modComBut">Usuń</button>
+                                    </div>
+                                }
                                 @if (comment.ShowEditComField)
                                 {
                                     <EditForm EditContext="@contextToEditCom" OnValidSubmit="EditComment" @onreset="@HandleResetEditComment">
@@ -132,25 +142,35 @@
                                 <div class="answerToCom">
                                     <a href="/users/@skillPost.Username" class="link"><div class="autorCom">@answerCom.Username </div></a>
                                     <div class="dateCom">@answerCom.Date</div><br />
-                                    <div>@answerCom.CommentText</div>
-                                    @if (IfUserGaveLike(answerCom) == null)
-                                    {
-                                        <input type="checkbox" @onclick="() => Like(answerCom)" />
+                                    @if(answerCom.StatusId == 1)
+                                    { 
+                                        <div>@answerCom.CommentText</div>
+                                        @if (IfUserGaveLike(answerCom) == null)
+                                        {
+                                            <input type="checkbox" @onclick="() => Like(answerCom)" />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" checked @onclick="() => Dislike(answerCom, IfUserGaveLike(answerCom))" />
+                                        }
+                                        <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(answerCom)))" class="link">@answerCom.Likes.Count</button></div>
+                                        <button @onclick="() => Answer(answerCom)" class="modComBut">Odpowiedz</button>
                                     }
                                     else
                                     {
-                                        <input type="checkbox" checked @onclick="() => Dislike(answerCom, IfUserGaveLike(answerCom))" />
+                                        <div>[Usunięto]</div>
                                     }
-                                    <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(answerCom)))" class="link">@answerCom.Likes.Count</button></div>
-                                    <button @onclick="() => Answer(answerCom)" class="modComBut">Odpowiedz</button>
                                     @if (answerCom.Username == user)
                                     {
-                                        <div class="modCom">
-                                            <button @onclick="() => CreateModelEdit(answerCom)" class="modComBut">Edytuj</button>
-                                        </div>
-                                        <div class="modCom">
-                                            <button @onclick="() => Delete(answerCom.Id)" class="modComBut">Usuń</button>
-                                        </div><br />
+                                        @if (answerCom.StatusId == 1)
+                                        { 
+                                            <div class="modCom">
+                                                <button @onclick="() => CreateModelEdit(answerCom)" class="modComBut">Edytuj</button>
+                                            </div>
+                                            <div class="modCom">
+                                                <button @onclick="() => Delete(answerCom.Id)" class="modComBut">Usuń</button>
+                                            </div><br />
+                                        }
                                         @if (answerCom.ShowEditComField)
                                         {
                                             <EditForm EditContext="@contextToEditAnswerCom" OnValidSubmit="EditAnswerComment" @onreset="@HandleResetEditAnswerComment">
