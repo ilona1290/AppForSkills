@@ -219,16 +219,16 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Returns all likes to comment.
-        /// <param name="idComment">Id of comment, which likes user wants to get</param>
+        /// Returns all likes from comment.
         /// </summary>
+        /// <param name="idComment">Id of comment, which likes user wants to get</param>
         [Route("{id}/comments/{idComment}/likes")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<LikesVm>> GetLikesToCommentAsync(int idComment)
+        public async Task<ActionResult<LikesVm>> GetLikesFromCommentAsync(int idComment)
         {
             var vm = await Mediator.Send(new GetLikesQuery() { CommentId = idComment, DiscussionId = null, PostInDiscussionId = null });
             return vm;

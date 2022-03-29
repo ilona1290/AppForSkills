@@ -100,6 +100,55 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
+        /// Returns all likes from discussion.
+        /// </summary>
+        /// ///<param name="id">Id of discussion, which likes user wants to get</param>
+        [Route("{id}/likes")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<LikesVm>> GetLikesFromDiscussionAsync(int id)
+        {
+            var vm = await Mediator.Send(new GetLikesQuery() { CommentId = null, DiscussionId = id, PostInDiscussionId = null });
+            return vm;
+        }
+
+        /// <summary>
+        /// Gives like to discussion.
+        /// </summary>
+        [Route("{id}/likes")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> LikeToDiscussionAsync(GiveLikeCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Deletes like from discussion.
+        /// </summary>
+        /// /// <param name="idLike">Id of like, which user wants to remove</param>
+        [Route("{id}/likes/{idLike}")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> DislikeDiscussion(int idLike)
+        {
+            var result = await Mediator.Send(new UnlikeCommand() { LikeId = idLike });
+            return Ok(result);
+        }
+
+        /// <summary>
         /// Adds post to discussion.
         /// </summary>
         [Route("{id}/posts")]
@@ -148,9 +197,10 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Returns all likes to comment.
-        /// <param name="idPost">Id of Post, which likes user wants to get</param>
+        /// Returns all likes from post in discussion.
         /// </summary>
+        /// ///<param name="idPost">Id of Post, which likes user wants to get</param>
+
         [Route("{id}/posts/{idPost}/likes")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -180,7 +230,7 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Deletes like.
+        /// Deletes like from post in discussion.
         /// </summary>
         /// /// <param name="idLike">Id of like, which user wants to remove</param>
         [Route("{id}/posts/likes/{idLike}")]

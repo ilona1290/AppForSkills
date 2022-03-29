@@ -23,7 +23,15 @@
                     <div class="back"><a class="btn btn-success" href="discussions">Powrót</a></div>
                 </div>
                 <h6>Data publikacji: @discussion.PublishingDate</h6><br />
-
+                @if (IfUserGaveLikeToDiscussion(discussion) == null)
+                {
+                    <input type="checkbox" @onclick="() => LikeDiscussion(discussion)" />
+                }
+                else
+                {
+                    <input type="checkbox" checked @onclick="() => DislikeDiscussion(discussion, IfUserGaveLikeToDiscussion(discussion))" />
+                }
+                <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParametersDiscussion(discussion)))" class="link">@discussion.Likes.Count</button></div>
                 <EditForm EditContext="@editContextPost" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
                     <DataAnnotationsValidator />
                     <div class="addPost">
@@ -46,15 +54,15 @@
                             @if (post.StatusId == 1)
                             {
                                 <div>@post.PostText</div>
-                                @if (IfUserGaveLike(post) == null)
+                                @if (IfUserGaveLikeToPost(post) == null)
                                 {
-                                    <input type="checkbox" @onclick="() => Like(post)" />
+                                    <input type="checkbox" @onclick="() => LikePost(post)" />
                                 }
                                 else
                                 {
-                                    <input type="checkbox" checked @onclick="() => Dislike(post, IfUserGaveLike(post))" />
+                                    <input type="checkbox" checked @onclick="() => DislikePost(post, IfUserGaveLikeToPost(post))" />
                                 }
-                                <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(post)))" class="link">@post.Likes.Count</button></div>
+                                <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParametersPost(post)))" class="link">@post.Likes.Count</button></div>
                                 <button @onclick="() => Answer(post)" class="modPostBut">Odpowiedz</button>
                             }
                             else
@@ -113,15 +121,15 @@
                                     @if (answerPost.StatusId == 1)
                                     {
                                         <div>@answerPost.PostText</div>
-                                        @if (IfUserGaveLike(answerPost) == null)
+                                        @if (IfUserGaveLikeToPost(answerPost) == null)
                                         {
-                                            <input type="checkbox" @onclick="() => Like(answerPost)" />
+                                            <input type="checkbox" @onclick="() => LikePost(answerPost)" />
                                         }
                                         else
                                         {
-                                            <input type="checkbox" checked @onclick="() => Dislike(answerPost, IfUserGaveLike(answerPost))" />
+                                            <input type="checkbox" checked @onclick="() => DislikePost(answerPost, IfUserGaveLikeToPost(answerPost))" />
                                         }
-                                        <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(answerPost)))" class="link">@answerPost.Likes.Count</button></div>
+                                        <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParametersPost(answerPost)))" class="link">@answerPost.Likes.Count</button></div>
                                         <button @onclick="() => Answer(answerPost)" class="modPostBut">Odpowiedz</button>
                                     }
                                     else
@@ -222,7 +230,13 @@
         user = authState.User.Identity.Name;
     }
 
-    private ModalParameters GetParameters(PostInDiscussionDto post)
+    private ModalParameters GetParametersDiscussion(DiscussionVm discussion)
+    {
+        modalParameters.Add("likes", discussion.Likes);
+        return modalParameters;
+    }
+
+    private ModalParameters GetParametersPost(PostInDiscussionDto post)
     {
         modalParameters.Add("likes", post.Likes);
         return modalParameters;
@@ -355,7 +369,18 @@
         NavigationManager.NavigateTo($"/discussions/{Id}", forceLoad: true);
     }
 
-    private async void Like(PostInDiscussionDto post)
+    private async void LikeDiscussion(DiscussionVm discussion)
+    {
+        giveLike.DiscussionId = discussion.Id;
+        giveLike.User = user;
+        LikeDto like = new LikeDto() { Username = user };
+        discussion.Likes.Add(like);
+        var modelJson = JsonSerializer.Serialize(giveLike, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/discussions/{Id}/likes", content);
+    }
+
+    private async void LikePost(PostInDiscussionDto post)
     {
         giveLike.PostInDiscussionId = post.Id;
         giveLike.User = user;
@@ -366,7 +391,35 @@
         await Http.PostAsync($"api/discussions/{Id}/posts/likes", content);
     }
 
-    private async void Dislike(PostInDiscussionDto post, LikeDto like)
+    private async void DislikeDiscussion(DiscussionVm discussion, LikeDto like)
+    {
+        LikeDto likeToRemove = new LikeDto();
+        int IdLikeToRemove = 0;
+        foreach (var like1 in discussion.Likes)
+        {
+            if (like1.Username == user)
+            {
+                likeToRemove = like1;
+                break;
+            }
+        }
+        discussion.Likes.Remove(likeToRemove);
+        ListLikes likes1 = new ListLikes();
+        likes1 = await Http.GetFromJsonAsync<ListLikes>($"api/discussions/{Id}/likes");
+        likes = likes1.Likes.ToList();
+        foreach (var likeComment in likes)
+        {
+            if (likeComment.Username == user)
+            {
+                IdLikeToRemove = likeComment.Id;
+                break;
+            }
+        }
+        await Http.DeleteAsync($"api/discussions/{Id}/likes/{IdLikeToRemove}");
+
+    }
+
+    private async void DislikePost(PostInDiscussionDto post, LikeDto like)
     {
         LikeDto likeToRemove = new LikeDto();
         int IdLikeToRemove = 0;
@@ -394,7 +447,17 @@
 
     }
 
-    private LikeDto IfUserGaveLike(PostInDiscussionDto post)
+    private LikeDto IfUserGaveLikeToDiscussion(DiscussionVm discussion)
+    {
+
+        foreach (var like in discussion.Likes)
+        {
+            if (like.Username == user) return like;
+        }
+        return null;
+    }
+
+    private LikeDto IfUserGaveLikeToPost(PostInDiscussionDto post)
     {
 
         foreach (var like in post.Likes)

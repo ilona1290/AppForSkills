@@ -84,22 +84,6 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Returns selected user posts. 
-        /// </summary>
-        [Route("{username}/skills/{id}")]
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<ActionResult<SkillPostVm>> GetUserSkillAsync(int id)
-        {
-            var vm = await Mediator.Send(new GetSkillPostDetailQuery() { SkillPostId = id });
-            return vm;
-        }
-
-        /// <summary>
         /// Returns all ratings, which user gave to other users. 
         /// </summary>
         [Route("{username}/ratings")]
@@ -176,22 +160,6 @@ namespace AppForSkills.Api.Controllers
         public async Task<ActionResult<UserDiscussionPostsVm>> GetAllDiscussionPostsWhichUserGaveAsync(string username)
         {
             var vm = await Mediator.Send(new GetUserDiscussionPostsQuery() { Username = username });
-            return vm;
-        }
-
-        /// <summary>
-        /// Returns selected discussion, in which user has been participated. 
-        /// </summary>
-        [Route("{username}/discussions/{id}")]
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<ActionResult<DiscussionVm>> GetSelectedDiscussionWithUser(int id)
-        {
-            var vm = await Mediator.Send(new GetDiscussionQuery() { DiscussionId = id });
             return vm;
         }
     }

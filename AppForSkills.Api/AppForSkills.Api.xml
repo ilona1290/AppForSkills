@@ -29,6 +29,23 @@
             Deletes discussion.
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.GetLikesFromDiscussionAsync(System.Int32)">
+            <summary>
+            Returns all likes from discussion.
+            </summary>
+            ///<param name="id">Id of discussion, which likes user wants to get</param>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.LikeToDiscussionAsync(AppForSkills.Application.Likes.Commands.GiveLike.GiveLikeCommand)">
+            <summary>
+            Gives like to discussion.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.DiscussionsController.DislikeDiscussion(System.Int32)">
+            <summary>
+            Deletes like from discussion.
+            </summary>
+            /// <param name="idLike">Id of like, which user wants to remove</param>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.DiscussionsController.AddPostToDiscussion(AppForSkills.Application.Discussions.Commands.CreatePost.CreatePostCommand)">
             <summary>
             Adds post to discussion.
@@ -46,9 +63,9 @@
         </member>
         <member name="M:AppForSkills.Api.Controllers.DiscussionsController.GetLikesToPostAsync(System.Int32)">
             <summary>
-            Returns all likes to comment.
-            <param name="idPost">Id of Post, which likes user wants to get</param>
+            Returns all likes from post in discussion.
             </summary>
+            ///<param name="idPost">Id of Post, which likes user wants to get</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.DiscussionsController.LikeToPostAsync(AppForSkills.Application.Likes.Commands.GiveLike.GiveLikeCommand)">
             <summary>
@@ -57,7 +74,7 @@
         </member>
         <member name="M:AppForSkills.Api.Controllers.DiscussionsController.DislikePost(System.Int32)">
             <summary>
-            Deletes like.
+            Deletes like from post in discussion.
             </summary>
             /// <param name="idLike">Id of like, which user wants to remove</param>
         </member>
@@ -129,11 +146,11 @@
             </summary>
             <param name="idComment">Id of comment, which user wants to remove</param>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.PostsController.GetLikesToCommentAsync(System.Int32)">
+        <member name="M:AppForSkills.Api.Controllers.PostsController.GetLikesFromCommentAsync(System.Int32)">
             <summary>
-            Returns all likes to comment.
-            <param name="idComment">Id of comment, which likes user wants to get</param>
+            Returns all likes from comment.
             </summary>
+            <param name="idComment">Id of comment, which likes user wants to get</param>
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.GiveLikeToComment(AppForSkills.Application.Likes.Commands.GiveLike.GiveLikeCommand)">
             <summary>
@@ -172,11 +189,6 @@
             Returns all user posts. 
             </summary>
         </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetUserSkillAsync(System.Int32)">
-            <summary>
-            Returns selected user posts. 
-            </summary>
-        </member>
         <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllRatingsWhichUserGaveAsync(System.String)">
             <summary>
             Returns all ratings, which user gave to other users. 
@@ -200,11 +212,6 @@
         <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllDiscussionPostsWhichUserGaveAsync(System.String)">
             <summary>
             Returns all discussion posts, which user gave. 
-            </summary>
-        </member>
-        <member name="M:AppForSkills.Api.Controllers.UsersController.GetSelectedDiscussionWithUser(System.Int32)">
-            <summary>
-            Returns selected discussion, in which user has been participated. 
             </summary>
         </member>
         <member name="M:AppForSkills.Api.Controllers.WeatherForecastController.Get">

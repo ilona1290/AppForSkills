@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using WebApi.Integration.Tests.Common;
 using Xunit;
 
-namespace WebApi.Integration.Tests.Controllers.Users
+namespace WebApi.Integration.Tests.Controllers.SkillPosts
 {
     public class DeleteSkillPost_Tests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {

@@ -27,7 +27,7 @@ namespace Application.UnitTests.Likes.Queries.GetLikes
         }
 
         [Fact]
-        public async Task CanGetLikesToPostInDiscussionById()
+        public async Task CanGetLikesFromPostInDiscussionById()
         {
             var handler = new GetLikesQueryHandler(_context, _mapper);
             var postInDiscussionId = 3;
@@ -41,7 +41,7 @@ namespace Application.UnitTests.Likes.Queries.GetLikes
         }
 
         [Fact]
-        public async Task CanGetLikesToDiscussionById()
+        public async Task CanGetLikesFromDiscussionById()
         {
             var handler = new GetLikesQueryHandler(_context, _mapper);
             var discussionId = 2;
@@ -55,7 +55,7 @@ namespace Application.UnitTests.Likes.Queries.GetLikes
         }
 
         [Fact]
-        public async Task CanGetLikesToCommentById()
+        public async Task CanGetLikesFromCommentById()
         {
             var handler = new GetLikesQueryHandler(_context, _mapper);
             var commentId = 1;
@@ -69,7 +69,7 @@ namespace Application.UnitTests.Likes.Queries.GetLikes
         }
 
         [Fact]
-        public void CantGetLikesToCommentById()
+        public void CantGetLikesByNotGivingId()
         {
             var handler = new GetLikesQueryHandler(_context, _mapper);
 
