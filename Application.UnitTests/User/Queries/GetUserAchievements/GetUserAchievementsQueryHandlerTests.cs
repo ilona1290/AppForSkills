@@ -31,7 +31,7 @@ namespace Application.UnitTests.User.Queries.GetUserAchievements
 
             result.ShouldBeOfType<AchievementsVm>();
             result.Achievements.ShouldBeOfType<List<AchievementDto>>();
-            result.Achievements.Count.ShouldBe(3);
+            result.Achievements.Count.ShouldBe(2);
         }
     }
 }

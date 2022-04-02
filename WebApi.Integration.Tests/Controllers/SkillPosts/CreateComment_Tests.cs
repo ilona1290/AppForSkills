@@ -21,7 +21,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
         public async Task GivenComment_ReturnsId()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            var comment = new CreateCommentCommand { SkillPostId = 2, CommentText = "Ładne" };
+            var comment = new CreateCommentCommand { SkillPostId = 1, CommentText = "Ładne" };
 
             var response = await client.PostAsync($"/api/posts/{comment.SkillPostId}/comments",
                 await Utilities.SendObjectAsContent(comment));

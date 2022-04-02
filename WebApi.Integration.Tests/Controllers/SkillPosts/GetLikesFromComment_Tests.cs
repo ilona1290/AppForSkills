@@ -23,7 +23,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
         public async Task ReturnsLikesFromComment()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            string id = "2";
+            string id = "1";
             string idComment = "1";
             var response = await client.GetAsync($"/api/posts/{id}/comments/{idComment}/likes");
             response.EnsureSuccessStatusCode();
@@ -31,7 +31,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
             var vm = await Utilities.GetResponseContent<LikesVm>(response);
 
             vm.Likes.ShouldBeOfType<List<LikeDto>>();
-            vm.Likes.Count.ShouldBe(2);
+            vm.Likes.Count.ShouldBe(1);
             vm.Likes[0].Username.ShouldBe("Podróżnik");
         }
     }

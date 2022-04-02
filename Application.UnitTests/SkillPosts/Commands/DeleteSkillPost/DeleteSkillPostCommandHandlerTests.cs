@@ -22,7 +22,7 @@ namespace Application.UnitTests.SkillPosts.Commands.DeleteSkillPost
         [Fact]
         public async Task Handle_GivenValidRequest_ShouldDeleteSkillPost()
         {
-            var command = new DeleteSkillPostCommand() { SkillPostId = 2 };
+            var command = new DeleteSkillPostCommand() { SkillPostId = 1 };
 
             var result = await _handler.Handle(command, CancellationToken.None);
 

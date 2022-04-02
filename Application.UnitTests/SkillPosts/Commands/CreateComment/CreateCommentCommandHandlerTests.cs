@@ -26,7 +26,7 @@ namespace Application.UnitTests.SkillPosts.Commands.CreateComment
             var command = new CreateCommentCommand()
             {
                 CommentText = "Super!",
-                SkillPostId = 2
+                SkillPostId = 1
             };
 
             var result = await _handler.Handle(command, CancellationToken.None);

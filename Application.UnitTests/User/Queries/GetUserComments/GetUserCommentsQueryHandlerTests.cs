@@ -27,7 +27,7 @@ namespace Application.UnitTests.User.Queries.GetUserComments
         {
             var handler = new GetUserCommentsQueryHandler(_context, _mapper);
 
-            var result = await handler.Handle(new GetUserCommentsQuery { Username = "Podrożnik" }, CancellationToken.None);
+            var result = await handler.Handle(new GetUserCommentsQuery { Username = "Podróżnik" }, CancellationToken.None);
 
             result.ShouldBeOfType<UserCommentsVm>();
             result.Comments.ShouldBeOfType<List<UserCommentDto>>();

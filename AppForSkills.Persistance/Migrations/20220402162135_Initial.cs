@@ -14,8 +14,10 @@ namespace AppForSkills.Persistance.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StatusId = table.Column<int>(type: "int", nullable: false),
-                    Achievement = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                    Category = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false),
+                    Achievement = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -152,7 +154,6 @@ namespace AppForSkills.Persistance.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    Views = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -279,31 +280,48 @@ namespace AppForSkills.Persistance.Migrations
 
             migrationBuilder.InsertData(
                 table: "Achievements",
-                columns: new[] { "Id", "Description", "Achievement", "StatusId" },
+                columns: new[] { "Id", "Amount", "Category", "Logo", "Achievement", "StatusId" },
                 values: new object[,]
                 {
-                    { 1, "Dodano pierwszy post.", "Świerzak", 1 },
-                    { 2, "Rozpoczęto pierwszą dyskusję.", "Początkujący mówca", 1 },
-                    { 3, "Dodano pierwszy post do dyskusji.", "Pierwsze udzielenie się", 1 }
+                    { 1, 1, "Skills", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Początkujący skiller", 1 },
+                    { 25, 200, "DiscussionPosts", null, "200 postów już gotowych, milion kolejnych w drodze...", 1 },
+                    { 24, 50, "DiscussionPosts", null, "Nie zwrócimy Ci czasu jaki spędziłeś na pisaniu tych postów", 1 },
+                    { 23, 25, "DiscussionPosts", null, "Prowadzący Talk-Show", 1 },
+                    { 22, 15, "DiscussionPosts", null, "Mam coś więcej do powiedzenia niż tylko ALE", 1 },
+                    { 21, 5, "DiscussionPosts", null, "Ja tu tylko dyskutuję", 1 },
+                    { 20, 100, "Discussions", null, "Crushin' discussion", 1 },
+                    { 19, 50, "Discussions", null, "Dyskutant-Alfa", 1 },
+                    { 18, 25, "Discussions", null, "Naczelny Gaduła", 1 },
+                    { 17, 5, "Discussions", null, "Zawsze musi być jakieś ALE", 1 },
+                    { 16, 1, "Discussions", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Chcę coś oznajmić", 1 },
+                    { 15, 50, "Ratings", null, "Dał/Dała tyle gwiazdek, że może nakręcić własny teledysk Shooting Stars", 1 },
+                    { 14, 25, "Ratings", null, "Mamo, możemy mieć własną konstelacje w domu?", 1 },
+                    { 12, 5, "Ratings", null, "Taniec z gwiazdami", 1 },
+                    { 11, 1, "Ratings", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Dam Ci gwiazdkę z nieba", 1 },
+                    { 10, 125, "Comments", null, "Mógłby/Mogłaby napisać książkę, ale pisze komentarze", 1 },
+                    { 9, 100, "Comments", null, "Imperator-komentator", 1 },
+                    { 8, 50, "Comments", null, "Komentator-niekoniecznie sportowy", 1 },
+                    { 7, 25, "Comments", null, "Buszujący w komentarzach", 1 },
+                    { 6, 5, "Comments", null, "Coś tam sobie pomamrocze", 1 },
+                    { 5, 25, "Skills", null, "SkillGod", 1 },
+                    { 4, 15, "Skills", null, "Co za utalentowana bestia", 1 },
+                    { 3, 10, "Skills", null, "SkillMaster", 1 },
+                    { 2, 5, "Skills", null, "Szał umiejętności", 1 },
+                    { 13, 15, "Ratings", null, "Mówcie mi StarLord", 1 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Discussions",
                 columns: new[] { "Id", "Created", "CreatedBy", "FirstPost", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "StatusId" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(6576), "SuperAdmin", "Cześć. W tej części aplikacji będziesz mógł rozpoczynać dyskusje, bądź udzielać się już w istniejących.", null, null, null, null, 1 },
-                    { 2, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(6954), "Podróżnik", "Jaki kraj chcielibyście odwiedzić?", null, null, null, null, 1 }
-                });
+                values: new object[] { 1, new DateTime(2022, 4, 2, 18, 21, 33, 884, DateTimeKind.Local).AddTicks(5850), "Podróżnik", "Jaki kraj chcielibyście odwiedzić?", null, null, null, null, 1 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "RecentLoginDate", "RegistrationDate", "StatusId", "Username" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "SuperAdmin" },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Podróżnik" },
-                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Turysta12" }
+                    { 1, new DateTime(2022, 4, 2, 18, 21, 33, 885, DateTimeKind.Local).AddTicks(9234), new DateTime(2022, 4, 2, 18, 21, 33, 885, DateTimeKind.Local).AddTicks(8457), 1, "Podróżnik" },
+                    { 2, new DateTime(2022, 4, 2, 18, 21, 33, 885, DateTimeKind.Local).AddTicks(9765), new DateTime(2022, 4, 2, 18, 21, 33, 885, DateTimeKind.Local).AddTicks(9742), 1, "Turysta12" }
                 });
 
             migrationBuilder.InsertData(
@@ -311,13 +329,10 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "AchievementsId", "UsersWithAchivementId" },
                 values: new object[,]
                 {
-                    { 3, 1 },
-                    { 3, 2 },
-                    { 2, 2 },
-                    { 1, 2 },
-                    { 3, 3 },
                     { 1, 1 },
-                    { 2, 1 }
+                    { 16, 1 },
+                    { 11, 2 },
+                    { 16, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -325,11 +340,8 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "DiscussionsId", "UsersInDiscussionId" },
                 values: new object[,]
                 {
-                    { 1, 2 },
-                    { 2, 2 },
                     { 1, 1 },
-                    { 2, 1 },
-                    { 2, 3 }
+                    { 1, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -337,9 +349,8 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "Id", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
                 values: new object[,]
                 {
-                    { 6, null, 2, null, "SuperAdmin" },
-                    { 5, null, 2, null, "Turysta12" },
-                    { 4, null, 1, null, "Podróżnik" }
+                    { 3, null, 1, null, "Podróżnik" },
+                    { 4, null, 1, null, "Turysta12" }
                 });
 
             migrationBuilder.InsertData(
@@ -347,30 +358,23 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "Id", "Created", "CreatedBy", "DiscussionId", "Inactivated", "InactivatedBy", "MainParentPostId", "Modified", "ModifiedBy", "ParentPostId", "PostText", "Reported", "StatusId", "UserId" },
                 values: new object[,]
                 {
-                    { 5, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8968), "SuperAdmin", 2, null, null, null, null, null, null, "Włochy", false, 1, null },
-                    { 3, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8952), "Turysta12", 2, null, null, null, null, null, 2, "Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).", false, 1, null },
-                    { 2, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8590), "Podróżnik", 2, null, null, null, null, null, 1, "Dlaczego?", false, 1, null },
-                    { 1, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8565), "Turysta12", 2, null, null, null, null, null, null, "Australia", false, 1, null },
-                    { 4, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8964), "Podróżnik", 1, null, null, null, null, null, null, "Jasne.", false, 1, null },
-                    { 6, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8971), "SuperAdmin", 2, null, null, null, null, null, 1, "Możesz rozwinąć?", false, 1, null }
+                    { 1, new DateTime(2022, 4, 2, 18, 21, 33, 884, DateTimeKind.Local).AddTicks(7864), "Turysta12", 1, null, null, null, null, null, null, "Australia", false, 1, null },
+                    { 2, new DateTime(2022, 4, 2, 18, 21, 33, 884, DateTimeKind.Local).AddTicks(7888), "Podróżnik", 1, null, null, 1, null, null, 1, "Dlaczego?", false, 1, null },
+                    { 3, new DateTime(2022, 4, 2, 18, 21, 33, 884, DateTimeKind.Local).AddTicks(8680), "Turysta12", 1, null, null, 1, null, null, 2, "Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).", false, 1, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "SkillPosts",
-                columns: new[] { "Id", "Address", "Created", "CreatedBy", "Description", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "StatusId", "Title", "UserId", "Views" },
-                values: new object[,]
-                {
-                    { 1, "images/firstPost.jpg", new DateTime(2022, 3, 4, 23, 5, 19, 197, DateTimeKind.Local).AddTicks(4604), null, "Cześć. W tej części aplikacji będziesz mógł zaprezentować pozostałym użytkownikom swoje umiejętności/talenty w formie zdjęcia, bądź filmiku. Dodać do niego tytuł i opis. Każdy użytkownik, może oceniać, komentować dany post. Baw się dobrze!", null, null, null, null, 1, "Start", 1, 0 },
-                    { 2, "images/Eiffel_Tower.jpg", new DateTime(2022, 3, 4, 23, 5, 19, 201, DateTimeKind.Local).AddTicks(3479), "Podróżnik", "Cześć. Autorskie zdjęcie wieży Eiffla", null, null, null, null, 1, "Wieża Eiffla", 2, 0 }
-                });
+                columns: new[] { "Id", "Address", "Created", "CreatedBy", "Description", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "StatusId", "Title", "UserId" },
+                values: new object[] { 1, "https://app.blob.core.windows.net/upload-container/Eiffel_Tower.jpg", new DateTime(2022, 4, 2, 18, 21, 33, 875, DateTimeKind.Local).AddTicks(722), "Podróżnik", "Cześć. Autorskie zdjęcie wieży Eiffla", null, null, null, null, 1, "Wieża Eiffla", 1 });
 
             migrationBuilder.InsertData(
                 table: "Comments",
                 columns: new[] { "Id", "CommentText", "Created", "CreatedBy", "Inactivated", "InactivatedBy", "MainParentCommentId", "Modified", "ModifiedBy", "ParentCommentId", "SkillPostId", "StatusId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Wow! Super zdjęcie.", new DateTime(2022, 3, 4, 23, 5, 19, 202, DateTimeKind.Local).AddTicks(8729), "Turysta12", null, null, null, null, null, null, 2, 1, 3 },
-                    { 2, "Dzięki.", new DateTime(2022, 3, 4, 23, 5, 19, 202, DateTimeKind.Local).AddTicks(9405), "Podrożnik", null, null, null, null, null, 1, 2, 1, 2 }
+                    { 1, "Wow! Super zdjęcie.", new DateTime(2022, 4, 2, 18, 21, 33, 883, DateTimeKind.Local).AddTicks(5989), "Turysta12", null, null, null, null, null, null, 1, 1, 2 },
+                    { 2, "Dzięki.", new DateTime(2022, 4, 2, 18, 21, 33, 883, DateTimeKind.Local).AddTicks(8088), "Podróżnik", null, null, 1, null, null, 1, 1, 1, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -378,28 +382,19 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "Id", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
                 values: new object[,]
                 {
-                    { 7, null, null, 1, "Podróżnik" },
-                    { 8, null, null, 3, "Podróżnik" }
+                    { 5, null, null, 1, "Podróżnik" },
+                    { 6, null, null, 3, "Podróżnik" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Ratings",
                 columns: new[] { "Id", "Created", "CreatedBy", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "SkillPostId", "StatusId", "UserId", "Value" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(357), "Turysta12", null, null, null, null, 2, 1, 3, 5 },
-                    { 2, new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(1119), "SuperAdmin", null, null, null, null, 2, 1, 1, 4 }
-                });
+                values: new object[] { 1, new DateTime(2022, 4, 2, 18, 21, 33, 884, DateTimeKind.Local).AddTicks(1102), "Turysta12", null, null, null, null, 1, 1, 2, 5 });
 
             migrationBuilder.InsertData(
                 table: "Likes",
                 columns: new[] { "Id", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
                 values: new object[] { 1, 1, null, null, "Podróżnik" });
-
-            migrationBuilder.InsertData(
-                table: "Likes",
-                columns: new[] { "Id", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
-                values: new object[] { 3, 1, null, null, "SuperAdmin" });
 
             migrationBuilder.InsertData(
                 table: "Likes",

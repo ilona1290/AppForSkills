@@ -22,13 +22,13 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 
-            string id = "2";
+            string id = "1";
             var response = await client.GetAsync($"/api/posts/{id}");
             response.EnsureSuccessStatusCode();
 
             var vm = await Utilities.GetResponseContent<SkillPostVm>(response);
             vm.ShouldNotBeNull();
-            vm.AddressOfPhotoOrVideo.ShouldBe("images/Eiffel_Tower.jpg");
+            vm.AddressOfPhotoOrVideo.ShouldBe("https://app.blob.core.windows.net/upload-container/Eiffel_Tower.jpg");
         }
 
         [Fact]

@@ -34,7 +34,7 @@ namespace Application.UnitTests.User.Queries.GetUserDiscussionPosts
 
             result.ShouldBeOfType<UserDiscussionPostsVm>();
             result.DiscussionPosts.ShouldBeOfType<List<UserDiscussionPostDto>>();
-            result.DiscussionPosts.Count.ShouldBe(3);
+            result.DiscussionPosts.Count.ShouldBe(1);
         }
     }
 }

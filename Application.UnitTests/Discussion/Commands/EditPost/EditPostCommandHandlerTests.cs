@@ -24,8 +24,8 @@ namespace Application.UnitTests.Discussion.Commands.EditPost
         {
             var command = new EditPostCommand()
             {
-                Id = 7,
-                PostText = "Koszykówkę"
+                Id = 4,
+                PostText = "USA"
             };
 
             var result = await _handler.Handle(command, CancellationToken.None);

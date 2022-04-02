@@ -44,14 +44,14 @@ namespace Application.UnitTests.Likes.Queries.GetLikes
         public async Task CanGetLikesFromDiscussionById()
         {
             var handler = new GetLikesQueryHandler(_context, _mapper);
-            var discussionId = 2;
+            var discussionId = 1;
 
             var result = await handler.Handle(new GetLikesQuery { DiscussionId = discussionId }, CancellationToken.None);
 
             result.ShouldBeOfType<LikesVm>();
             result.Likes.ShouldBeOfType<List<LikeDto>>();
             result.Likes.Count.ShouldBe(2);
-            result.Likes[0].Username.ShouldBe("Turysta12");
+            result.Likes[0].Username.ShouldBe("Podróżnik");
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace Application.UnitTests.Likes.Queries.GetLikes
 
             result.ShouldBeOfType<LikesVm>();
             result.Likes.ShouldBeOfType<List<LikeDto>>();
-            result.Likes.Count.ShouldBe(2);
+            result.Likes.Count.ShouldBe(1);
             result.Likes[0].Username.ShouldBe("Podróżnik");
         }
 

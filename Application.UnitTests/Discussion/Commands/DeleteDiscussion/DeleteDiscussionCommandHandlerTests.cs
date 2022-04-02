@@ -22,7 +22,7 @@ namespace Application.UnitTests.Discussion.Commands.DeleteDiscussion
         [Fact]
         public async Task Handle_GivenValidRequest_ShouldDeleteDiscussion()
         {
-            var command = new DeleteDiscussionCommand() { Id = 3 };
+            var command = new DeleteDiscussionCommand() { Id = 2 };
 
             var result = await _handler.Handle(command, CancellationToken.None);
 

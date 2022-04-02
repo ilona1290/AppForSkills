@@ -32,7 +32,7 @@ namespace Application.UnitTests.User.Queries.GetUserDiscussions
 
             result.ShouldBeOfType<DiscussionsVm>();
             result.Discussions.ShouldBeOfType<List<DiscussionDto>>();
-            result.Discussions.Count.ShouldBe(2);
+            result.Discussions.Count.ShouldBe(1);
         }
     }
 }

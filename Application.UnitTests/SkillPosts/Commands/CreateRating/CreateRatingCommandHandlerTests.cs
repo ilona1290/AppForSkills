@@ -25,7 +25,7 @@ namespace Application.UnitTests.SkillPosts.Commands.CreateRating
         {
             var command = new CreateRatingCommand()
             {
-                SkillPostId = 2,
+                SkillPostId = 1,
                 Value = 5
             };
 

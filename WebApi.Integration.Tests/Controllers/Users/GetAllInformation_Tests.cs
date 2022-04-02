@@ -29,7 +29,7 @@ namespace WebApi.Integration.Tests.Controllers.Users
             vm.UserSkills.ShouldBe(0);
             vm.UserComments.ShouldBe(1);
             vm.GavedRatings.ShouldBe(1);
-            vm.Achievements.ShouldBe(1);
+            vm.Achievements.ShouldBe(2);
             vm.Discussions.ShouldBe(1);
         }
     }

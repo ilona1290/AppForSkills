@@ -28,7 +28,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
             var vm = await Utilities.GetResponseContent<DiscussionsVm>(response);
 
             vm.Discussions.ShouldBeOfType<List<DiscussionDto>>();
-            vm.Discussions.Count.ShouldBe(3);
+            vm.Discussions.Count.ShouldBe(2);
         }
     }
 }

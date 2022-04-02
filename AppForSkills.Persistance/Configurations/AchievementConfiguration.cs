@@ -8,8 +8,10 @@ namespace AppForSkills.Persistance.Configurations
     {
         public void Configure(EntityTypeBuilder<Achievement> builder)
         {
-            builder.Property(p => p.Name).HasMaxLength(100).HasColumnName("Achievement").IsRequired();
-            builder.Property(p => p.Description).HasMaxLength(500).IsRequired();
+            builder.HasKey(i => i.Id);
+            builder.Property(p => p.Category).HasMaxLength(50).IsRequired();
+            builder.Property(p => p.Amount).IsRequired();
+            builder.Property(p => p.Name).HasMaxLength(500).HasColumnName("Achievement").IsRequired();
         }
     }
 }

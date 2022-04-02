@@ -28,7 +28,7 @@ namespace WebApi.Integration.Tests.Controllers.Users
 
             var vm = await Utilities.GetResponseContent<AchievementsVm>(response);
             vm.Achievements.ShouldBeOfType<List<AchievementDto>>();
-            vm.Achievements.Count.ShouldBe(3);
+            vm.Achievements.Count.ShouldBe(2);
         }
     }
 }

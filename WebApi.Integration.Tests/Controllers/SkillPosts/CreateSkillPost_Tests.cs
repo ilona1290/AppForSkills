@@ -38,7 +38,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
 
             var id = await Utilities.GetResponseContent<int>(response);
 
-            id.ShouldBe(3);
+            id.ShouldBe(2);
 
         }
     }

@@ -28,13 +28,13 @@ namespace Application.UnitTests.Discussion.Queries.GetDiscussion
         public async Task CanGetDiscussionDetailById()
         {
             var handler = new GetDiscussionQueryHandler(_context, _mapper);
-            var discussionId = 3;
+            var discussionId = 2;
 
             var result = await handler.Handle(new GetDiscussionQuery { DiscussionId = discussionId }, CancellationToken.None);
 
             result.ShouldBeOfType<DiscussionVm>();
             result.Posts.ShouldBeOfType<List<PostInDiscussionDto>>();
-            result.Posts.Count.ShouldBe(1);
+            result.Posts.Count.ShouldBe(0);
             result.FirstPost.ShouldBe("Jakie sporty uprawiacie?");
         }
 

@@ -21,8 +21,8 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
         public async Task GivenLikeId_DeleteLikeFromPostInDiscussion()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            string discussionId = "2";
-            string likeId = "8";
+            string discussionId = "1";
+            string likeId = "4";
 
             var response = await client.DeleteAsync($"/api/discussions/{discussionId}/posts/likes/{likeId}");
             response.EnsureSuccessStatusCode();
