@@ -1,0 +1,24 @@
+﻿@using AppForSkills.Client.Models
+
+@foreach (var achievement in achievements)
+{
+    @if (previousCategory != achievement.Category)
+    {
+        <br />
+        previousCategory = achievement.Category;
+        <div><h3>@previousCategory</h3></div>
+    }
+    <div>
+        <img src=@achievement.Logo style="display: inline-block; max-width: 100px; height: auto; " />
+        <div style="display: inline-block;">
+            <div style="font-size: 19px; font-weight: bold">@achievement.Name<br /></div>
+            <div style="font-size: 12px;">(@achievement.Description)</div>
+        </div>
+        <br /><br />
+    </div>
+}
+@code {
+    [Parameter]
+    public List<AchievementDto> achievements { get; set; } = new List<AchievementDto>();
+    private string previousCategory = "";
+}

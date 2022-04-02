@@ -73,7 +73,7 @@
                     if (Comments.Contains(comment))
                     {
                         <div class="comments">
-                            <a href="/users/@skillPost.Username" class="link"><div class="autorCom">@comment.Username </div></a>
+                            <a href="/users/@comment.Username" class="link"><div class="autorCom">@comment.Username </div></a>
                             <div class="dateCom">@comment.Date</div>
                             @if (comment.StatusId == 1)
                             {
@@ -140,7 +140,7 @@
                             if (answerCom.MainParentCommentId == comment.Id)
                             {
                                 <div class="answerToCom">
-                                    <a href="/users/@skillPost.Username" class="link"><div class="autorCom">@answerCom.Username </div></a>
+                                    <a href="/users/@answerCom.Username" class="link"><div class="autorCom">@answerCom.Username </div></a>
                                     <div class="dateCom">@answerCom.Date</div><br />
                                     @if(answerCom.StatusId == 1)
                                     { 

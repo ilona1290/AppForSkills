@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppForSkills.Persistance.Migrations
 {
     [DbContext(typeof(AppForSkillsDbContext))]
-    [Migration("20220402162135_Initial")]
+    [Migration("20220402185456_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,6 +73,9 @@ namespace AppForSkills.Persistance.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Logo")
                         .HasColumnType("nvarchar(max)");
 
@@ -95,8 +98,9 @@ namespace AppForSkills.Persistance.Migrations
                             Id = 1,
                             Amount = 1,
                             Category = "Skills",
+                            Description = "Dodano pierwszy SkillPost",
                             Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
-                            Name = "Początkujący skiller",
+                            Name = "Początkujący Skiller",
                             StatusId = 1
                         },
                         new
@@ -104,6 +108,8 @@ namespace AppForSkills.Persistance.Migrations
                             Id = 2,
                             Amount = 5,
                             Category = "Skills",
+                            Description = "Dodano 5 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Szał umiejętności",
                             StatusId = 1
                         },
@@ -112,6 +118,8 @@ namespace AppForSkills.Persistance.Migrations
                             Id = 3,
                             Amount = 10,
                             Category = "Skills",
+                            Description = "Dodano 10 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "SkillMaster",
                             StatusId = 1
                         },
@@ -120,6 +128,8 @@ namespace AppForSkills.Persistance.Migrations
                             Id = 4,
                             Amount = 15,
                             Category = "Skills",
+                            Description = "Dodano 15 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Co za utalentowana bestia",
                             StatusId = 1
                         },
@@ -128,6 +138,8 @@ namespace AppForSkills.Persistance.Migrations
                             Id = 5,
                             Amount = 25,
                             Category = "Skills",
+                            Description = "Dodano 25 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "SkillGod",
                             StatusId = 1
                         },
@@ -135,7 +147,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 6,
                             Amount = 5,
-                            Category = "Comments",
+                            Category = "Komentarze",
+                            Description = "Dodano 5 Komentarzy",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Coś tam sobie pomamrocze",
                             StatusId = 1
                         },
@@ -143,7 +157,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 7,
                             Amount = 25,
-                            Category = "Comments",
+                            Category = "Komentarze",
+                            Description = "Dodano 25 Komentarzy",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Buszujący w komentarzach",
                             StatusId = 1
                         },
@@ -151,7 +167,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 8,
                             Amount = 50,
-                            Category = "Comments",
+                            Category = "Komentarze",
+                            Description = "Dodano 50 Komentarzy",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Komentator-niekoniecznie sportowy",
                             StatusId = 1
                         },
@@ -159,7 +177,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 9,
                             Amount = 100,
-                            Category = "Comments",
+                            Category = "Komentarze",
+                            Description = "Dodano 100 Komentarzy",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Imperator-komentator",
                             StatusId = 1
                         },
@@ -167,7 +187,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 10,
                             Amount = 125,
-                            Category = "Comments",
+                            Category = "Komentarze",
+                            Description = "Dodano 125 Komentarzy",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Mógłby/Mogłaby napisać książkę, ale pisze komentarze",
                             StatusId = 1
                         },
@@ -175,7 +197,8 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 11,
                             Amount = 1,
-                            Category = "Ratings",
+                            Category = "Oceny",
+                            Description = "Oceniono pierwszy SkillPost",
                             Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Dam Ci gwiazdkę z nieba",
                             StatusId = 1
@@ -184,7 +207,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 12,
                             Amount = 5,
-                            Category = "Ratings",
+                            Category = "Oceny",
+                            Description = "Oceniono 5 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Taniec z gwiazdami",
                             StatusId = 1
                         },
@@ -192,7 +217,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 13,
                             Amount = 15,
-                            Category = "Ratings",
+                            Category = "Oceny",
+                            Description = "Oceniono 15 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Mówcie mi StarLord",
                             StatusId = 1
                         },
@@ -200,7 +227,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 14,
                             Amount = 25,
-                            Category = "Ratings",
+                            Category = "Oceny",
+                            Description = "Oceniono 25 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Mamo, możemy mieć własną konstelacje w domu?",
                             StatusId = 1
                         },
@@ -208,7 +237,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 15,
                             Amount = 50,
-                            Category = "Ratings",
+                            Category = "Oceny",
+                            Description = "Oceniono 50 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Dał/Dała tyle gwiazdek, że może nakręcić własny teledysk Shooting Stars",
                             StatusId = 1
                         },
@@ -216,7 +247,8 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 16,
                             Amount = 1,
-                            Category = "Discussions",
+                            Category = "Dyskusje",
+                            Description = "Dołączono do pierwszej dyskusji",
                             Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Chcę coś oznajmić",
                             StatusId = 1
@@ -225,7 +257,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 17,
                             Amount = 5,
-                            Category = "Discussions",
+                            Category = "Dyskusje",
+                            Description = "Dołączono do 5 dyskusji",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Zawsze musi być jakieś ALE",
                             StatusId = 1
                         },
@@ -233,7 +267,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 18,
                             Amount = 25,
-                            Category = "Discussions",
+                            Category = "Dyskusje",
+                            Description = "Dołączono do 25 dyskusji",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Naczelny Gaduła",
                             StatusId = 1
                         },
@@ -241,7 +277,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 19,
                             Amount = 50,
-                            Category = "Discussions",
+                            Category = "Dyskusje",
+                            Description = "Dołączono do 50 dyskusji",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Dyskutant-Alfa",
                             StatusId = 1
                         },
@@ -249,7 +287,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 20,
                             Amount = 100,
-                            Category = "Discussions",
+                            Category = "Dyskusje",
+                            Description = "Dołączono do 100 dyskusji",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Crushin' discussion",
                             StatusId = 1
                         },
@@ -257,7 +297,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 21,
                             Amount = 5,
-                            Category = "DiscussionPosts",
+                            Category = "Posty w dyskusjach",
+                            Description = "Udzielono się 5 razy w dyskusjach",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Ja tu tylko dyskutuję",
                             StatusId = 1
                         },
@@ -265,7 +307,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 22,
                             Amount = 15,
-                            Category = "DiscussionPosts",
+                            Category = "Posty w dyskusjach",
+                            Description = "Udzielono się 15 razy w dyskusjach",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Mam coś więcej do powiedzenia niż tylko ALE",
                             StatusId = 1
                         },
@@ -273,7 +317,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 23,
                             Amount = 25,
-                            Category = "DiscussionPosts",
+                            Category = "Posty w dyskusjach",
+                            Description = "Udzielono się 25 razy w dyskusjach",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Prowadzący Talk-Show",
                             StatusId = 1
                         },
@@ -281,7 +327,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 24,
                             Amount = 50,
-                            Category = "DiscussionPosts",
+                            Category = "Posty w dyskusjach",
+                            Description = "Udzielono się 50 razy w dyskusjach",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "Nie zwrócimy Ci czasu jaki spędziłeś na pisaniu tych postów",
                             StatusId = 1
                         },
@@ -289,7 +337,9 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 25,
                             Amount = 200,
-                            Category = "DiscussionPosts",
+                            Category = "Posty w dyskusjach",
+                            Description = "Udzielono się 200 razy w dyskusjach",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
                             Name = "200 postów już gotowych, milion kolejnych w drodze...",
                             StatusId = 1
                         });
@@ -353,7 +403,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 1,
                             CommentText = "Wow! Super zdjęcie.",
-                            Created = new DateTime(2022, 4, 2, 18, 21, 33, 883, DateTimeKind.Local).AddTicks(5989),
+                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 310, DateTimeKind.Local).AddTicks(5744),
                             CreatedBy = "Turysta12",
                             SkillPostId = 1,
                             StatusId = 1,
@@ -363,7 +413,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 2,
                             CommentText = "Dzięki.",
-                            Created = new DateTime(2022, 4, 2, 18, 21, 33, 883, DateTimeKind.Local).AddTicks(8088),
+                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 310, DateTimeKind.Local).AddTicks(6434),
                             CreatedBy = "Podróżnik",
                             MainParentCommentId = 1,
                             ParentCommentId = 1,
@@ -414,7 +464,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 4, 2, 18, 21, 33, 884, DateTimeKind.Local).AddTicks(5850),
+                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(534),
                             CreatedBy = "Podróżnik",
                             FirstPost = "Jaki kraj chcielibyście odwiedzić?",
                             StatusId = 1
@@ -551,7 +601,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 4, 2, 18, 21, 33, 884, DateTimeKind.Local).AddTicks(7864),
+                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(1807),
                             CreatedBy = "Turysta12",
                             DiscussionId = 1,
                             PostText = "Australia",
@@ -561,7 +611,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 4, 2, 18, 21, 33, 884, DateTimeKind.Local).AddTicks(7888),
+                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(1825),
                             CreatedBy = "Podróżnik",
                             DiscussionId = 1,
                             MainParentPostId = 1,
@@ -573,7 +623,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2022, 4, 2, 18, 21, 33, 884, DateTimeKind.Local).AddTicks(8680),
+                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(2299),
                             CreatedBy = "Turysta12",
                             DiscussionId = 1,
                             MainParentPostId = 1,
@@ -633,7 +683,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 4, 2, 18, 21, 33, 884, DateTimeKind.Local).AddTicks(1102),
+                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 310, DateTimeKind.Local).AddTicks(7562),
                             CreatedBy = "Turysta12",
                             SkillPostId = 1,
                             StatusId = 1,
@@ -699,7 +749,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 1,
                             AddressOfPhotoOrVideo = "https://app.blob.core.windows.net/upload-container/Eiffel_Tower.jpg",
-                            Created = new DateTime(2022, 4, 2, 18, 21, 33, 875, DateTimeKind.Local).AddTicks(722),
+                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 306, DateTimeKind.Local).AddTicks(4602),
                             CreatedBy = "Podróżnik",
                             Description = "Cześć. Autorskie zdjęcie wieży Eiffla",
                             StatusId = 1,
@@ -737,16 +787,16 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            RecentLoginDate = new DateTime(2022, 4, 2, 18, 21, 33, 885, DateTimeKind.Local).AddTicks(9234),
-                            RegistrationDate = new DateTime(2022, 4, 2, 18, 21, 33, 885, DateTimeKind.Local).AddTicks(8457),
+                            RecentLoginDate = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(6393),
+                            RegistrationDate = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(6126),
                             StatusId = 1,
                             Username = "Podróżnik"
                         },
                         new
                         {
                             Id = 2,
-                            RecentLoginDate = new DateTime(2022, 4, 2, 18, 21, 33, 885, DateTimeKind.Local).AddTicks(9765),
-                            RegistrationDate = new DateTime(2022, 4, 2, 18, 21, 33, 885, DateTimeKind.Local).AddTicks(9742),
+                            RecentLoginDate = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(6638),
+                            RegistrationDate = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(6631),
                             StatusId = 1,
                             Username = "Turysta12"
                         });

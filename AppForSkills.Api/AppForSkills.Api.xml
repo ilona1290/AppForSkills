@@ -4,6 +4,11 @@
         <name>AppForSkills.Api</name>
     </assembly>
     <members>
+        <member name="M:AppForSkills.Api.Controllers.AchievementsController.GetAllAchievements">
+            <summary>
+            Returns all achievements.
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.DiscussionsController.GetAllDiscussions">
             <summary>
             Returns all discussions.
