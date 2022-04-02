@@ -1,0 +1,38 @@
+﻿@using AppForSkills.Client.Models
+@inject IModalService modal
+
+@foreach (var comment in Comments)
+{
+    <a href="skillPosts/@comment.SkillId">
+        @if (comment.AddressOfPhotoOrVideo.EndsWith(".png") || comment.AddressOfPhotoOrVideo.EndsWith(".jpg"))
+        {
+            <img src=@comment.AddressOfPhotoOrVideo style="display: block; max-width: 500px; height: auto; " />
+        }
+        else if (comment.AddressOfPhotoOrVideo.EndsWith(".mp4"))
+        {
+            <video preload="auto" controls="controls" width="500">
+                <source src=@comment.AddressOfPhotoOrVideo type="video/mp4" />
+            </video>
+        }
+    </a><br />
+    <div class="comments">
+        <a href="/skillPosts/@comment.SkillId" class="linkLike">
+            <div class="dateCom">@comment.Date</div><br />
+            <div>@comment.CommentText</div>
+        </a>
+        <div>&#10084;&#65039; <button @onclick="@(()=>modal.Show<Likes>(" Polubienia", GetParameters(comment)))" class="linkLike">@comment.Likes.Count</button></div>
+    </div>
+    <br />
+}
+
+@code {
+    [Parameter]
+    public List<UserCommentDto> Comments { get; set; } = new List<UserCommentDto>();
+    private ModalParameters modalParameters { get; set; } = new ModalParameters();
+
+    private ModalParameters GetParameters(UserCommentDto com)
+    {
+        modalParameters.Add("likes", com.Likes);
+        return modalParameters;
+    }
+}

@@ -1,0 +1,31 @@
+﻿@page "/skillPosts"
+@using AppForSkills.Client.Models
+@using AppForSkills.Client.Components
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpClient Http
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            <a class="btn btn-info" href="/skillPosts/AddSkillPost">Dodaj post</a><br /><br />
+            <Skills SkillPosts="@skillPosts" User="@user"></Skills>
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+@code{
+    private List<SkillPostDto> skillPosts { get; set; } = new List<SkillPostDto>();
+    private string user { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListSkillPosts skills = new ListSkillPosts();
+        skills = await Http.GetFromJsonAsync<ListSkillPosts>("api/posts");
+        skillPosts = skills.SkillPosts.ToList();
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        user = authState.User.Identity.Name;
+    }
+}

@@ -6,8 +6,6 @@ using AutoMapper;
 using Shouldly;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -38,7 +36,7 @@ namespace Application.UnitTests.SkillPosts.Queries.GetSkillPostDetail
             result.Comments.ShouldBeOfType<List<CommentDto>>();
             result.Comments.Count.ShouldBe(2);
             result.AddressOfPhotoOrVideo.ShouldBe("images/Eiffel_Tower.jpg");
-            result.Rating.ShouldBe(4,5);
+            result.Rating.ShouldBe(4, 5);
         }
 
         [Fact]

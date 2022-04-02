@@ -40,7 +40,8 @@ namespace Application.UnitTests.Common
                 Id = 7,
                 DiscussionId = 3,
                 PostText = "Piłkę nożną",
-                StatusId = 1
+                StatusId = 1,
+                CreatedBy = "Podróżnik"
             };
             context.PostsInDiscussion.Add(postInDiscussion);
 

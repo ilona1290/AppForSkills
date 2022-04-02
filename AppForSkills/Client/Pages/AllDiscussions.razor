@@ -1,0 +1,30 @@
+﻿@page "/discussions"
+@using AppForSkills.Client.Models
+@using AppForSkills.Client.Components
+@using System.Text.Json
+@using System.Text
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpClient Http
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            <a class="btn btn-primary" href="discussions/AddDiscussion">Rozpocznij dyskusję</a><br /><br />
+            <Discussions discussions="@discs"></Discussions>
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+@code {
+    private List<DiscussionDto> discs { get; set; } = new List<DiscussionDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListDiscussions listDisc = new ListDiscussions();
+        listDisc = await Http.GetFromJsonAsync<ListDiscussions>("api/discussions");
+        discs = listDisc.Discussions.ToList();
+    }   
+}

@@ -1,0 +1,31 @@
+﻿@using AppForSkills.Client.Models
+@inject IModalService modal
+
+@foreach (var comment in Comments)
+{
+    <div class="comments">
+        <div class="autorCom">@comment.ParentComment.Username </div>
+        <div class="dateCom">@comment.ParentComment.Date</div>
+        <div>@comment.ParentComment.CommentText</div>
+    </div>
+    <br />
+    <div class="answerToCom">
+        <a href="/skillPosts/@comment.SkillId" class="linkLike">
+            <div class="dateCom">@comment.Date</div><br />
+            <div>@comment.CommentText</div>
+        </a>
+        <div>&#10084;&#65039; <button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(comment)))" class="linkLike">@comment.Likes.Count</button></div>
+    </div><br /><br />
+}
+
+@code {
+    [Parameter]
+    public List<UserCommentDto> Comments { get; set; } = new List<UserCommentDto>();
+    private ModalParameters modalParameters { get; set; } = new ModalParameters();
+
+    private ModalParameters GetParameters(UserCommentDto com)
+    {
+        modalParameters.Add("likes", com.Likes);
+        return modalParameters;
+    }
+}

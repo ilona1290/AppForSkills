@@ -1,0 +1,66 @@
+﻿@using AppForSkills.Client.Models
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+
+@foreach (var skillPost in SkillPosts)
+{
+    <div class="firstRow">
+        <div class="row">
+            <div class="col-sm-4"><a href="/users/@skillPost.Username" class="link"><h4 class="font-weight-bold">@skillPost.Username </h4></a></div>
+            <div class="col-sm-8">
+                @if (skillPost.Username == User)
+                {
+                    <div class="buttonSk">
+                        <button class="btn btn-danger" @onclick="() => Delete(skillPost.Id)">Usuń</button>
+                    </div>
+                    <div class="buttonSk">
+                        <a class="btn btn-primary" href="skillPosts/@skillPost.Id/EditSkillPost">Edytuj</a>
+                    </div>
+                }
+                <div class="buttonSk">
+                    <a class="btn btn-success" href="skillPosts/@skillPost.Id">Szczegóły</a>
+                </div>
+            </div>
+        </div>
+        <h5>@skillPost.Title</h5>
+    </div>
+    <div class="firstRow">
+        <a href="skillPosts/@skillPost.Id">
+            @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
+            {
+                <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 500px; height: auto; " />
+            }
+            else if (skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
+            {
+                <video preload="auto" controls="controls" width="500">
+                    <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
+                </video>
+            }
+        </a>
+    </div>
+    <div class="firstRow">
+        <div class="row">
+            <div class="col">
+                <a href="/skillPosts/@skillPost.Id/ratings" class="link"><h4>Ocen: @skillPost.Rating</h4></a>
+            </div>
+            <div class="col-sm-7">
+                <a href="skillPosts/@skillPost.Id" class="link"><h4>Komentarzy: @skillPost.Comment</h4></a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+}
+@code {
+    [Parameter]
+    public List<SkillPostDto> SkillPosts { get; set; } = new List<SkillPostDto>();
+    [Parameter]
+    public string User { get; set; }
+
+    private async void Delete(int idSkill)
+    {
+        await Http.DeleteAsync($"api/posts/{idSkill}");
+        NavigationManager.NavigateTo($"/skillPosts", forceLoad: true);
+    }
+}

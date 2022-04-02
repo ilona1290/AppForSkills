@@ -9,6 +9,7 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateComment
     {
         public string CommentText { get; set; }
         public int SkillPostId { get; set; }
+        public int? MainParentCommentId { get; set; }
         public int? ParentCommentId { get; set; }
 
         public void Mapping(Profile profile)
@@ -16,6 +17,7 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateComment
             profile.CreateMap<CreateCommentCommand, Comment>()
                 .ForMember(s => s.CommentText, map => map.MapFrom(src => src.CommentText))
                 .ForMember(s => s.SkillPostId, map => map.MapFrom(src => src.SkillPostId))
+                .ForMember(s => s.MainParentCommentId, map => map.MapFrom(src => src.MainParentCommentId))
                 .ForMember(s => s.ParentCommentId, map => map.MapFrom(src => src.ParentCommentId))
                 .ForAllOtherMembers(d => d.Ignore());
         }

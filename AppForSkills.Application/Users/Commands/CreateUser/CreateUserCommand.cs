@@ -5,7 +5,7 @@ using MediatR;
 
 namespace AppForSkills.Application.Users.Commands.CreateUser
 {
-    public class CreateUserCommand : IRequest, IMapFrom<User>
+    public class CreateUserCommand : IRequest<int>, IMapFrom<User>
     {
         public string Username { get; set; }
         public string RegistrationDate { get; set; }

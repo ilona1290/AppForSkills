@@ -1,0 +1,145 @@
+﻿@page "/users/{Username}"
+@using AppForSkills.Client.Models
+@using AppForSkills.Client.Components
+@using System.Text.Json
+@using System.Text
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpClient Http
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            @if (user == null)
+            {
+                <p>Wczytywanie...</p>
+            }
+            else
+            {
+                <h3>Użytkownik: @user.Username</h3>
+                <h6>Data rejestracji: @user.RegistrationDate</h6>
+                <h6>Data ostatniego logowania: @user.RecentLoginDate</h6>
+                <div class="mainRow">
+                    <div class="stats">
+                        <button class="btn btn-success" @onclick="() => WhichShow(1)"> @user.UserSkills Skills</button>
+                    </div>
+                    <div class="stats">
+                        <button class="btn btn-success" @onclick="() => WhichShow(2)"> @userCommentsToSkills.Count Komentarzy do Skill Posts</button>
+                    </div>
+                    <div class="stats">
+                        <button class="btn btn-success" @onclick="() => WhichShow(3)"> @userAnswersToComments.Count Odpowiedzi do komentarzy</button>
+                    </div>
+                    <div class="stats">
+                        <button class="btn btn-success" @onclick="() => WhichShow(4)"> @user.GavedRatings Wystawionych ocen</button>
+                    </div>
+                    <div class="stats">
+                        <button class="btn btn-success" @onclick="() => WhichShow(5)"> @user.Discussions Dyskusji</button>
+                    </div>
+                    <div class="stats">
+                        <button class="btn btn-success" @onclick="() => WhichShow(6)"> @userPostsToDiscussionTopic.Count Odpowiedzi do tematu dyskusji</button>
+                    </div>
+                    <div class="stats">
+                        <button class="btn btn-success" @onclick="() => WhichShow(7)"> @userAnswersToPosts.Count Odpowiedzi do innych postów w dyskusji</button>
+                    </div>
+                </div>
+
+                @switch (action)
+                {
+                    case 1:
+                        <Skills SkillPosts="@skillPosts"></Skills>
+                        break;
+                    case 2:
+                        <UserCommentsToSkills Comments="@userCommentsToSkills"></UserCommentsToSkills>
+                        break;
+                    case 3:
+                        <UserAnswersToComments Comments="@userAnswersToComments"></UserAnswersToComments>
+                        break;
+                    case 4:
+                        <UserGavedRatings UserRatings="@userRatings"></UserGavedRatings>
+                        break;
+                    case 5:
+                        <Discussions discussions="@discs"></Discussions>
+                        break;
+                    case 6:
+                        <UserPostsToDiscussionTopic Posts="@userPostsToDiscussionTopic"></UserPostsToDiscussionTopic>
+                        break;
+                    case 7:
+                        <UserAnswersToPosts Posts="@userAnswersToPosts"></UserAnswersToPosts>
+                        break;
+                }
+            }
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+@code {
+    [Parameter]
+    public string Username { get; set; }
+    private UserInformationVm user;
+    private List<SkillPostDto> skillPosts { get; set; } = new List<SkillPostDto>();
+    private List<UserCommentDto> comments { get; set; } = new List<UserCommentDto>();
+    private List<UserDiscussionPostDto> posts { get; set; } = new List<UserDiscussionPostDto>();
+    private List<DiscussionDto> discs { get; set; } = new List<DiscussionDto>();
+    private List<UserGavedRatingDto> userRatings { get; set; } = new List<UserGavedRatingDto>();
+    private List<UserCommentDto> userCommentsToSkills = new List<UserCommentDto>();
+    private List<UserCommentDto> userAnswersToComments = new List<UserCommentDto>();
+    private List<UserDiscussionPostDto> userPostsToDiscussionTopic = new List<UserDiscussionPostDto>();
+    private List<UserDiscussionPostDto> userAnswersToPosts = new List<UserDiscussionPostDto>();
+    private int action = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await Http.GetFromJsonAsync<UserInformationVm>($"api/users/{Username}");
+
+        ListSkillPosts skills = new ListSkillPosts();
+        skills = await Http.GetFromJsonAsync<ListSkillPosts>($"api/users/{Username}/skills");
+        skillPosts = skills.SkillPosts.ToList();
+
+        ListUserComments userCom = new ListUserComments();
+        userCom = await Http.GetFromJsonAsync<ListUserComments>($"api/users/{Username}/comments");
+        comments = userCom.Comments.ToList();
+
+        ListGavedRatings listRatings = new ListGavedRatings();
+        listRatings = await Http.GetFromJsonAsync<ListGavedRatings>($"api/users/{Username}/ratings");
+        userRatings = listRatings.Ratings.ToList();
+
+        foreach (var com in comments)
+        {
+            if(com.MainParentCommentId == null)
+            {
+                userCommentsToSkills.Add(com);
+            }
+            else
+            {
+                userAnswersToComments.Add(com);
+            }
+        }
+
+        ListDiscussions listDiscs = new ListDiscussions();
+        listDiscs = await Http.GetFromJsonAsync<ListDiscussions>($"api/users/{Username}/discussions");
+        discs = listDiscs.Discussions.ToList();
+
+        ListUserDiscussionPosts userPosts = new ListUserDiscussionPosts();
+        userPosts = await Http.GetFromJsonAsync<ListUserDiscussionPosts>($"api/users/{Username}/discussionPosts");
+        posts = userPosts.DiscussionPosts.ToList();
+
+        foreach (var post in posts)
+        {
+            if (post.MainParentPostId == null)
+            {
+                userPostsToDiscussionTopic.Add(post);
+            }
+            else
+            {
+                userAnswersToPosts.Add(post);
+            }
+        }
+    }
+
+    private void WhichShow(int num)
+    {
+        action = num;
+    }
+}

@@ -1,0 +1,85 @@
+﻿@page "/skillPosts/{Id:int}/ratings"
+@using AppForSkills.Client.Models
+@using System.Text.Json
+@using System.Text
+@inject HttpClient Http
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+
+<div class="row">
+    <div class="col">
+        <h3>Oceny</h3>
+    </div>
+    <div class="col-3">
+        <a href="/skillPosts/@Id" class="btn btn-danger">Powrót</a>
+    </div>
+</div>
+
+@foreach (var rating in ratings)
+ {
+    <div class="ratings">
+        <div class="autorRat">@rating.Username </div>
+        <div class="dateRat">@rating.Date</div>
+        @if (user == rating.Username)
+        {
+            <div class="buttonRat"><button class="btn btn-danger" @onclick="() => Delete(rating.Id)">Usuń</button></div>
+            @if (rating.ShowRatingButtons)
+            {
+                <div class="buttonRat">
+                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 1)">1</button>
+                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 2)">2</button>
+                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 3)">3</button>
+                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 4)">4</button>
+                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 5)">5</button>
+                </div>
+             }
+            <div class="buttonRat"><button class="btn btn-primary" @onclick="() => Rate(rating)">Edytuj</button></div>
+        }
+        <br />
+        @for (int i = 0; i < rating.Value; i++)
+        {
+            <span>&#11088;</span>
+        }
+        <br />
+        
+    </div>
+    <br />
+ }
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private string user { get; set; }
+    private List<RatingDto> ratings { get; set; } = new List<RatingDto>();
+    private EditRatingForm model = new EditRatingForm();
+    protected override async Task OnInitializedAsync()
+    {
+        ListRatings ratingsToPost = new ListRatings();
+        ratingsToPost = await Http.GetFromJsonAsync<ListRatings>($"api/posts/{Id}/ratings");
+        ratings = ratingsToPost.RatingsPost.ToList();
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        user = authState.User.Identity.Name;
+    }
+
+    private void Rate(RatingDto rating)
+    {
+        if (!rating.ShowRatingButtons) rating.ShowRatingButtons = true;
+        else rating.ShowRatingButtons = false;
+    }
+
+    private async void EditRate(int id, int rate)
+    {
+        model.Id = id;
+        model.Value = rate;
+        var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PutAsync($"api/posts/{Id}/ratings/{id}", content);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}/ratings", forceLoad: true);
+    }
+
+    private async void Delete(int idRat)
+    {
+        await Http.DeleteAsync($"api/posts/{Id}/ratings/{idRat}");
+        NavigationManager.NavigateTo($"/skillPosts/{Id}/ratings", forceLoad: true);
+    }
+}

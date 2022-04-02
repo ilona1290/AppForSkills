@@ -2,9 +2,6 @@
 using AppForSkills.Application.Exceptions;
 using AppForSkills.Application.SkillPosts.Commands.CreateRating;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Integration.Tests.Common;
 using Xunit;
@@ -24,9 +21,9 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
         public async Task GivenRating_ReturnsId()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            var rating = new CreateRatingCommand { SkillPostId = 2, Value = 4};
+            var rating = new CreateRatingCommand { SkillPostId = 2, Value = 4 };
 
-            var response = await client.PostAsync($"/api/posts/{rating.SkillPostId}", 
+            var response = await client.PostAsync($"/api/posts/{rating.SkillPostId}",
                 await Utilities.SendObjectAsContent(rating));
             response.EnsureSuccessStatusCode();
 
@@ -51,7 +48,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
         public async Task GivenRatingToNotExistSkillPost_ReturnsWrongIDException()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            var rating = new CreateRatingCommand { SkillPostId = 80, Value = 5};
+            var rating = new CreateRatingCommand { SkillPostId = 80, Value = 5 };
 
             var error = Should.Throw<WrongIDException>(async () => await client
                 .PostAsync($"/api/posts/{rating.SkillPostId}", await Utilities.SendObjectAsContent(rating)));

@@ -15,6 +15,10 @@ namespace AppForSkills.Application.Likes.Commands.GiveLike
         public void Mapping(Profile profile)
         {
             profile.CreateMap<GiveLikeCommand, Like>()
+                .ForMember(s => s.User, map => map.MapFrom(src => src.User))
+                .ForMember(s => s.PostInDiscussionId, map => map.MapFrom(src => src.PostInDiscussionId))
+                .ForMember(s => s.CommentId, map => map.MapFrom(src => src.CommentId))
+                .ForMember(s => s.DiscussionId, map => map.MapFrom(src => src.DiscussionId))
                 .ForAllOtherMembers(d => d.Ignore());
         }
     }

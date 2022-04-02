@@ -1,0 +1,88 @@
+﻿@page "/skillPosts/{Id:int}/EditSkillPost"
+@using AppForSkills.Client.Models
+@using System.Text
+@using System.Text.Json
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
+                <DataAnnotationsValidator />
+                <div class="form-row">
+                    <label>Tytuł</label>
+                    <InputText @bind-Value="@model.Title" class="form-control" />
+                    <ValidationMessage For="@(() => model.Title)" />
+                </div>
+                <div class="form-row">
+                    <label>Opis</label>
+                    <InputTextArea @bind-Value="@model.Description" class="form-control" />
+                    <ValidationMessage For="@(() => model.Description)" />
+                </div>
+                <br />
+                <p>Zdjęcie lub video Twojego Skilla (prześlij tylko jeśli zmieniasz plik):</p>
+                <div class="form-row">
+                    <InputFile OnChange="@HandleSelected" />
+                </div>
+                <br /><br />
+                <button type="submit" class="btn btn-primary">Zatwierdź</button>
+                <button type="reset" class="btn btn-danger">Wyczyść</button>
+                <a class="btn btn-info" href="skillPosts">Powrót</a>
+            </EditForm>
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private SkillPostVm skillPost;
+    public string FileUrl { get; set; }
+    public string FileType { get; set; }
+    EditSkillPostForm model = new EditSkillPostForm();
+    private EditContext editContext;
+    protected override async Task OnInitializedAsync()
+    {
+        skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
+        model.Id = skillPost.Id;
+        model.Title = skillPost.Title;
+        model.Description = skillPost.Description;
+        model.Skill = skillPost.AddressOfPhotoOrVideo;
+        editContext = new EditContext(model);
+    }
+
+    private async void HandleValidSubmit()
+    {
+        var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PutAsync($"api/posts/{Id}", content);
+        Navigation.NavigateTo("/skillPosts");
+    }
+
+    private void HandleReset()
+    {
+        model = new EditSkillPostForm();
+        editContext = new EditContext(model);
+    }
+
+    private async Task HandleSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        FileType = file.ContentType;
+        if (file == null)
+            return;
+        using (var ms = file.OpenReadStream(file.Size))
+        {
+            var content = new MultipartFormDataContent();
+            content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+            content.Add(new StreamContent(ms, Convert.ToInt32(file.Size)), FileType, file.Name);
+            var response = await Http.PostAsync("api/upload", content);
+            FileUrl = await response.Content.ReadAsStringAsync();
+            model.Skill = FileUrl;
+        }
+    }
+}

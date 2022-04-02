@@ -1,0 +1,87 @@
+﻿@using AppForSkills.Client.Models
+@using System.Text.Json
+@using System.Text
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@foreach (var discussion in discussions)
+{
+    <div class="discussions">
+        <a href="/users/@discussion.Username" class="link"><h4 class="font-weight-bold"> Rozpoczynający dyskusję: @discussion.Username</h4></a>
+        @if (user == discussion.Username)
+        {
+            <div class="buttonDisc"><button class="btn btn-danger" @onclick="() => Delete(discussion.Id)">Usuń</button></div>
+            <div class="buttonDisc"><button class="btn btn-primary" @onclick="() => CreateModelEdit(discussion)">Edytuj</button></div>
+        }
+        <div class="buttonDisc"><a class="btn btn-success" href="discussions/@discussion.Id">Dołącz</a></div>
+        <a href="discussions/@discussion.Id" class="link">
+            <h4>@discussion.FirstPost</h4>
+            <h4 class="numlikes">&#128077; @discussion.Likes</h4>
+            <h4 class="numPosts">&#128488; @discussion.Posts</h4>
+            <h4 class="numUsers"> &#128483;&#65039;@discussion.Users</h4>
+        </a>
+    </div>
+    @if (discussion.ShowEditDiscField)
+    {
+        <EditForm EditContext="@editContext" OnValidSubmit="EditDiscussion" @onreset="@HandleReset">
+            <DataAnnotationsValidator />
+            <br />
+            <div class="addAnswerComment">
+                <label>Edytuj:</label>
+                <InputTextArea @bind-Value="@modelToEdit.FirstPost" class="form-control" />
+                <ValidationMessage For="@(() => modelToEdit.FirstPost)" />
+                <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                <button type="reset" class="btn btn-dark">Wyczyść</button>
+                <button @onclick="() => CreateModelEdit(discussion)" class="btn btn-light">Anuluj</button>
+            </div><br />
+        </EditForm>
+    }
+    <br />
+}
+
+@code {
+    [Parameter]
+    public List<DiscussionDto> discussions { get; set; } = new List<DiscussionDto>();
+    private string user { get; set; }
+    private EditDiscussionForm modelToEdit = new EditDiscussionForm();
+    private EditContext editContext;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        user = authState.User.Identity.Name;
+    }
+
+    private void CreateModelEdit(DiscussionDto disc)
+    {
+        if (!disc.ShowEditDiscField)
+        {
+            disc.ShowEditDiscField = true;
+            modelToEdit.DiscussionId = disc.Id;
+            modelToEdit.FirstPost = disc.FirstPost;
+            editContext = new EditContext(modelToEdit);
+        }
+        else disc.ShowEditDiscField = false;
+    }
+
+    private async void EditDiscussion()
+    {
+        var modelJson = JsonSerializer.Serialize(modelToEdit, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PutAsync($"api/discussions/{modelToEdit.DiscussionId}", content);
+        NavigationManager.NavigateTo("/discussions", forceLoad: true);
+    }
+
+    private void HandleReset()
+    {
+        modelToEdit = new EditDiscussionForm();
+        editContext = new EditContext(modelToEdit);
+    }
+
+    private async void Delete(int idDisc)
+    {
+        await Http.DeleteAsync($"api/discussions/{idDisc}");
+        NavigationManager.NavigateTo("/discussions", forceLoad: true);
+    }
+}

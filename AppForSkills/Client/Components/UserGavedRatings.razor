@@ -1,0 +1,30 @@
+﻿@using AppForSkills.Client.Models
+@inject HttpClient Http
+
+@foreach (var rating in UserRatings)
+{
+    <div>
+        <a href="skillPosts/@rating.SkillId">
+            @if (rating.AddressOfPhotoOrVideo.EndsWith(".png") || rating.AddressOfPhotoOrVideo.EndsWith(".jpg"))
+            {
+                <img src=@rating.AddressOfPhotoOrVideo style="display: block; max-width: 500px; height: auto; " />
+            }
+            else if (rating.AddressOfPhotoOrVideo.EndsWith(".mp4"))
+            {
+                <video preload="auto" controls="controls" width="500">
+                    <source src=@rating.AddressOfPhotoOrVideo type="video/mp4" />
+                </video>
+            }
+        </a>
+        <h5>@rating.Date</h5>
+        @for (int i = 0; i < rating.Value; i++)
+        {
+            <span>&#11088;</span>
+        }
+    </div><br /><br />
+}
+
+@code {
+    [Parameter]
+    public List<UserGavedRatingDto> UserRatings { get; set; } = new List<UserGavedRatingDto>();
+}

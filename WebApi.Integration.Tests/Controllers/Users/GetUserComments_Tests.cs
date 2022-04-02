@@ -1,9 +1,7 @@
 ﻿using AppForSkills.Api;
 using AppForSkills.Application.Users.Queries.GetUserComments;
 using Shouldly;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Integration.Tests.Common;
 using Xunit;
@@ -28,7 +26,7 @@ namespace WebApi.Integration.Tests.Controllers.Users
             var response = await client.GetAsync($"/api/users/{username}/comments");
             response.EnsureSuccessStatusCode();
 
-            var vm = await Utilities.GetResponseContent<CommentsVm>(response);
+            var vm = await Utilities.GetResponseContent<UserCommentsVm>(response);
             vm.Comments.ShouldBeOfType<List<UserCommentDto>>();
             vm.Comments.Count.ShouldBe(1);
         }

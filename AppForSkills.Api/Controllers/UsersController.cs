@@ -8,6 +8,7 @@ using AppForSkills.Application.Users.Commands.CreateUser;
 using AppForSkills.Application.Users.Commands.UpdateLoginDate;
 using AppForSkills.Application.Users.Queries.GetUserAchievements;
 using AppForSkills.Application.Users.Queries.GetUserComments;
+using AppForSkills.Application.Users.Queries.GetUserDiscussionPosts;
 using AppForSkills.Application.Users.Queries.GetUserDiscussions;
 using AppForSkills.Application.Users.Queries.GetUserInformation;
 using AppForSkills.Application.Users.Queries.GetUserRatings;
@@ -83,54 +84,6 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Returns selected user posts. 
-        /// </summary>
-        [Route("{username}/skills/{id}")]
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<ActionResult<SkillPostVm>> GetUserSkillAsync(int id)
-        {
-            var vm = await Mediator.Send(new GetSkillPostDetailQuery() { SkillPostId = id });
-            return vm;
-        }
-
-        /// <summary>
-        /// Edits selected user posts. 
-        /// </summary>
-        [Route("{username}/skills/{id}")]
-        [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<ActionResult> EditUserSkill([FromForm]EditSkillPostCommand command)
-        {
-            var result = await Mediator.Send(command);
-            return Ok(result);
-        }
-
-        /// <summary>
-        /// Deletes selected user posts. 
-        /// </summary>
-        [Route("{username}/skills/{id}")]
-        [HttpDelete]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<ActionResult> DeleteUserSkill(int id)
-        {
-            var result = await Mediator.Send(new DeleteSkillPostCommand() { SkillPostId = id });
-            return Ok(result);
-        }
-
-        /// <summary>
         /// Returns all ratings, which user gave to other users. 
         /// </summary>
         [Route("{username}/ratings")]
@@ -147,7 +100,7 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Returns all comments, which user gave to other users. 
+        /// Returns all comments, which user gave. 
         /// </summary>
         [Route("{username}/comments")]
         [HttpGet]
@@ -156,7 +109,7 @@ namespace AppForSkills.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CommentsVm>> GetAllCommentsWhichUserGaveAsync(string username)
+        public async Task<ActionResult<UserCommentsVm>> GetAllCommentsWhichUserGaveAsync(string username)
         {
             var vm = await Mediator.Send(new GetUserCommentsQuery() { Username = username });
             return vm;
@@ -195,18 +148,18 @@ namespace AppForSkills.Api.Controllers
         }
 
         /// <summary>
-        /// Returns selected discussion, in which user has been participated. 
+        /// Returns all discussion posts, which user gave. 
         /// </summary>
-        [Route("{username}/discussions/{id}")]
+        [Route("{username}/discussionPosts")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<DiscussionVm>> GetSelectedDiscussionWithUser(int id)
+        public async Task<ActionResult<UserDiscussionPostsVm>> GetAllDiscussionPostsWhichUserGaveAsync(string username)
         {
-            var vm = await Mediator.Send(new GetDiscussionQuery() { DiscussionId = id });
+            var vm = await Mediator.Send(new GetUserDiscussionPostsQuery() { Username = username });
             return vm;
         }
     }

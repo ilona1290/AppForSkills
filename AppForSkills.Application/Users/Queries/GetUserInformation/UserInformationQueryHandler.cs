@@ -20,14 +20,18 @@ namespace AppForSkills.Application.Users.Queries.GetUserInformation
         public async Task<UserInformationVm> Handle(GetUserInformationQuery request, CancellationToken cancellationToken)
         {
             var user = await _context.Users.Where(d => d.StatusId == 1 && d.Username == request.Username)
-                .Include(u => u.UserSkills)
-                .Include(c => c.UserComments)
-                .Include(r => r.GavedRatings)
-                .Include(d => d.Discussions)
-                .Include(a => a.Achievements)
+                .Include(u => u.UserSkills.Where(s => s.StatusId == 1))
+                .Include(c => c.UserComments.Where(s => s.StatusId == 1))
+                .Include(r => r.GavedRatings.Where(s => s.StatusId == 1))
+                .FirstOrDefaultAsync(cancellationToken);
+            var user2 = await _context.Users.Where(d => d.StatusId == 1 && d.Username == request.Username)
+                .Include(d => d.Discussions.Where(s => s.StatusId == 1))
+                .Include(a => a.Achievements.Where(s => s.StatusId == 1))
                 .FirstOrDefaultAsync(cancellationToken);
 
             var userVm = _mapper.Map<UserInformationVm>(user);
+            userVm.Discussions = user2.Discussions.Count;
+            userVm.Achievements = user2.Achievements.Count;
 
             return userVm;
         }

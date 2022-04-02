@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AppForSkills.Application.Users.Queries.GetUsersSkills
+namespace AppForSkills.Application.Users.Queries.GetUserSkills
 {
     public class GetUserSkillsQueryHandler : IRequestHandler<GetUserSkillsQuery, SkillPostsVm>
     {

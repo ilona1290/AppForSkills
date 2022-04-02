@@ -1,0 +1,130 @@
+﻿body {
+}
+
+.topic {
+    font-weight: bold;
+    display: inline-block;
+}
+
+.firstRow {
+    position: relative;
+}
+
+.back {
+    float: right;
+    margin-right: 10%;
+    display: inline-block;
+}
+
+.addPost {
+    margin-bottom: 1%;
+    margin-right: 10%;
+    font-size: 20px;
+}
+
+.posts {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    background-image: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(37,126,208,0.4875700280112045) 15%, rgba(0,212,255,0.2578781512605042) 100%);
+    margin-right: 20%;
+    padding-left: 1%;
+}
+
+.autorPost {
+    font-size: 20px;
+    font-weight: bold;
+    padding-right: 0.75%;
+    display: inline-block;
+}
+
+.datePost {
+    font-size: 13px;
+    display: inline-block;
+}
+
+.answerToPost {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    background-image: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(37,126,208,0.4875700280112045) 15%, rgba(0,212,255,0.2578781512605042) 100%);
+    margin-right: 15%;
+    margin-left: 5%;
+    padding-left: 1%;
+}
+
+.modPost {
+    margin-left: 1%;
+    display: inline-block;
+}
+
+.modPostBut {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*input has OS specific font-family*/
+    color: #3ca4ff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.addAnswerPost {
+    margin-left: 5%;
+    padding-left: 1%;
+    font-size: 20px;
+}
+
+.like {
+    display: inline-block;
+    margin-left: 1%;
+    margin-right: 15px;
+}
+
+.link {
+    color: white;
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    height: 10px;
+    width: 10px;
+    background-color: white;
+    position: relative;
+    outline: none;
+    transform: rotate(45deg);
+    -webkit-appearance: none;
+    margin-left: 0.5%;
+}
+
+input[type="checkbox"]:before {
+    position: absolute;
+    content: "";
+    background-color: white;
+    height: 60%;
+    width: 100%;
+    top: -55%;
+    border-radius: 75px 75px 0 0;
+}
+
+input[type="checkbox"]:after {
+    position: absolute;
+    content: "";
+    background-color: white;
+    height: 60%;
+    width: 100%;
+    transform: rotate(-90deg);
+    border-radius: 75px 75px 0 0;
+    top: 19%;
+    right: 75%;
+}
+
+input[type="checkbox"]:checked,
+input:checked[type="checkbox"]:before,
+input:checked[type="checkbox"]:after {
+    background-color: #fe0f42;
+}

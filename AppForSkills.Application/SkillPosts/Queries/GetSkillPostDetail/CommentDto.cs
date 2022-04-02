@@ -1,4 +1,5 @@
 ﻿using AppForSkills.Application.Common.Mappings;
+using AppForSkills.Application.Likes.Queries.GetLikes;
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using System;
@@ -12,7 +13,9 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
         public string Username { get; set; }
         public string CommentText { get; set; }
         public DateTime Date { get; set; }
+        public int? MainParentCommentId { get; set; }
         public int? ParentCommentId { get; set; }
+        public int StatusId { get; set; }
         public ICollection<LikeDto> Likes { get; set; }
 
         public void Mapping(Profile profile)

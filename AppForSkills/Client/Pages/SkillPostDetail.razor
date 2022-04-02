@@ -1,0 +1,481 @@
+﻿@page "/skillPosts/{Id:int}"
+@using AppForSkills.Client.Models
+@using AppForSkills.Client.Components
+@using System.Text.Json
+@using System.Text
+@inject IModalService modal
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpClient Http
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            @if (skillPost == null)
+            {
+                <p>Wczytywanie...</p>
+            }
+            else
+            {
+                <div class="firstRow">
+                    <h5 class="rating">Ocena: @skillPost.Rating</h5>
+                    <a href="/skillPosts/@skillPost.Id/ratings" class="btn btn-warning">Pokaż oceny</a>
+                    @if (Rated)
+                    {
+                        <button class="btn btn-danger">Już oceniono</button>
+                    }
+                    else
+                    { 
+                        <button @onclick="Rate" class="btn btn-danger">Oceń</button>
+                    }
+                    <div class="buttons">
+                        @if (ShowRatingButtons)
+                        {
+                            <button class="btn btn-success" @onclick="() => AddRate(1)">1</button>
+                            <button class="btn btn-success" @onclick="() => AddRate(2)">2</button>
+                            <button class="btn btn-success" @onclick="() => AddRate(3)">3</button>
+                            <button class="btn btn-success" @onclick="() => AddRate(4)">4</button>
+                            <button class="btn btn-success" @onclick="() => AddRate(5)">5</button>
+                        }
+                    </div>
+                    <a href="/skillPosts" class="back">Powrót</a>
+                </div><br />
+                <br />
+                <h5>Tytuł: @skillPost.Title</h5>
+                <h5>Opis: @skillPost.Description</h5>
+                <h6>Data publikacji: @skillPost.PublishingDate</h6><br />
+                @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
+                {
+                    <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 550px; height: auto; " />
+                }
+                else if (skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
+                {
+                    <video preload="auto" controls="controls" width="800" height="400">
+                        <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
+                    </video>
+                }
+                <a href="/users/@skillPost.Username" class="link"><h4>Autor: @skillPost.Username</h4><br /><br /></a>
+
+                <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
+                    <DataAnnotationsValidator />
+                    <div class="addComment">
+                        <label>Dodaj komentarz:</label>
+                        <InputTextArea @bind-Value="@model.CommentText" class="form-control" />
+                        <ValidationMessage For="@(() => model.CommentText)" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                    <button type="reset" class="btn btn-dark">Wyczyść</button>
+                </EditForm>
+                <br /><br />
+                <h4>Komentarze: </h4>
+                @foreach (var comment in skillPost.Comments)
+                {
+                    if (Comments.Contains(comment))
+                    {
+                        <div class="comments">
+                            <a href="/users/@skillPost.Username" class="link"><div class="autorCom">@comment.Username </div></a>
+                            <div class="dateCom">@comment.Date</div>
+                            @if (comment.StatusId == 1)
+                            {
+                                <div>@comment.CommentText</div>
+                                @if (IfUserGaveLike(comment) == null)
+                                {
+                                    <input type="checkbox" @onclick="() => Like(comment)" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" checked @onclick="() => Dislike(comment, IfUserGaveLike(comment))" />
+                                }
+                                <div class="like"><button @onclick="@(() => modal.Show<Likes>("Polubienia", GetParameters(comment)))" class="link">@comment.Likes.Count</button></div>
+                                <button @onclick="() => Answer(comment)" class="modComBut">Odpowiedz</button>
+                            }
+                            else
+                            {
+                                <div>[Usunięto]</div>
+                            }
+                            @if (comment.Username == user)
+                            {
+                                @if (comment.StatusId == 1)
+                                { 
+                                    <div class="modCom">
+                                        <button @onclick="() => CreateModelEdit(comment)" class="modComBut">Edytuj</button>
+                                    </div>
+                                    <div class="modCom">
+                                        <button @onclick="() => Delete(comment.Id)" class="modComBut">Usuń</button>
+                                    </div>
+                                }
+                                @if (comment.ShowEditComField)
+                                {
+                                    <EditForm EditContext="@contextToEditCom" OnValidSubmit="EditComment" @onreset="@HandleResetEditComment">
+                                        <DataAnnotationsValidator />
+                                        <br />
+                                        <div class="addComment">
+                                            <label>Edytuj:</label>
+                                            <InputTextArea @bind-Value="@modelToEdit.CommentText" class="form-control" />
+                                            <ValidationMessage For="@(() => modelToEdit.CommentText)" />
+                                            <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                                            <button type="reset" class="btn btn-dark">Wyczyść</button>
+                                            <button @onclick="() => CreateModelEdit(comment)" class="btn btn-light">Anuluj</button>
+                                        </div><br />
+                                    </EditForm>
+                                }
+                            }
+                        </div><br />
+                        @if (comment.ShowAnswerField)
+                        {
+                            <EditForm EditContext="@editContextToAnswer" OnValidSubmit="() => HandleValidSubmitAnswerComment(comment)" @onreset="@HandleResetToAnswer">
+                                <DataAnnotationsValidator />
+                                <div class="addAnswerComment">
+                                    <label>Odpowiedz:</label>
+                                    <InputTextArea @bind-Value="@modelToAnswer.CommentText" class="form-control" />
+                                    <ValidationMessage For="@(() => modelToAnswer.CommentText)" />
+                                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                                    <button type="reset" class="btn btn-dark">Wyczyść</button>
+                                    <button @onclick="() => Answer(comment)" class="btn btn-light">Anuluj</button>
+                                </div><br />
+                            </EditForm>
+                        }
+                        @foreach (var answerCom in AnswersToComment)
+                        {
+                            if (answerCom.MainParentCommentId == comment.Id)
+                            {
+                                <div class="answerToCom">
+                                    <a href="/users/@skillPost.Username" class="link"><div class="autorCom">@answerCom.Username </div></a>
+                                    <div class="dateCom">@answerCom.Date</div><br />
+                                    @if(answerCom.StatusId == 1)
+                                    { 
+                                        <div>@answerCom.CommentText</div>
+                                        @if (IfUserGaveLike(answerCom) == null)
+                                        {
+                                            <input type="checkbox" @onclick="() => Like(answerCom)" />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" checked @onclick="() => Dislike(answerCom, IfUserGaveLike(answerCom))" />
+                                        }
+                                        <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(answerCom)))" class="link">@answerCom.Likes.Count</button></div>
+                                        <button @onclick="() => Answer(answerCom)" class="modComBut">Odpowiedz</button>
+                                    }
+                                    else
+                                    {
+                                        <div>[Usunięto]</div>
+                                    }
+                                    @if (answerCom.Username == user)
+                                    {
+                                        @if (answerCom.StatusId == 1)
+                                        { 
+                                            <div class="modCom">
+                                                <button @onclick="() => CreateModelEdit(answerCom)" class="modComBut">Edytuj</button>
+                                            </div>
+                                            <div class="modCom">
+                                                <button @onclick="() => Delete(answerCom.Id)" class="modComBut">Usuń</button>
+                                            </div><br />
+                                        }
+                                        @if (answerCom.ShowEditComField)
+                                        {
+                                            <EditForm EditContext="@contextToEditAnswerCom" OnValidSubmit="EditAnswerComment" @onreset="@HandleResetEditAnswerComment">
+                                                <DataAnnotationsValidator />
+                                                <br />
+                                                <div class="addComment">
+                                                    <label>Edytuj:</label>
+                                                    <InputTextArea @bind-Value="@modelToEditAnswer.CommentText" class="form-control" />
+                                                    <ValidationMessage For="@(() => modelToEditAnswer.CommentText)" />
+                                                    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                                                    <button type="reset" class="btn btn-dark">Wyczyść</button>
+                                                    <button @onclick="() => CreateModelEdit(answerCom)" class="btn btn-light">Anuluj</button>
+                                                </div><br />
+                                            </EditForm>
+                                        }
+                                    }
+                                </div><br />
+                                @if (answerCom.ShowAnswerField)
+                                {
+                                    <EditForm EditContext="@editContextToAnswerAnswer" OnValidSubmit="() => HandleValidSubmitAnswerAnswerComment(answerCom)" @onreset="@HandleResetToAnswerAnswer">
+                                        <DataAnnotationsValidator />
+                                        <div class="addAnswerComment">
+                                            <label>Odpowiedz:</label>
+                                            <InputTextArea @bind-Value="@modelToAnswerAnswer.CommentText" class="form-control" />
+                                            <ValidationMessage For="@(() => modelToAnswerAnswer.CommentText)" />
+                                            <button type="submit" class="btn btn-primary">Dodaj</button>
+                                            <button type="reset" class="btn btn-dark">Wyczyść</button>
+                                            <button @onclick="() => Answer(answerCom)" class="btn btn-light">Anuluj</button>
+                                        </div><br />
+                                    </EditForm>
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private SkillPostVm skillPost;
+    private List<RatingDto> ratings { get; set; } = new List<RatingDto>();
+    private string user { get; set; }
+    private List<CommentDto> AnswersToComment = new List<CommentDto>();
+    private List<CommentDto> Comments = new List<CommentDto>();
+    private CommentForm model = new CommentForm();
+    private CommentForm modelToAnswer = new CommentForm();
+    private CommentForm modelToAnswerAnswer = new CommentForm();
+    private EditCommentForm modelToEdit = new EditCommentForm();
+    private EditCommentForm modelToEditAnswer = new EditCommentForm();
+    private RatingForm modelToRating = new RatingForm();
+    private EditContext editContext;
+    private EditContext editContextToAnswer;
+    private EditContext editContextToAnswerAnswer;
+    private EditContext contextToEditCom;
+    private EditContext contextToEditAnswerCom;
+    private bool ShowRatingButtons { get; set; } = false;
+    private bool Rated { get; set; } = false;
+    private GiveLike giveLike = new GiveLike();
+    private List<LikeDto> likes = new List<LikeDto>();
+    private ModalParameters modalParameters { get; set; } = new ModalParameters();
+    protected override async Task OnInitializedAsync()
+    {
+        skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
+        @foreach (var comment in skillPost.Comments)
+        {
+            if (comment.MainParentCommentId != null)
+            {
+                AnswersToComment.Add(comment);
+                Console.WriteLine(comment.CommentText);
+            }
+            else
+            {
+                Comments.Add(comment);
+            }
+        }
+        editContext = new EditContext(model);
+        editContextToAnswer = new EditContext(modelToAnswer);
+        editContextToAnswerAnswer = new EditContext(modelToAnswerAnswer);
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        user = authState.User.Identity.Name;
+
+
+        ListRatings ratingsToPost = new ListRatings();
+        ratingsToPost = await Http.GetFromJsonAsync<ListRatings>($"api/posts/{Id}/ratings");
+        ratings = ratingsToPost.RatingsPost.ToList();
+        foreach (var rat in ratings)
+        {
+            if (rat.Username == user)
+            {
+                Rated = true;
+                break;
+            }
+            else
+            {
+                Rated = false;
+            }
+        }
+        Console.WriteLine(Rated);
+    }
+
+    private ModalParameters GetParameters(CommentDto com)
+    {
+        modalParameters.Add("likes", com.Likes);
+        return modalParameters;
+    }
+
+    private async void HandleValidSubmit()
+    {
+        model.SkillPostId = Id;
+        model.MainParentCommentId = null;
+        model.ParentCommentId = null;
+        var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/posts/{Id}/comments", content);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    private async void HandleValidSubmitAnswerComment(CommentDto com)
+    {
+        modelToAnswer.SkillPostId = Id;
+        modelToAnswer.MainParentCommentId = com.Id;
+        modelToAnswer.ParentCommentId = com.Id;
+        var modelJson = JsonSerializer.Serialize(modelToAnswer, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/posts/{Id}/comments", content);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    private async void HandleValidSubmitAnswerAnswerComment(CommentDto com)
+    {
+        modelToAnswerAnswer.SkillPostId = Id;
+        modelToAnswerAnswer.MainParentCommentId = com.MainParentCommentId;
+        modelToAnswerAnswer.ParentCommentId = com.Id;
+        var modelJson = JsonSerializer.Serialize(modelToAnswerAnswer, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/posts/{Id}/comments", content);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    private async void AddRate(int rate)
+    {
+        modelToRating.SkillPostId = Id;
+        modelToRating.Value = rate;
+        var modelJson = JsonSerializer.Serialize(modelToRating, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/posts/{Id}", content);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    private void HandleReset()
+    {
+        model = new CommentForm();
+        editContext = new EditContext(model);
+    }
+
+    private void HandleResetToAnswer()
+    {
+        modelToAnswer = new CommentForm();
+        editContextToAnswer = new EditContext(modelToAnswer);
+    }
+
+    private void HandleResetToAnswerAnswer()
+    {
+        modelToAnswerAnswer = new CommentForm();
+        editContextToAnswerAnswer = new EditContext(modelToAnswerAnswer);
+    }
+
+    private void HandleResetEditComment()
+    {
+        modelToEdit.CommentText = "";
+        contextToEditCom = new EditContext(modelToEdit);
+    }
+
+    private void HandleResetEditAnswerComment()
+    {
+        modelToEditAnswer.CommentText = "";
+        contextToEditCom = new EditContext(modelToEditAnswer);
+    }
+
+    private void Answer(CommentDto com)
+    {
+        if (!com.ShowAnswerField)
+        {
+            com.ShowAnswerField = true;
+        }
+        else
+        {
+            com.ShowAnswerField = false;
+        }
+        if (com.ParentCommentId != null)
+        {
+            AddUsernameToAnswerComment(modelToAnswerAnswer, com.Username);
+        }
+    }
+
+    private void AddUsernameToAnswerComment(CommentForm model, string username)
+    {
+        model.CommentText = "@" + username;
+    }
+
+    private void Rate()
+    {
+        if (!ShowRatingButtons) ShowRatingButtons = true;
+        else ShowRatingButtons = false;
+    }
+
+    private void CreateModelEdit(CommentDto com)
+    {
+        if (!com.ShowEditComField)
+        {
+            com.ShowEditComField = true;
+            if (com.ParentCommentId == null)
+            {
+                modelToEdit.Id = com.Id;
+                modelToEdit.CommentText = com.CommentText;
+                contextToEditCom = new EditContext(modelToEdit);
+            }
+            else
+            {
+                modelToEditAnswer.Id = com.Id;
+                modelToEditAnswer.CommentText = com.CommentText;
+                contextToEditAnswerCom = new EditContext(modelToEditAnswer);
+            }
+        }
+        else com.ShowEditComField = false;
+    }
+
+    private async void EditComment()
+    {
+        var modelJson = JsonSerializer.Serialize(modelToEdit, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PutAsync($"api/posts/{Id}/comments/{modelToEdit.Id}", content);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    private async void EditAnswerComment()
+    {
+        var modelJson = JsonSerializer.Serialize(modelToEditAnswer, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PutAsync($"api/posts/{Id}/comments/{modelToEditAnswer.Id}", content);
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    private async void Delete(int idCom)
+    {
+        await Http.DeleteAsync($"api/posts/{Id}/comments/{idCom}");
+        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    private async void Like(CommentDto com)
+    {
+        giveLike.CommentId = com.Id;
+        giveLike.User = user;
+        LikeDto like = new LikeDto() { Username = user };
+        com.Likes.Add(like);
+        var modelJson = JsonSerializer.Serialize(giveLike, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync($"api/posts/{Id}/comments/likes", content);
+    }
+
+    private async void Dislike(CommentDto com, LikeDto like)
+    {
+        LikeDto likeToRemove = new LikeDto();
+        int IdLikeToRemove = 0;
+        foreach (var like1 in com.Likes)
+        {
+            if (like1.Username == user)
+            {
+                likeToRemove = like1;
+                break;
+            }
+        }
+        com.Likes.Remove(likeToRemove);
+        ListLikes likes1 = new ListLikes();
+        likes1 = await Http.GetFromJsonAsync<ListLikes>($"api/posts/{Id}/comments/{com.Id}/likes");
+        likes = likes1.Likes.ToList();
+        foreach (var likeComment in likes)
+        {
+            if (likeComment.Username == user)
+            {
+                IdLikeToRemove = likeComment.Id;
+                break;
+            }
+        }
+        await Http.DeleteAsync($"api/posts/{Id}/comments/likes/{IdLikeToRemove}");
+
+    }
+
+    private LikeDto IfUserGaveLike(CommentDto com)
+    {
+
+        foreach (var like in com.Likes)
+        {
+            if (like.Username == user) return like;
+        }
+        return null;
+    }
+}
+

@@ -1,9 +1,7 @@
 ﻿using AppForSkills.Api;
 using AppForSkills.Application.Users.Queries.GetUserAchievements;
 using Shouldly;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Integration.Tests.Common;
 using Xunit;
