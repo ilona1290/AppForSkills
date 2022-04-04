@@ -98,7 +98,7 @@ namespace AppForSkills.Persistance
                     DiscussionId = 1,
                     MainParentPostId = 1,
                     ParentPostId = 2,
-                    PostText = "Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :)."
+                    PostText = "@Podróżnik Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :)."
                 });
 
             modelBuilder.Entity<Achievement>().HasData(
@@ -116,7 +116,7 @@ namespace AppForSkills.Persistance
                     Description = "Dodano 5 Komentarzy", Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg"},
                 new Achievement() { Id = 7, StatusId = 1, Category = "Komentarze", Amount = 25, Name = "Buszujący w komentarzach",
                     Description = "Dodano 25 Komentarzy", Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg"},
-                new Achievement() { Id = 8, StatusId = 1, Category = "Komentarze", Amount = 50, Name = "Komentator-niekoniecznie sportowy",
+                new Achievement() { Id = 8, StatusId = 1, Category = "Komentarze", Amount = 50, Name = "Komentator-niekoniecznie-sportowy",
                     Description = "Dodano 50 Komentarzy", Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg"},
                 new Achievement() { Id = 9, StatusId = 1, Category = "Komentarze", Amount = 100, Name = "Imperator-komentator",
                     Description = "Dodano 100 Komentarzy", Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg"},

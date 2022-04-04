@@ -1,5 +1,5 @@
 ﻿using AppForSkills.Api;
-using AppForSkills.Application.Users.Queries.GetUserAchievements;
+using AppForSkills.Application.Achievements.Queries.GetAchievements;
 using Shouldly;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -1,4 +1,5 @@
-﻿using AppForSkills.Application.Users.Queries.GetUserAchievements;
+﻿using AppForSkills.Application.Achievements.Queries.GetAchievements;
+using AppForSkills.Application.Users.Queries.GetUserAchievements;
 using AppForSkills.Persistance;
 using Application.UnitTests.Common;
 using AutoMapper;

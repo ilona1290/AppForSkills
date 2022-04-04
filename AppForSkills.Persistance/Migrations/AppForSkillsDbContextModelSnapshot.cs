@@ -168,7 +168,7 @@ namespace AppForSkills.Persistance.Migrations
                             Category = "Komentarze",
                             Description = "Dodano 50 Komentarzy",
                             Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
-                            Name = "Komentator-niekoniecznie sportowy",
+                            Name = "Komentator-niekoniecznie-sportowy",
                             StatusId = 1
                         },
                         new
@@ -401,7 +401,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 1,
                             CommentText = "Wow! Super zdjęcie.",
-                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 310, DateTimeKind.Local).AddTicks(5744),
+                            Created = new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(1599),
                             CreatedBy = "Turysta12",
                             SkillPostId = 1,
                             StatusId = 1,
@@ -411,7 +411,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 2,
                             CommentText = "Dzięki.",
-                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 310, DateTimeKind.Local).AddTicks(6434),
+                            Created = new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(2134),
                             CreatedBy = "Podróżnik",
                             MainParentCommentId = 1,
                             ParentCommentId = 1,
@@ -462,7 +462,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(534),
+                            Created = new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(5664),
                             CreatedBy = "Podróżnik",
                             FirstPost = "Jaki kraj chcielibyście odwiedzić?",
                             StatusId = 1
@@ -599,7 +599,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(1807),
+                            Created = new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(7133),
                             CreatedBy = "Turysta12",
                             DiscussionId = 1,
                             PostText = "Australia",
@@ -609,7 +609,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(1825),
+                            Created = new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(7150),
                             CreatedBy = "Podróżnik",
                             DiscussionId = 1,
                             MainParentPostId = 1,
@@ -621,12 +621,12 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(2299),
+                            Created = new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(7568),
                             CreatedBy = "Turysta12",
                             DiscussionId = 1,
                             MainParentPostId = 1,
                             ParentPostId = 2,
-                            PostText = "Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).",
+                            PostText = "@Podróżnik Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).",
                             Reported = false,
                             StatusId = 1
                         });
@@ -681,7 +681,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 310, DateTimeKind.Local).AddTicks(7562),
+                            Created = new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(3039),
                             CreatedBy = "Turysta12",
                             SkillPostId = 1,
                             StatusId = 1,
@@ -747,7 +747,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 1,
                             AddressOfPhotoOrVideo = "https://app.blob.core.windows.net/upload-container/Eiffel_Tower.jpg",
-                            Created = new DateTime(2022, 4, 2, 20, 54, 55, 306, DateTimeKind.Local).AddTicks(4602),
+                            Created = new DateTime(2022, 4, 2, 23, 31, 59, 568, DateTimeKind.Local).AddTicks(5687),
                             CreatedBy = "Podróżnik",
                             Description = "Cześć. Autorskie zdjęcie wieży Eiffla",
                             StatusId = 1,
@@ -785,16 +785,16 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            RecentLoginDate = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(6393),
-                            RegistrationDate = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(6126),
+                            RecentLoginDate = new DateTime(2022, 4, 2, 23, 31, 59, 576, DateTimeKind.Local).AddTicks(480),
+                            RegistrationDate = new DateTime(2022, 4, 2, 23, 31, 59, 576, DateTimeKind.Local).AddTicks(255),
                             StatusId = 1,
                             Username = "Podróżnik"
                         },
                         new
                         {
                             Id = 2,
-                            RecentLoginDate = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(6638),
-                            RegistrationDate = new DateTime(2022, 4, 2, 20, 54, 55, 311, DateTimeKind.Local).AddTicks(6631),
+                            RecentLoginDate = new DateTime(2022, 4, 2, 23, 31, 59, 576, DateTimeKind.Local).AddTicks(681),
+                            RegistrationDate = new DateTime(2022, 4, 2, 23, 31, 59, 576, DateTimeKind.Local).AddTicks(675),
                             StatusId = 1,
                             Username = "Turysta12"
                         });
