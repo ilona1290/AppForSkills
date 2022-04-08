@@ -1,0 +1,118 @@
+﻿@using AppForSkills.Client.Models
+@using Microsoft.AspNetCore.SignalR.Client
+@using System.Text.Json
+@using System.Text
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<div id="notificationContainer">
+    <div class="notificationsCounter">@notiCounter</div>
+    <div class="notificationsButton" style="background: #ebb70e" @onclick="NotificationHideShow"></div>
+    <div class="notifications" style="display:@BoxCss !important" @onclick="NotificationHideShow">
+        <h3>
+            Powiadomienia (<span class="notificationsCounterOnHead">@notifications.Count</span>)
+        </h3>
+        @if (newNotifications != 0)
+        {
+            <div style="display:inline-block"><button class="buttonToLink" @onclick="NewNotifications">Nowe powiadomienia</button></div>
+        }
+      
+        <div class="notificationItems">
+            @foreach (var notification in notifications)
+            {
+                <h4 class="notificationFromWho">@notification.FromWho</h4>
+                <div class="notificationMessage">@notification.Message</div>
+                <div class="notificationWhen">@notification.When</div>
+            }
+        </div>
+        <div class="seeAll"><a href="/allNotifications">Zobacz wszystkie</a></div>
+    </div>
+</div>
+
+@code {
+    private List<NotificationDto> notifications { get; set; } = new List<NotificationDto>();
+    private HubConnection hubConnection;
+    private string BoxCss = "none";
+    private string user { get; set; }
+    private int notiCounter { get; set; }
+    private int newNotifications { get; set; } = 0;
+    private bool ShowNewNotifications { get; set; } = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("https://localhost:44371/broadcastHub"))
+            .Build();
+        hubConnection.On<string>("ReceiveMessage", (receiverName) =>
+        {
+            if(receiverName == user)
+            {
+                if (BoxCss == "block") newNotifications++;
+                notiCounter = notifications.Count + 1;
+                CallLoadData();
+                StateHasChanged();
+            }
+        });
+
+        await hubConnection.StartAsync();
+
+        await LoadData();
+        notiCounter = notifications.Count;
+    }
+
+    private void CallLoadData()
+    {
+        Task.Run(async () =>
+        {
+            await LoadData();
+        });
+    }
+
+    protected async Task LoadData()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        user = authState.User.Identity.Name;
+        ListNotifications listNoti = new ListNotifications();
+        listNoti = await Http.GetFromJsonAsync<ListNotifications>($"api/notifications/{user}/unread");
+        notifications = listNoti.Notifications.ToList();
+    }
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
+    }
+
+    private async void NotificationHideShow()
+    {
+        if (BoxCss == "none")
+        {
+            BoxCss = "block";
+        }
+        else
+        {
+            BoxCss = "none";
+            notiCounter = 0;
+            if (notifications.Count != 0)
+            {
+                NotificationsVm model = new NotificationsVm();
+                model.Notifications = notifications;
+                var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+                var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+                await Http.PutAsync($"api/notifications", content);
+                notifications.Clear();
+            }
+        }
+    }
+
+    private void NewNotifications()
+    {
+        ShowNewNotifications = true;
+        newNotifications = 0;
+    }
+}

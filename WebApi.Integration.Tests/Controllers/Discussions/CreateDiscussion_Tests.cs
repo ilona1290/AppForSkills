@@ -27,7 +27,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
 
             var id = await Utilities.GetResponseContent<int>(response);
 
-            id.ShouldBe(4);
+            id.ShouldBe(3);
         }
 
         [Fact]

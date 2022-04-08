@@ -28,7 +28,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
 
             var vm = await Utilities.GetResponseContent<DiscussionVm>(response);
             vm.ShouldNotBeNull();
-            vm.FirstPost.ShouldBe("Jaki kraj chcielibyście odwiedzić?");
+            vm.FirstPost.ShouldBe("Jakie sporty uprawiacie?");
         }
 
         [Fact]

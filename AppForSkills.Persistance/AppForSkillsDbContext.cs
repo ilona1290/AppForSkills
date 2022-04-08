@@ -26,6 +26,7 @@ namespace AppForSkills.Persistance
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Discussion> Discussions { get; set; }
         public DbSet<Like> Likes { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<PostInDiscussion> PostsInDiscussion { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<SkillPost> SkillPosts { get; set; }

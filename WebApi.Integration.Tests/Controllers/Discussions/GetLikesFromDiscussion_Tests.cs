@@ -23,7 +23,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
         public async Task ReturnsLikesFromDiscussion()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            string id = "2";
+            string id = "1";
             var response = await client.GetAsync($"/api/discussions/{id}/likes");
             response.EnsureSuccessStatusCode();
 
@@ -31,7 +31,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
 
             vm.Likes.ShouldBeOfType<List<LikeDto>>();
             vm.Likes.Count.ShouldBe(2);
-            vm.Likes[0].Username.ShouldBe("Turysta12");
+            vm.Likes[0].Username.ShouldBe("Podróżnik");
         }
     }
 }

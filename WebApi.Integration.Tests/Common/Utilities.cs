@@ -32,7 +32,7 @@ namespace WebApi.Integration.Tests.Common
         {
             var discussion = new AppForSkills.Domain.Entities.Discussion()
             {
-                Id = 3,
+                Id = 2,
                 FirstPost = "Jakie sporty uprawiacie?",
                 StatusId = 1
             };
@@ -40,16 +40,18 @@ namespace WebApi.Integration.Tests.Common
 
             var postInDiscussion = new AppForSkills.Domain.Entities.PostInDiscussion()
             {
-                Id = 7,
-                DiscussionId = 3,
-                PostText = "Piłkę nożną",
-                StatusId = 1
+                Id = 4,
+                DiscussionId = 1,
+                PostText = "Francję",
+                StatusId = 1,
+                CreatedBy = "user"
             };
             context.PostsInDiscussion.Add(postInDiscussion);
 
+
             var user = new AppForSkills.Domain.Entities.User()
             {
-                Id = 4,
+                Id = 3,
                 Username = "user",
                 RegistrationDate = new DateTime(1999, 12, 29),
                 RecentLoginDate = new DateTime(2000, 1, 1),
@@ -59,7 +61,7 @@ namespace WebApi.Integration.Tests.Common
 
             var alice = new AppForSkills.Domain.Entities.User()
             {
-                Id = 5,
+                Id = 4,
                 Username = "alice",
                 RegistrationDate = new DateTime(1999, 12, 29),
                 RecentLoginDate = new DateTime(2000, 1, 1),

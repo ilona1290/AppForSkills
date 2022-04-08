@@ -23,7 +23,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
             var client = await _factory.GetAuthenticatedClientAsync();
             var discussion = new EditDiscussionCommand
             {
-                DiscussionId = 3,
+                DiscussionId = 2,
                 FirstPost = "Jakie sporty uprawiacie? " +
                 "Macie jakieś sukcesy?"
             };

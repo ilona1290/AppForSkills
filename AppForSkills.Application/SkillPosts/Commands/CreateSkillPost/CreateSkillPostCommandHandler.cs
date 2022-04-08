@@ -3,6 +3,8 @@ using AppForSkills.Application.Exceptions;
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,11 +30,36 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateSkillPost
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            var user = _context.Users.Where(u => u.StatusId == 1 && u.Username == skillPost.CreatedBy).FirstOrDefault();
+            var user = _context.Users.Where(u => u.StatusId == 1 && u.Username == skillPost.CreatedBy)
+                .Include(u => u.Achievements).FirstOrDefault();
 
             if (user == null)
             {
                 throw new WrongIDException("User not exists.");
+            }
+
+            Achievement achievement = new Achievement();
+            if (user.Achievements.Count != 0)
+            {
+                var userSkillPostAchievements = user.Achievements.Where(a => a.Category == "Skills").ToList();
+                if (userSkillPostAchievements.Count != 0)
+                {
+                    achievement = _context.Achievements.FirstOrDefault(a => a.Category == "Skills" &&
+                        a.Amount > userSkillPostAchievements.Last().Amount);
+                }
+                else
+                {
+                    achievement = _context.Achievements.FirstOrDefault(a => a.Category == "Skills");
+                }
+            }
+            else
+            {
+                achievement = _context.Achievements.FirstOrDefault(a => a.Category == "Skills");
+            }
+            var amountOfSkillPost = _context.SkillPosts.Where(a => a.StatusId == 1 && a.CreatedBy == user.Username).ToList().Count;
+            if (amountOfSkillPost == achievement.Amount)
+            {
+                user.Achievements.Add(achievement);
             }
 
             skillPost.UserId = user.Id;

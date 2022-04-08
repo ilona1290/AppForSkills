@@ -41,33 +41,18 @@ namespace AppForSkills.Persistance.Migrations
                         },
                         new
                         {
-                            AchievementsId = 1,
+                            AchievementsId = 11,
                             UsersWithAchivementId = 2
                         },
                         new
                         {
-                            AchievementsId = 2,
+                            AchievementsId = 16,
                             UsersWithAchivementId = 1
                         },
                         new
                         {
-                            AchievementsId = 2,
+                            AchievementsId = 16,
                             UsersWithAchivementId = 2
-                        },
-                        new
-                        {
-                            AchievementsId = 3,
-                            UsersWithAchivementId = 1
-                        },
-                        new
-                        {
-                            AchievementsId = 3,
-                            UsersWithAchivementId = 2
-                        },
-                        new
-                        {
-                            AchievementsId = 3,
-                            UsersWithAchivementId = 3
                         });
                 });
 
@@ -78,15 +63,24 @@ namespace AppForSkills.Persistance.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Category")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasColumnName("Achievement");
 
                     b.Property<int>("StatusId")
@@ -100,22 +94,251 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Dodano pierwszy post.",
-                            Name = "Świerzak",
+                            Amount = 1,
+                            Category = "Skills",
+                            Description = "Dodano pierwszy SkillPost",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Początkujący Skiller",
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Rozpoczęto pierwszą dyskusję.",
-                            Name = "Początkujący mówca",
+                            Amount = 5,
+                            Category = "Skills",
+                            Description = "Dodano 5 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Szał umiejętności",
                             StatusId = 1
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Dodano pierwszy post do dyskusji.",
-                            Name = "Pierwsze udzielenie się",
+                            Amount = 10,
+                            Category = "Skills",
+                            Description = "Dodano 10 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "SkillMaster",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Amount = 15,
+                            Category = "Skills",
+                            Description = "Dodano 15 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Co za utalentowana bestia",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Amount = 25,
+                            Category = "Skills",
+                            Description = "Dodano 25 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "SkillGod",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Amount = 5,
+                            Category = "Komentarze",
+                            Description = "Dodano 5 Komentarzy",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Coś tam sobie pomamrocze",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Amount = 25,
+                            Category = "Komentarze",
+                            Description = "Dodano 25 Komentarzy",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Buszujący w komentarzach",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Amount = 50,
+                            Category = "Komentarze",
+                            Description = "Dodano 50 Komentarzy",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Komentator-niekoniecznie-sportowy",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Amount = 100,
+                            Category = "Komentarze",
+                            Description = "Dodano 100 Komentarzy",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Imperator-komentator",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Amount = 125,
+                            Category = "Komentarze",
+                            Description = "Dodano 125 Komentarzy",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Mógłby/Mogłaby napisać książkę, ale pisze komentarze",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Amount = 1,
+                            Category = "Oceny",
+                            Description = "Oceniono pierwszy SkillPost",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Dam Ci gwiazdkę z nieba",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Amount = 5,
+                            Category = "Oceny",
+                            Description = "Oceniono 5 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Taniec z gwiazdami",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Amount = 15,
+                            Category = "Oceny",
+                            Description = "Oceniono 15 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Mówcie mi StarLord",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Amount = 25,
+                            Category = "Oceny",
+                            Description = "Oceniono 25 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Mamo, możemy mieć własną konstelacje w domu?",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Amount = 50,
+                            Category = "Oceny",
+                            Description = "Oceniono 50 SkillPost'ów",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Dał/Dała tyle gwiazdek, że może nakręcić własny teledysk Shooting Stars",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Amount = 1,
+                            Category = "Dyskusje",
+                            Description = "Dołączono do pierwszej dyskusji",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Chcę coś oznajmić",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Amount = 5,
+                            Category = "Dyskusje",
+                            Description = "Dołączono do 5 dyskusji",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Zawsze musi być jakieś ALE",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Amount = 25,
+                            Category = "Dyskusje",
+                            Description = "Dołączono do 25 dyskusji",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Naczelny Gaduła",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Amount = 50,
+                            Category = "Dyskusje",
+                            Description = "Dołączono do 50 dyskusji",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Dyskutant-Alfa",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Amount = 100,
+                            Category = "Dyskusje",
+                            Description = "Dołączono do 100 dyskusji",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Crushin' discussion",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Amount = 5,
+                            Category = "Posty w dyskusjach",
+                            Description = "Udzielono się 5 razy w dyskusjach",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Ja tu tylko dyskutuję",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Amount = 15,
+                            Category = "Posty w dyskusjach",
+                            Description = "Udzielono się 15 razy w dyskusjach",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Mam coś więcej do powiedzenia niż tylko ALE",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Amount = 25,
+                            Category = "Posty w dyskusjach",
+                            Description = "Udzielono się 25 razy w dyskusjach",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Prowadzący Talk-Show",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Amount = 50,
+                            Category = "Posty w dyskusjach",
+                            Description = "Udzielono się 50 razy w dyskusjach",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "Nie zwrócimy Ci czasu jaki spędziłeś na pisaniu tych postów",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Amount = 200,
+                            Category = "Posty w dyskusjach",
+                            Description = "Udzielono się 200 razy w dyskusjach",
+                            Logo = "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg",
+                            Name = "200 postów już gotowych, milion kolejnych w drodze...",
                             StatusId = 1
                         });
                 });
@@ -178,22 +401,23 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 1,
                             CommentText = "Wow! Super zdjęcie.",
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 202, DateTimeKind.Local).AddTicks(8729),
+                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(1421),
                             CreatedBy = "Turysta12",
-                            SkillPostId = 2,
+                            SkillPostId = 1,
                             StatusId = 1,
-                            UserId = 3
+                            UserId = 2
                         },
                         new
                         {
                             Id = 2,
                             CommentText = "Dzięki.",
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 202, DateTimeKind.Local).AddTicks(9405),
-                            CreatedBy = "Podrożnik",
+                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(2036),
+                            CreatedBy = "Podróżnik",
+                            MainParentCommentId = 1,
                             ParentCommentId = 1,
-                            SkillPostId = 2,
+                            SkillPostId = 1,
                             StatusId = 1,
-                            UserId = 2
+                            UserId = 1
                         });
                 });
 
@@ -238,15 +462,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(6576),
-                            CreatedBy = "SuperAdmin",
-                            FirstPost = "Cześć. W tej części aplikacji będziesz mógł rozpoczynać dyskusje, bądź udzielać się już w istniejących.",
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(6954),
+                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(5961),
                             CreatedBy = "Podróżnik",
                             FirstPost = "Jaki kraj chcielibyście odwiedzić?",
                             StatusId = 1
@@ -300,39 +516,58 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 3,
-                            CommentId = 1,
-                            User = "SuperAdmin"
-                        },
-                        new
-                        {
-                            Id = 4,
                             DiscussionId = 1,
                             User = "Podróżnik"
                         },
                         new
                         {
-                            Id = 5,
-                            DiscussionId = 2,
+                            Id = 4,
+                            DiscussionId = 1,
                             User = "Turysta12"
                         },
                         new
                         {
-                            Id = 6,
-                            DiscussionId = 2,
-                            User = "SuperAdmin"
-                        },
-                        new
-                        {
-                            Id = 7,
+                            Id = 5,
                             PostInDiscussionId = 1,
                             User = "Podróżnik"
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 6,
                             PostInDiscussionId = 3,
                             User = "Podróżnik"
                         });
+                });
+
+            modelBuilder.Entity("AppForSkills.Domain.Entities.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("FromWhoId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ToWhoId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("When")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromWhoId");
+
+                    b.HasIndex("ToWhoId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.PostInDiscussion", b =>
@@ -395,9 +630,9 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8565),
+                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(7124),
                             CreatedBy = "Turysta12",
-                            DiscussionId = 2,
+                            DiscussionId = 1,
                             PostText = "Australia",
                             Reported = false,
                             StatusId = 1
@@ -405,9 +640,10 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8590),
+                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(7140),
                             CreatedBy = "Podróżnik",
-                            DiscussionId = 2,
+                            DiscussionId = 1,
+                            MainParentPostId = 1,
                             ParentPostId = 1,
                             PostText = "Dlaczego?",
                             Reported = false,
@@ -416,42 +652,12 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8952),
+                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(7581),
                             CreatedBy = "Turysta12",
-                            DiscussionId = 2,
-                            ParentPostId = 2,
-                            PostText = "Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).",
-                            Reported = false,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8964),
-                            CreatedBy = "Podróżnik",
                             DiscussionId = 1,
-                            PostText = "Jasne.",
-                            Reported = false,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8968),
-                            CreatedBy = "SuperAdmin",
-                            DiscussionId = 2,
-                            PostText = "Włochy",
-                            Reported = false,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(8971),
-                            CreatedBy = "SuperAdmin",
-                            DiscussionId = 2,
-                            ParentPostId = 1,
-                            PostText = "Możesz rozwinąć?",
+                            MainParentPostId = 1,
+                            ParentPostId = 2,
+                            PostText = "@Podróżnik Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).",
                             Reported = false,
                             StatusId = 1
                         });
@@ -506,22 +712,12 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(357),
+                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(3000),
                             CreatedBy = "Turysta12",
-                            SkillPostId = 2,
+                            SkillPostId = 1,
                             StatusId = 1,
-                            UserId = 3,
+                            UserId = 2,
                             Value = 5
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 203, DateTimeKind.Local).AddTicks(1119),
-                            CreatedBy = "SuperAdmin",
-                            SkillPostId = 2,
-                            StatusId = 1,
-                            UserId = 1,
-                            Value = 4
                         });
                 });
 
@@ -571,9 +767,6 @@ namespace AppForSkills.Persistance.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Views")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
@@ -584,25 +777,13 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            AddressOfPhotoOrVideo = "images/firstPost.jpg",
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 197, DateTimeKind.Local).AddTicks(4604),
-                            Description = "Cześć. W tej części aplikacji będziesz mógł zaprezentować pozostałym użytkownikom swoje umiejętności/talenty w formie zdjęcia, bądź filmiku. Dodać do niego tytuł i opis. Każdy użytkownik, może oceniać, komentować dany post. Baw się dobrze!",
-                            StatusId = 1,
-                            Title = "Start",
-                            UserId = 1,
-                            Views = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AddressOfPhotoOrVideo = "images/Eiffel_Tower.jpg",
-                            Created = new DateTime(2022, 3, 4, 23, 5, 19, 201, DateTimeKind.Local).AddTicks(3479),
+                            AddressOfPhotoOrVideo = "https://app.blob.core.windows.net/upload-container/Eiffel_Tower.jpg",
+                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 390, DateTimeKind.Local).AddTicks(4420),
                             CreatedBy = "Podróżnik",
                             Description = "Cześć. Autorskie zdjęcie wieży Eiffla",
                             StatusId = 1,
                             Title = "Wieża Eiffla",
-                            UserId = 2,
-                            Views = 0
+                            UserId = 1
                         });
                 });
 
@@ -635,24 +816,16 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            RecentLoginDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RegistrationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            StatusId = 1,
-                            Username = "SuperAdmin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            RecentLoginDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RegistrationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RecentLoginDate = new DateTime(2022, 4, 4, 19, 25, 58, 395, DateTimeKind.Local).AddTicks(755),
+                            RegistrationDate = new DateTime(2022, 4, 4, 19, 25, 58, 395, DateTimeKind.Local).AddTicks(517),
                             StatusId = 1,
                             Username = "Podróżnik"
                         },
                         new
                         {
-                            Id = 3,
-                            RecentLoginDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RegistrationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 2,
+                            RecentLoginDate = new DateTime(2022, 4, 4, 19, 25, 58, 395, DateTimeKind.Local).AddTicks(974),
+                            RegistrationDate = new DateTime(2022, 4, 4, 19, 25, 58, 395, DateTimeKind.Local).AddTicks(967),
                             StatusId = 1,
                             Username = "Turysta12"
                         });
@@ -673,21 +846,6 @@ namespace AppForSkills.Persistance.Migrations
                     b.ToTable("DiscussionUser");
 
                     b.HasData(
-                        new
-                        {
-                            DiscussionsId = 2,
-                            UsersInDiscussionId = 2
-                        },
-                        new
-                        {
-                            DiscussionsId = 2,
-                            UsersInDiscussionId = 3
-                        },
-                        new
-                        {
-                            DiscussionsId = 2,
-                            UsersInDiscussionId = 1
-                        },
                         new
                         {
                             DiscussionsId = 1,
@@ -751,6 +909,21 @@ namespace AppForSkills.Persistance.Migrations
                     b.Navigation("Discussion");
 
                     b.Navigation("PostInDiscussion");
+                });
+
+            modelBuilder.Entity("AppForSkills.Domain.Entities.Notification", b =>
+                {
+                    b.HasOne("AppForSkills.Domain.Entities.User", "FromWho")
+                        .WithMany()
+                        .HasForeignKey("FromWhoId");
+
+                    b.HasOne("AppForSkills.Domain.Entities.User", "ToWho")
+                        .WithMany()
+                        .HasForeignKey("ToWhoId");
+
+                    b.Navigation("FromWho");
+
+                    b.Navigation("ToWho");
                 });
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.PostInDiscussion", b =>

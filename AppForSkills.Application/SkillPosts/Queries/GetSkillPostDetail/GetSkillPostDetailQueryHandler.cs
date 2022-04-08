@@ -45,9 +45,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
                 skillPostVm.Rating = 0;
             }
 
-            skillPost.Views++;
             await _context.SaveChangesAsync(cancellationToken);
-            skillPostVm.Views++;
 
             return skillPostVm;
         }

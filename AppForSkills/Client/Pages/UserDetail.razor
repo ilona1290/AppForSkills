@@ -41,6 +41,9 @@
                     <div class="stats">
                         <button class="btn btn-success" @onclick="() => WhichShow(7)"> @userAnswersToPosts.Count Odpowiedzi do innych postów w dyskusji</button>
                     </div>
+                    <div class="stats">
+                        <button class="btn btn-success" @onclick="() => WhichShow(8)"> @userAchievements.Count Osiągnięć</button>
+                    </div>
                 </div>
 
                 @switch (action)
@@ -66,6 +69,9 @@
                     case 7:
                         <UserAnswersToPosts Posts="@userAnswersToPosts"></UserAnswersToPosts>
                         break;
+                    case 8:
+                        <Achievements Achievements="@userAchievements"></Achievements>
+                        break;
                 }
             }
         </Authorized>
@@ -87,6 +93,7 @@
     private List<UserCommentDto> userAnswersToComments = new List<UserCommentDto>();
     private List<UserDiscussionPostDto> userPostsToDiscussionTopic = new List<UserDiscussionPostDto>();
     private List<UserDiscussionPostDto> userAnswersToPosts = new List<UserDiscussionPostDto>();
+    private List<AchievementDto> userAchievements = new List<AchievementDto>();
     private int action = 1;
 
     protected override async Task OnInitializedAsync()
@@ -136,6 +143,11 @@
                 userAnswersToPosts.Add(post);
             }
         }
+
+        ListAchievements achievements = new ListAchievements();
+        achievements = await Http.GetFromJsonAsync<ListAchievements>($"api/users/{Username}/achievements");
+        userAchievements = achievements.Achievements.ToList();
+        userAchievements.OrderBy(a => a.Category);
     }
 
     private void WhichShow(int num)

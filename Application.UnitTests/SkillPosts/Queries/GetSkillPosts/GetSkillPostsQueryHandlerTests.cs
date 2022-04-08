@@ -31,7 +31,7 @@ namespace Application.UnitTests.SkillPosts.Queries.GetSkillPosts
 
             result.ShouldBeOfType<SkillPostsVm>();
             result.SkillPosts.ShouldBeOfType<List<SkillPostDto>>();
-            result.SkillPosts.Count.ShouldBe(2);
+            result.SkillPosts.Count.ShouldBe(1);
         }
     }
 }

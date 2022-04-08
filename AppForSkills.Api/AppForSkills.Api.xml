@@ -4,6 +4,11 @@
         <name>AppForSkills.Api</name>
     </assembly>
     <members>
+        <member name="M:AppForSkills.Api.Controllers.AchievementsController.GetAllAchievements">
+            <summary>
+            Returns all achievements.
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.DiscussionsController.GetAllDiscussions">
             <summary>
             Returns all discussions.
@@ -81,6 +86,21 @@
         <member name="M:AppForSkills.Api.Controllers.DiscussionsController.ReportPostInDiscussion(System.Int32)">
             <summary>
             Reports post in discussion.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.NotificationsController.GetAllNotifications(System.String)">
+            <summary>
+            Returns all notifications for user.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.NotificationsController.GetUnreadNotifications(System.String)">
+            <summary>
+            Returns unread notifications for user.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.NotificationsController.ReadNotifications(AppForSkills.Application.Notifications.Queries.Commands.ReadNotifications.ReadNotificationsCommand)">
+            <summary>
+            Read notifications.
             </summary>
         </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.GetAllSkillsAsync">

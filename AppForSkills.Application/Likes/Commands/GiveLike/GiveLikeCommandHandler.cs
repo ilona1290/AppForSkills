@@ -1,7 +1,11 @@
 ﻿using AppForSkills.Application.Common.Interfaces;
+using AppForSkills.Application.Exceptions;
 using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,6 +26,47 @@ namespace AppForSkills.Application.Likes.Commands.GiveLike
         {
             var like = _mapper.Map<Like>(request);
             _context.Likes.Add(like);
+
+            var user = await _context.Users.Where(u => u.StatusId == 1 && u.Username == request.User)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (user == null)
+            {
+                throw new WrongIDException("User not exists.");
+            }
+
+            var notification = new Notification()
+            {
+                FromWhoId = user.Id,
+                When = DateTime.Now
+            };
+
+            if (request.CommentId != null)
+            {
+                var comment = await _context.Comments.Where(c => c.Id == request.CommentId).FirstOrDefaultAsync(cancellationToken);
+                notification.ToWhoId = comment.UserId;
+                notification.Message = "Lubi Twój komentarz: " + comment.CommentText;
+            }
+            else if(request.DiscussionId != null)
+            {
+                var discussion = await _context.Discussions.Where(d => d.Id == request.DiscussionId).FirstOrDefaultAsync(cancellationToken);
+                var userDisc = await _context.Users.Where(u => u.StatusId == 1 && u.Username == discussion.CreatedBy)
+                    .FirstOrDefaultAsync(cancellationToken);
+                notification.ToWhoId = userDisc.Id;
+                notification.Message = "Lubi Twoją dyskusję: " + discussion.FirstPost;
+            }
+            else if(request.PostInDiscussionId != null)
+            {
+                var postInDiscussion = await _context.PostsInDiscussion.Where(p => p.Id == request.PostInDiscussionId).FirstOrDefaultAsync(cancellationToken);
+                notification.ToWhoId = postInDiscussion.UserId;
+                notification.Message = "Lubi Twój post w dyskusji: " + postInDiscussion.PostText;
+            }
+
+            if(notification.FromWhoId != notification.ToWhoId)
+            {
+                _context.Notifications.Add(notification);
+            }
+            
             await _context.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }

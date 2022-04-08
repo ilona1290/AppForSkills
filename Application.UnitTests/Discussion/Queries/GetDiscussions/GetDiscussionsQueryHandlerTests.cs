@@ -31,7 +31,7 @@ namespace Application.UnitTests.Discussion.Queries.GetDiscussions
 
             result.ShouldBeOfType<DiscussionsVm>();
             result.Discussions.ShouldBeOfType<List<DiscussionDto>>();
-            result.Discussions.Count.ShouldBe(3);
+            result.Discussions.Count.ShouldBe(2);
         }
     }
 }

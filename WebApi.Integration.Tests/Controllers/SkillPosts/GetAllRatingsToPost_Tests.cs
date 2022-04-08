@@ -21,7 +21,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
         public async Task ReturnsAllRatingsToPost()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            string id = "2";
+            string id = "1";
 
             var response = await client.GetAsync($"/api/posts/{id}/ratings");
             response.EnsureSuccessStatusCode();
@@ -29,7 +29,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
             var vm = await Utilities.GetResponseContent<RatingsPostVm>(response);
 
             vm.RatingsPost.ShouldBeOfType<List<RatingPostDto>>();
-            vm.RatingsPost.Count.ShouldBe(2);
+            vm.RatingsPost.Count.ShouldBe(1);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Application.UnitTests.SkillPosts.Commands.DeleteRating
         [Fact]
         public async Task Handle_GivenValidRequest_ShouldDeleteRating()
         {
-            var command = new DeleteRatingCommand() { RatingId = 2 };
+            var command = new DeleteRatingCommand() { RatingId = 1 };
 
             var result = await _handler.Handle(command, CancellationToken.None);
 

@@ -1,4 +1,5 @@
-﻿using AppForSkills.Application.Common.Interfaces;
+﻿using AppForSkills.Application.Achievements.Queries.GetAchievements;
+using AppForSkills.Application.Common.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;

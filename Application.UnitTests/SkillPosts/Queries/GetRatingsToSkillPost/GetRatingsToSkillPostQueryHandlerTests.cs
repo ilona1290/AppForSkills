@@ -26,13 +26,13 @@ namespace Application.UnitTests.SkillPosts.Queries.GetRatingsToSkillPost
         public async Task CanGetRatingsSkillPosts()
         {
             var handler = new GetRatingsToSkillPostQueryHandler(_context, _mapper);
-            var skillId = 2;
+            var skillId = 1;
 
             var result = await handler.Handle(new GetRatingsToSkillPostQuery { SkillId = skillId }, CancellationToken.None);
 
             result.ShouldBeOfType<RatingsPostVm>();
             result.RatingsPost.ShouldBeOfType<List<RatingPostDto>>();
-            result.RatingsPost.Count.ShouldBe(2);
+            result.RatingsPost.Count.ShouldBe(1);
         }
     }
 }

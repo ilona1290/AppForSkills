@@ -1,4 +1,5 @@
-﻿using AppForSkills.Application.Users.Queries.GetUserAchievements;
+﻿using AppForSkills.Application.Achievements.Queries.GetAchievements;
+using AppForSkills.Application.Users.Queries.GetUserAchievements;
 using AppForSkills.Persistance;
 using Application.UnitTests.Common;
 using AutoMapper;
@@ -31,7 +32,7 @@ namespace Application.UnitTests.User.Queries.GetUserAchievements
 
             result.ShouldBeOfType<AchievementsVm>();
             result.Achievements.ShouldBeOfType<List<AchievementDto>>();
-            result.Achievements.Count.ShouldBe(3);
+            result.Achievements.Count.ShouldBe(2);
         }
     }
 }

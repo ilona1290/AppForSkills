@@ -24,7 +24,7 @@ namespace Application.UnitTests.Discussion.Commands.EditDiscussion
         {
             var command = new EditDiscussionCommand()
             {
-                DiscussionId = 3,
+                DiscussionId = 2,
                 FirstPost = "Macie jakieś hobby? Jak tak to jakie?"
             };
 

@@ -20,11 +20,11 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
         public async Task GivenPostToDiscussion_Update()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            var discussionId = "3";
+            var discussionId = "1";
             var post = new EditPostCommand
             {
-                Id = 7,
-                PostText = "Koszykówkę"
+                Id = 4,
+                PostText = "Brazylię"
             };
 
             var response = await client.PutAsync($"/api/discussions/{discussionId}/posts/{post.Id}",

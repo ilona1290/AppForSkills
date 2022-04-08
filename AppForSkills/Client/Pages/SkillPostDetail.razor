@@ -1,6 +1,7 @@
 ﻿@page "/skillPosts/{Id:int}"
 @using AppForSkills.Client.Models
 @using AppForSkills.Client.Components
+@using Microsoft.AspNetCore.SignalR.Client
 @using System.Text.Json
 @using System.Text
 @inject IModalService modal
@@ -25,7 +26,7 @@
                         <button class="btn btn-danger">Już oceniono</button>
                     }
                     else
-                    { 
+                    {
                         <button @onclick="Rate" class="btn btn-danger">Oceń</button>
                     }
                     <div class="buttons">
@@ -73,7 +74,7 @@
                     if (Comments.Contains(comment))
                     {
                         <div class="comments">
-                            <a href="/users/@skillPost.Username" class="link"><div class="autorCom">@comment.Username </div></a>
+                            <a href="/users/@comment.Username" class="link"><div class="autorCom">@comment.Username </div></a>
                             <div class="dateCom">@comment.Date</div>
                             @if (comment.StatusId == 1)
                             {
@@ -96,7 +97,7 @@
                             @if (comment.Username == user)
                             {
                                 @if (comment.StatusId == 1)
-                                { 
+                                {
                                     <div class="modCom">
                                         <button @onclick="() => CreateModelEdit(comment)" class="modComBut">Edytuj</button>
                                     </div>
@@ -140,10 +141,10 @@
                             if (answerCom.MainParentCommentId == comment.Id)
                             {
                                 <div class="answerToCom">
-                                    <a href="/users/@skillPost.Username" class="link"><div class="autorCom">@answerCom.Username </div></a>
+                                    <a href="/users/@answerCom.Username" class="link"><div class="autorCom">@answerCom.Username </div></a>
                                     <div class="dateCom">@answerCom.Date</div><br />
-                                    @if(answerCom.StatusId == 1)
-                                    { 
+                                    @if (answerCom.StatusId == 1)
+                                    {
                                         <div>@answerCom.CommentText</div>
                                         @if (IfUserGaveLike(answerCom) == null)
                                         {
@@ -163,7 +164,7 @@
                                     @if (answerCom.Username == user)
                                     {
                                         @if (answerCom.StatusId == 1)
-                                        { 
+                                        {
                                             <div class="modCom">
                                                 <button @onclick="() => CreateModelEdit(answerCom)" class="modComBut">Edytuj</button>
                                             </div>
@@ -240,6 +241,7 @@
     private GiveLike giveLike = new GiveLike();
     private List<LikeDto> likes = new List<LikeDto>();
     private ModalParameters modalParameters { get; set; } = new ModalParameters();
+    private HubConnection hubConnection;
     protected override async Task OnInitializedAsync()
     {
         skillPost = await Http.GetFromJsonAsync<SkillPostVm>($"api/posts/{Id}");
@@ -255,6 +257,13 @@
                 Comments.Add(comment);
             }
         }
+
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("https://localhost:44371/broadcastHub"))
+            .Build();
+
+        await hubConnection.StartAsync();
+
         editContext = new EditContext(model);
         editContextToAnswer = new EditContext(modelToAnswer);
         editContextToAnswerAnswer = new EditContext(modelToAnswerAnswer);
@@ -294,7 +303,21 @@
         var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/posts/{Id}/comments", content);
+        if (user != skillPost.Username)
+        {
+            if (IsConnected) await SendMessage(skillPost.Username);
+        }
         NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+    }
+
+    Task SendMessage(string receiver) => hubConnection.SendAsync("SendMessage", receiver);
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
     }
 
     private async void HandleValidSubmitAnswerComment(CommentDto com)
@@ -305,6 +328,10 @@
         var modelJson = JsonSerializer.Serialize(modelToAnswer, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/posts/{Id}/comments", content);
+        if (user != com.Username)
+        {
+            if (IsConnected) await SendMessage(com.Username);
+        }
         NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
     }
 
@@ -316,6 +343,10 @@
         var modelJson = JsonSerializer.Serialize(modelToAnswerAnswer, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/posts/{Id}/comments", content);
+        if (user != com.Username)
+        {
+            if (IsConnected) await SendMessage(com.Username);
+        }
         NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
     }
 
@@ -326,6 +357,10 @@
         var modelJson = JsonSerializer.Serialize(modelToRating, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/posts/{Id}", content);
+        if (user != skillPost.Username)
+        {
+            if (IsConnected) await SendMessage(skillPost.Username);
+        }
         NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
     }
 
@@ -438,6 +473,11 @@
         var modelJson = JsonSerializer.Serialize(giveLike, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/posts/{Id}/comments/likes", content);
+        if(user != com.Username)
+        {
+            if (IsConnected) await SendMessage(com.Username);
+        }
+
     }
 
     private async void Dislike(CommentDto com, LikeDto like)

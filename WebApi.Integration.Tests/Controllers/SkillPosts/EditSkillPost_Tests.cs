@@ -24,7 +24,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
             var client = await _factory.GetAuthenticatedClientAsync();
             var skillPost = new EditSkillPostCommand()
             {
-                Id = 2,
+                Id = 1,
                 Title = "Wieża Eiffla",
                 Description = "Zdjęcie Wieży Eiffla",
                 Skill = "https://app.blob.core.windows.net/upload-container/picture1.jpg"

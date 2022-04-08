@@ -26,7 +26,7 @@ namespace Application.UnitTests.Discussion.Commands.CreatePost
         {
             var command = new CreatePostCommand()
             {
-                DiscussionId = 3,
+                DiscussionId = 2,
                 PostText = "Siatkówkę"
             };
 

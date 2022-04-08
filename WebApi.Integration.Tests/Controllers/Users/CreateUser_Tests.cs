@@ -34,7 +34,7 @@ namespace WebApi.Integration.Tests.Controllers.Users
 
             var id = await Utilities.GetResponseContent<int>(response);
 
-            id.ShouldBe(6);
+            id.ShouldBe(5);
 
             var responseAfterUpdate = await client.GetAsync($"/api/users/{user.Username}");
             responseAfterUpdate.EnsureSuccessStatusCode();

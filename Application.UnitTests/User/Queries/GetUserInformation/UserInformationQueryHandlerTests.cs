@@ -32,7 +32,7 @@ namespace Application.UnitTests.User.Queries.GetUserInformation
             result.UserSkills.ShouldBe(0);
             result.UserComments.ShouldBe(1);
             result.GavedRatings.ShouldBe(1);
-            result.Achievements.ShouldBe(1);
+            result.Achievements.ShouldBe(2);
             result.Discussions.ShouldBe(1);
         }
     }

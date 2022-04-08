@@ -25,7 +25,7 @@ namespace Application.UnitTests.SkillPosts.Commands.EditSkillPost
         {
             var command = new EditSkillPostCommand()
             {
-                Id = 2,
+                Id = 1,
                 Title = "Zdjęcie Wieży Eiffla",
                 Description = "Przesyłam wykonane przeze mnie zdjęcie Wieży Eiffla",
                 Skill = "https://app.blob.core.windows.net/upload-container/picture.jpg"

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AppForSkills.Application.Users.Queries.GetUserAchievements
+namespace AppForSkills.Application.Achievements.Queries.GetAchievements
 {
     public class AchievementsVm
     {

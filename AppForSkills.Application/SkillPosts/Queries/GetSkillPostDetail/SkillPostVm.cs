@@ -14,7 +14,6 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
         public string AddressOfPhotoOrVideo { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public int Views { get; set; }
         public float Rating { get; set; }
         public ICollection<CommentDto> Comments { get; set; }
 

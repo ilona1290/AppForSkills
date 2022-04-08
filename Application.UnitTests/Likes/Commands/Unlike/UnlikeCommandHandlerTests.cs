@@ -23,7 +23,7 @@ namespace Application.UnitTests.Likes.Commands.Unlike
         [Fact]
         public async Task Handle_GivenValidRequest_ShouldDeleteLike()
         {
-            var command = new UnlikeCommand() { LikeId = 3 };
+            var command = new UnlikeCommand() { LikeId = 2 };
 
             var result = await _handler.Handle(command, CancellationToken.None);
 

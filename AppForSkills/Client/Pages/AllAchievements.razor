@@ -1,0 +1,28 @@
+﻿@page "/achievements"
+@using AppForSkills.Client.Models
+@using AppForSkills.Client.Components
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpClient Http
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            <Achievements achievements="@Achievements"></Achievements>
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+@code {
+    private List<AchievementDto> Achievements { get; set; } = new List<AchievementDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListAchievements listAchi = new ListAchievements();
+        listAchi = await Http.GetFromJsonAsync<ListAchievements>("api/achievements");
+        Achievements = listAchi.Achievements.ToList();
+    }
+}

@@ -21,7 +21,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 
-            string skillPostId = "2";
+            string skillPostId = "1";
             var response = await client.DeleteAsync($"api/posts/{skillPostId}");
             response.EnsureSuccessStatusCode();
         }

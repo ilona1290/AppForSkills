@@ -1,6 +1,7 @@
 ﻿@page "/discussions/{Id:int}"
 @using AppForSkills.Client.Models
 @using AppForSkills.Client.Components
+@using Microsoft.AspNetCore.SignalR.Client
 @using System.Text.Json
 @using System.Text
 @inject IModalService modal
@@ -209,6 +210,7 @@
     private GiveLike giveLike = new GiveLike();
     private List<LikeDto> likes { get; set; } = new List<LikeDto>();
     private ModalParameters modalParameters { get; set; } = new ModalParameters();
+    private HubConnection hubConnection;
     protected override async Task OnInitializedAsync()
     {
         discussion = await Http.GetFromJsonAsync<DiscussionVm>($"api/discussions/{Id}");
@@ -223,6 +225,13 @@
                 Posts.Add(post);
             }
         }
+
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("https://localhost:44371/broadcastHub"))
+            .Build();
+
+        await hubConnection.StartAsync();
+
         editContextPost = new EditContext(modelPost);
         editContextToAnswer = new EditContext(modelToAnswer);
         editContextToAnswerAnswer = new EditContext(modelToAnswerAnswer);
@@ -250,7 +259,21 @@
         var modelJson = JsonSerializer.Serialize(modelPost, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/discussions/{Id}/posts", content);
+        if (user != discussion.Username)
+        {
+            if (IsConnected) await SendMessage(discussion.Username);
+        }
         NavigationManager.NavigateTo($"/discussions/{Id}", forceLoad: true);
+    }
+
+    Task SendMessage(string receiver) => hubConnection.SendAsync("SendMessage", receiver);
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
     }
 
     private async void HandleValidSubmitAnswerPost(PostInDiscussionDto post)
@@ -261,6 +284,10 @@
         var modelJson = JsonSerializer.Serialize(modelToAnswer, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/discussions/{Id}/posts", content);
+        if (user != post.Username)
+        {
+            if (IsConnected) await SendMessage(post.Username);
+        }
         NavigationManager.NavigateTo($"/discussions/{Id}", forceLoad: true);
     }
 
@@ -272,6 +299,10 @@
         var modelJson = JsonSerializer.Serialize(modelToAnswerAnswer, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/discussions/{Id}/posts", content);
+        if (user != post.Username)
+        {
+            if (IsConnected) await SendMessage(post.Username);
+        }
         NavigationManager.NavigateTo($"/discussions/{Id}", forceLoad: true);
     }
 
@@ -378,6 +409,10 @@
         var modelJson = JsonSerializer.Serialize(giveLike, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/discussions/{Id}/likes", content);
+        if (user != discussion.Username)
+        {
+            if (IsConnected) await SendMessage(discussion.Username);
+        }
     }
 
     private async void LikePost(PostInDiscussionDto post)
@@ -389,6 +424,10 @@
         var modelJson = JsonSerializer.Serialize(giveLike, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/discussions/{Id}/posts/likes", content);
+        if (user != post.Username)
+        {
+            if (IsConnected) await SendMessage(post.Username);
+        }
     }
 
     private async void DislikeDiscussion(DiscussionVm discussion, LikeDto like)

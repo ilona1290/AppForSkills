@@ -29,7 +29,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
             var vm = await Utilities.GetResponseContent<SkillPostsVm>(response);
 
             vm.SkillPosts.ShouldBeOfType<List<SkillPostDto>>();
-            vm.SkillPosts.Count.ShouldBe(2);
+            vm.SkillPosts.Count.ShouldBe(1);
         }
     }
 }

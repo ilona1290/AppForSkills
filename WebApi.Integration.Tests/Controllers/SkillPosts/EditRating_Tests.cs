@@ -20,10 +20,10 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
         public async Task GivenRating_Update()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            string skillPostId = "2";
+            string skillPostId = "1";
             var rating = new EditRatingCommand
             {
-                Id = 2,
+                Id = 1,
                 Value = 3
             };
 

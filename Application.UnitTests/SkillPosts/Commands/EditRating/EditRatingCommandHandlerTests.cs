@@ -24,7 +24,7 @@ namespace Application.UnitTests.SkillPosts.Commands.EditRating
         {
             var command = new EditRatingCommand()
             {
-                Id = 2,
+                Id = 1,
                 Value = 3
             };
 

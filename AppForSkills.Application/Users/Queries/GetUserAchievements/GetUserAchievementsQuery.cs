@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AppForSkills.Application.Achievements.Queries.GetAchievements;
+using MediatR;
 
 namespace AppForSkills.Application.Users.Queries.GetUserAchievements
 {

@@ -28,14 +28,14 @@ namespace Application.UnitTests.SkillPosts.Queries.GetSkillPostDetail
         public async Task CanGetSkillPostDetailById()
         {
             var handler = new GetSkillPostDetailQueryHandler(_context, _mapper);
-            var skillPostId = 2;
+            var skillPostId = 1;
 
             var result = await handler.Handle(new GetSkillPostDetailQuery { SkillPostId = skillPostId }, CancellationToken.None);
 
             result.ShouldBeOfType<SkillPostVm>();
             result.Comments.ShouldBeOfType<List<CommentDto>>();
             result.Comments.Count.ShouldBe(2);
-            result.AddressOfPhotoOrVideo.ShouldBe("images/Eiffel_Tower.jpg");
+            result.AddressOfPhotoOrVideo.ShouldBe("https://app.blob.core.windows.net/upload-container/Eiffel_Tower.jpg");
             result.Rating.ShouldBe(4, 5);
         }
 
@@ -43,7 +43,7 @@ namespace Application.UnitTests.SkillPosts.Queries.GetSkillPostDetail
         public void CantGetSkillPostDetailById()
         {
             var handler = new GetSkillPostDetailQueryHandler(_context, _mapper);
-            var skillPostId = 3;
+            var skillPostId = 2;
 
             var exception = Should.Throw<Exception>(async () => await handler
                 .Handle(new GetSkillPostDetailQuery { SkillPostId = skillPostId }, CancellationToken.None));

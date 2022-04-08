@@ -21,7 +21,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
         public async Task GivenPostToDiscussion_ReturnsId()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            var post = new CreatePostCommand { DiscussionId = 3, PostText = "Siatkówkę" };
+            var post = new CreatePostCommand { DiscussionId = 2, PostText = "Siatkówkę" };
 
             var response = await client.PostAsync($"/api/discussions/{post.DiscussionId}/posts",
                 await Utilities.SendObjectAsContent(post));
@@ -29,7 +29,7 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
 
             var id = await Utilities.GetResponseContent<int>(response);
 
-            id.ShouldBe(8);
+            id.ShouldBe(5);
         }
 
         [Fact]
