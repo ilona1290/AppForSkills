@@ -4,6 +4,7 @@ using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,6 +45,20 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateRating
             {
                 throw new WrongIDException("User not exists.");
             }
+
+            var notification = new Notification()
+            {
+                FromWhoId = user.Id,
+                ToWhoId = skillPost.UserId,
+                When = DateTime.Now,
+                Message = "Ocenił(a) Twój SkillPost \"" + skillPost.Title + "\" na: " + rating.Value + " gwiazdek."
+            };
+
+            if (notification.FromWhoId != notification.ToWhoId)
+            {
+                _context.Notifications.Add(notification);
+            }
+            await _context.SaveChangesAsync(cancellationToken);
 
             Achievement achievement = new Achievement();
             if (user.Achievements.Count != 0)

@@ -1,0 +1,21 @@
+﻿.notifications {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    background-image: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(37,126,208,0.4875700280112045) 15%, rgba(0,212,255,0.2578781512605042) 100%);
+    margin-right: 20%;
+    padding-left: 1%;
+}
+
+.fromWho {
+    font-size: 20px;
+    font-weight: bold;
+    padding-right: 0.75%;
+    display: inline-block;
+}
+
+.dateNoti {
+    font-size: 13px;
+    display: inline-block;
+}

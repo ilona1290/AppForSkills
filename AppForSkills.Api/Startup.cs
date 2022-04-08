@@ -1,3 +1,4 @@
+using AppForSkills.Api.Hubs;
 using AppForSkills.Api.Service;
 using AppForSkills.Application;
 using AppForSkills.Application.Common.Interfaces;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +24,7 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Claims;
 
 namespace AppForSkills.Api
@@ -45,6 +48,12 @@ namespace AppForSkills.Api
             services.AddPersistance(Configuration);
             services.AddCommon(Configuration);
             services.AddControllers();
+            services.AddSignalR();
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
 
             services.AddCors(options =>
             {
@@ -174,6 +183,7 @@ namespace AppForSkills.Api
             }
 
 
+
             app.UseHealthChecks("/hc");
 
             app.UseHttpsRedirection();
@@ -195,6 +205,7 @@ namespace AppForSkills.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<BroadcastHub>("/broadcastHub");
             });
         }
     }

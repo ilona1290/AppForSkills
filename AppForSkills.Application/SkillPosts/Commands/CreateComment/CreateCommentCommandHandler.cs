@@ -4,6 +4,7 @@ using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,6 +46,32 @@ namespace AppForSkills.Application.SkillPosts.Commands.CreateComment
             {
                 throw new WrongIDException("User not exists.");
             }
+
+            var notification = new Notification()
+            {
+                FromWhoId = user.Id,
+                When = DateTime.Now
+            };
+
+            if (comment.ParentCommentId == null)
+            {
+                notification.ToWhoId = skillPost.UserId;
+                notification.Message = "Skomentował(a) Twój SkillPost \"" + skillPost.Title + "\": " +
+                    comment.CommentText;
+            }
+            else
+            {
+                var parentComment = _context.Comments.Where(c => c.Id == comment.ParentCommentId).FirstOrDefault();
+                notification.ToWhoId = parentComment.UserId;
+                notification.Message = "Odpowiedział(a) na Twój komentarz \"" + parentComment.CommentText + "\": " +
+                    comment.CommentText;
+            }
+
+            if (notification.FromWhoId != notification.ToWhoId)
+            {
+                _context.Notifications.Add(notification);
+            }
+            await _context.SaveChangesAsync(cancellationToken);
 
             Achievement achievement = new Achievement();
             if (user.Achievements.Count != 0)

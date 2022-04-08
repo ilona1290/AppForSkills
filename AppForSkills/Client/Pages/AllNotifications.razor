@@ -1,0 +1,82 @@
+﻿@page "/allNotifications"
+@using AppForSkills.Client.Models
+@using Microsoft.AspNetCore.SignalR.Client
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+@if (newNotifications != 0)
+{
+    <button class="btn btn-danger" @onclick="NewNotifications">Nowe powiadomienia</button><br /><br />
+}
+
+@foreach (var notification in Notifications)
+{
+    <div class="notifications">
+        <div class="fromWho">@notification.FromWho</div>
+        <div class="dateNoti">@notification.When</div>
+        <div><b>@notification.Message</b></div>
+    </div>
+    <br />
+}
+
+@code {
+    private List<NotificationDto> Notifications { get; set; } = new List<NotificationDto>();
+    private HubConnection hubConnection;
+    private string user { get; set; }
+    private int newNotifications { get; set; } = 0;
+    private bool ShowNewNotifications { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("https://localhost:44371/broadcastHub"))
+            .Build();
+        Console.WriteLine(hubConnection);
+        hubConnection.On<string>("ReceiveMessage", (receiverName) =>
+        {
+            if (receiverName == user)
+            {
+                newNotifications++;
+                CallLoadData();
+                StateHasChanged();
+            }
+        });
+
+        await hubConnection.StartAsync();
+
+        await LoadData();
+    }
+
+    private void CallLoadData()
+    {
+        Task.Run(async () =>
+        {
+            await LoadData();
+        });
+    }
+
+    protected async Task LoadData()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        user = authState.User.Identity.Name;
+        ListNotifications listNoti = new ListNotifications();
+        listNoti = await Http.GetFromJsonAsync<ListNotifications>($"api/notifications/{user}");
+        Notifications = listNoti.Notifications.ToList();
+    }
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
+    }
+
+    private void NewNotifications()
+    {
+        ShowNewNotifications = true;
+        newNotifications = 0;
+    }
+
+}

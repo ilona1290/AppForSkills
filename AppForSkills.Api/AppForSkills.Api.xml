@@ -88,6 +88,21 @@
             Reports post in discussion.
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.NotificationsController.GetAllNotifications(System.String)">
+            <summary>
+            Returns all notifications for user.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.NotificationsController.GetUnreadNotifications(System.String)">
+            <summary>
+            Returns unread notifications for user.
+            </summary>
+        </member>
+        <member name="M:AppForSkills.Api.Controllers.NotificationsController.ReadNotifications(AppForSkills.Application.Notifications.Queries.Commands.ReadNotifications.ReadNotificationsCommand)">
+            <summary>
+            Read notifications.
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.PostsController.GetAllSkillsAsync">
             <summary>
             Returns all user skills.

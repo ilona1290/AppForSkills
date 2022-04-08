@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
+@using AppForSkills.Client.Components
 
 <AuthorizeView>
     <Authorized>
@@ -7,6 +8,7 @@
             Cześć, <a class="link" href="/users/@context.User.Identity.Name">@context.User.Identity.Name!</a>
         </div>
         <button class="btn btn-success" @onclick="BeginSignOut">Wyloguj</button>
+        <Notifications></Notifications>
     </Authorized>
     <NotAuthorized>
         <a href="authentication/login" class="btn btn-primary">Zaloguj</a>

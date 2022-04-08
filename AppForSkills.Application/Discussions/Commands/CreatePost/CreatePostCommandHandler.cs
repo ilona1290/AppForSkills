@@ -4,6 +4,7 @@ using AppForSkills.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,6 +47,33 @@ namespace AppForSkills.Application.Discussions.Commands.CreatePost
             {
                 throw new WrongIDException("User not exists.");
             }
+
+            var notification = new Notification()
+            {
+                FromWhoId = user.Id,
+                When = DateTime.Now
+            };
+
+            if (post.ParentPostId == null)
+            {
+                var createdDiscussion = _context.Users.FirstOrDefault(u => u.Username == discussion.CreatedBy); 
+                notification.ToWhoId = createdDiscussion.Id;
+                notification.Message = "Odpowiedział(a) Ci do założonej przed Ciebie dyskusji o temacie: \""
+                    + discussion.FirstPost + "\": " + post.PostText;
+            }
+            else
+            {
+                var parentPost = _context.PostsInDiscussion.Where(c => c.Id == post.ParentPostId).FirstOrDefault();
+                notification.ToWhoId = parentPost.UserId;
+                notification.Message = "Odpowiedział(a) w dyskusji na Twój post \"" + parentPost.PostText + "\": " +
+                    post.PostText;
+            }
+
+            if (notification.FromWhoId != notification.ToWhoId)
+            {
+                _context.Notifications.Add(notification);
+            }
+            await _context.SaveChangesAsync(cancellationToken);
 
             Achievement achievement = new Achievement();
             if (user.Achievements.Count != 0)
