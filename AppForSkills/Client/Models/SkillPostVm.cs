@@ -6,6 +6,7 @@ namespace AppForSkills.Client.Models
     public class SkillPostVm
     {
         public int Id { get; set; }
+        public string Avatar { get; set; }
         public string Username { get; set; }
         public DateTime PublishingDate { get; set; }
         public string AddressOfPhotoOrVideo { get; set; }

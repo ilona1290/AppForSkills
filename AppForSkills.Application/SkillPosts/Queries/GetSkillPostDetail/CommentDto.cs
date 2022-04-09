@@ -10,6 +10,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
     public class CommentDto : IMapFrom<Comment>
     {
         public int Id { get; set; }
+        public string Avatar { get; set; }
         public string Username { get; set; }
         public string CommentText { get; set; }
         public DateTime Date { get; set; }
@@ -22,7 +23,11 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
         {
             profile.CreateMap<Comment, CommentDto>()
                 .ForMember(s => s.Username, map => map.MapFrom(src => src.CreatedBy))
-                .ForMember(s => s.Date, map => map.MapFrom(src => src.Created));
+                .ForMember(s => s.Date, map => map.MapFrom(src => src.Created))
+                .IncludeMembers(u => u.User);
+
+            profile.CreateMap<User, CommentDto>()
+                .ForMember(s => s.Avatar, map => map.MapFrom(src => src.Avatar));
         }
     }
 }

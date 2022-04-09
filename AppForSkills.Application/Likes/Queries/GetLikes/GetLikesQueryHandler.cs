@@ -27,6 +27,7 @@ namespace AppForSkills.Application.Likes.Queries.GetLikes
                 var likes = _context.Likes.Where(l => l.CommentId == request.CommentId);
                 var likesDtos = await likes.ProjectTo<LikeDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
+
                 var likesVm = new LikesVm
                 {
                     Likes = likesDtos

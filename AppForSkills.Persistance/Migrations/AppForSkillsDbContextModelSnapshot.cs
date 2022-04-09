@@ -401,7 +401,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 1,
                             CommentText = "Wow! Super zdjęcie.",
-                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(1421),
+                            Created = new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(3943),
                             CreatedBy = "Turysta12",
                             SkillPostId = 1,
                             StatusId = 1,
@@ -411,7 +411,7 @@ namespace AppForSkills.Persistance.Migrations
                         {
                             Id = 2,
                             CommentText = "Dzięki.",
-                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(2036),
+                            Created = new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(4531),
                             CreatedBy = "Podróżnik",
                             MainParentCommentId = 1,
                             ParentCommentId = 1,
@@ -462,7 +462,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(5961),
+                            Created = new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(8568),
                             CreatedBy = "Podróżnik",
                             FirstPost = "Jaki kraj chcielibyście odwiedzić?",
                             StatusId = 1
@@ -476,6 +476,9 @@ namespace AppForSkills.Persistance.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CommentId")
                         .HasColumnType("int");
 
@@ -487,8 +490,7 @@ namespace AppForSkills.Persistance.Migrations
 
                     b.Property<string>("User")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -504,6 +506,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
+                            Avatar = "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg",
                             CommentId = 1,
                             User = "Podróżnik"
                         },
@@ -516,6 +519,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 3,
+                            Avatar = "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg",
                             DiscussionId = 1,
                             User = "Podróżnik"
                         },
@@ -528,12 +532,14 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 5,
+                            Avatar = "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg",
                             PostInDiscussionId = 1,
                             User = "Podróżnik"
                         },
                         new
                         {
                             Id = 6,
+                            Avatar = "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg",
                             PostInDiscussionId = 3,
                             User = "Podróżnik"
                         });
@@ -630,7 +636,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(7124),
+                            Created = new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(9729),
                             CreatedBy = "Turysta12",
                             DiscussionId = 1,
                             PostText = "Australia",
@@ -640,7 +646,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(7140),
+                            Created = new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(9745),
                             CreatedBy = "Podróżnik",
                             DiscussionId = 1,
                             MainParentPostId = 1,
@@ -652,7 +658,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(7581),
+                            Created = new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(189),
                             CreatedBy = "Turysta12",
                             DiscussionId = 1,
                             MainParentPostId = 1,
@@ -712,7 +718,7 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 394, DateTimeKind.Local).AddTicks(3000),
+                            Created = new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(5599),
                             CreatedBy = "Turysta12",
                             SkillPostId = 1,
                             StatusId = 1,
@@ -777,8 +783,8 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            AddressOfPhotoOrVideo = "https://app.blob.core.windows.net/upload-container/Eiffel_Tower.jpg",
-                            Created = new DateTime(2022, 4, 4, 19, 25, 58, 390, DateTimeKind.Local).AddTicks(4420),
+                            AddressOfPhotoOrVideo = "https://appforskills1.blob.core.windows.net/upload-container/Eiffel_Tower.jpg",
+                            Created = new DateTime(2022, 4, 9, 0, 17, 23, 932, DateTimeKind.Local).AddTicks(5784),
                             CreatedBy = "Podróżnik",
                             Description = "Cześć. Autorskie zdjęcie wieży Eiffla",
                             StatusId = 1,
@@ -793,6 +799,9 @@ namespace AppForSkills.Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RecentLoginDate")
                         .HasColumnType("datetime2");
@@ -816,16 +825,18 @@ namespace AppForSkills.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            RecentLoginDate = new DateTime(2022, 4, 4, 19, 25, 58, 395, DateTimeKind.Local).AddTicks(755),
-                            RegistrationDate = new DateTime(2022, 4, 4, 19, 25, 58, 395, DateTimeKind.Local).AddTicks(517),
+                            Avatar = "",
+                            RecentLoginDate = new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(3448),
+                            RegistrationDate = new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(3202),
                             StatusId = 1,
                             Username = "Podróżnik"
                         },
                         new
                         {
                             Id = 2,
-                            RecentLoginDate = new DateTime(2022, 4, 4, 19, 25, 58, 395, DateTimeKind.Local).AddTicks(974),
-                            RegistrationDate = new DateTime(2022, 4, 4, 19, 25, 58, 395, DateTimeKind.Local).AddTicks(967),
+                            Avatar = "",
+                            RecentLoginDate = new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(3670),
+                            RegistrationDate = new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(3662),
                             StatusId = 1,
                             Username = "Turysta12"
                         });
@@ -892,7 +903,7 @@ namespace AppForSkills.Persistance.Migrations
 
             modelBuilder.Entity("AppForSkills.Domain.Entities.Like", b =>
                 {
-                    b.HasOne("AppForSkills.Domain.Entities.Comment", "Commment")
+                    b.HasOne("AppForSkills.Domain.Entities.Comment", "Comment")
                         .WithMany("Likes")
                         .HasForeignKey("CommentId");
 
@@ -904,7 +915,7 @@ namespace AppForSkills.Persistance.Migrations
                         .WithMany("Likes")
                         .HasForeignKey("PostInDiscussionId");
 
-                    b.Navigation("Commment");
+                    b.Navigation("Comment");
 
                     b.Navigation("Discussion");
 

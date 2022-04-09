@@ -16,7 +16,7 @@ namespace AppForSkills.Persistance
                     StatusId = 1,
                     Created = DateTime.Now,
                     CreatedBy = "Podróżnik",
-                    AddressOfPhotoOrVideo = "https://app.blob.core.windows.net/upload-container/Eiffel_Tower.jpg",
+                    AddressOfPhotoOrVideo = "https://appforskills1.blob.core.windows.net/upload-container/Eiffel_Tower.jpg",
                     Title = "Wieża Eiffla",
                     Description = "Cześć. Autorskie zdjęcie wieży Eiffla",
                     UserId = 1
@@ -50,12 +50,12 @@ namespace AppForSkills.Persistance
                 new Rating() { Id = 1, StatusId = 1, Created = DateTime.Now, CreatedBy = "Turysta12", SkillPostId = 1, UserId = 2, Value = 5 });
 
             modelBuilder.Entity<Like>().HasData(
-                new Like() { Id = 1, CommentId = 1, User = "Podróżnik" },
+                new Like() { Id = 1, CommentId = 1, User = "Podróżnik", Avatar = "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg" },
                 new Like() { Id = 2, CommentId = 2, User = "Turysta12" },
-                new Like() { Id = 3, DiscussionId = 1, User = "Podróżnik" },
+                new Like() { Id = 3, DiscussionId = 1, User = "Podróżnik", Avatar = "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg" },
                 new Like() { Id = 4, DiscussionId = 1, User = "Turysta12" },
-                new Like() { Id = 5, PostInDiscussionId = 1, User = "Podróżnik" },
-                new Like() { Id = 6, PostInDiscussionId = 3, User = "Podróżnik" }
+                new Like() { Id = 5, PostInDiscussionId = 1, User = "Podróżnik", Avatar = "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg" },
+                new Like() { Id = 6, PostInDiscussionId = 3, User = "Podróżnik", Avatar = "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg" }
                 );
 
             modelBuilder.Entity<Discussion>().HasData(

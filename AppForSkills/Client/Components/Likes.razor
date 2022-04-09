@@ -4,6 +4,14 @@
 
 @foreach (var like in likes)
 {
+    @if(like.Avatar == "")
+     {
+        <MudAvatar Color="Color.Primary">@like.Username.Substring(0,1).ToUpper()</MudAvatar>
+    }
+    else
+    { 
+        <MudAvatar Image="@like.Avatar"/>
+    }
     <div class="autorLik">@like.Username</div><br />
 }
 

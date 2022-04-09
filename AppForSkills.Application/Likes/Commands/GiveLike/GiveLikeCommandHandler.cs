@@ -25,8 +25,6 @@ namespace AppForSkills.Application.Likes.Commands.GiveLike
         public async Task<Unit> Handle(GiveLikeCommand request, CancellationToken cancellationToken)
         {
             var like = _mapper.Map<Like>(request);
-            _context.Likes.Add(like);
-
             var user = await _context.Users.Where(u => u.StatusId == 1 && u.Username == request.User)
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -34,6 +32,9 @@ namespace AppForSkills.Application.Likes.Commands.GiveLike
             {
                 throw new WrongIDException("User not exists.");
             }
+
+            like.Avatar = user.Avatar;
+            _context.Likes.Add(like);
 
             var notification = new Notification()
             {

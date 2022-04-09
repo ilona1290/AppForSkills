@@ -1,0 +1,30 @@
+﻿@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<MudDialog Style="background: linear-gradient(90deg, rgba(9,122,227,1) 46%, rgba(4,170,242,1) 100%); color: white">
+    <DialogContent>
+        <MudText>@ContentText</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Style="color: white" OnClick="Cancel">Zamknij</MudButton>
+        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="Submit">@ButtonText</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public string ContentText { get; set; }
+
+    [Parameter] public string ButtonText { get; set; }
+
+    [Parameter] public Color Color { get; set; }
+
+    [Parameter] public int Id { get; set; }
+
+    private async void Submit()
+    {
+        await Http.DeleteAsync($"api/posts/{Id}");
+        NavigationManager.NavigateTo($"/skillPosts", forceLoad: true);
+    }
+    private void Cancel() => MudDialog.Cancel();
+}

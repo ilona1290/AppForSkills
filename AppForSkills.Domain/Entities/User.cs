@@ -7,6 +7,7 @@ namespace AppForSkills.Domain.Entities
     {
         public int Id { get; set; }
         public int StatusId { get; set; }
+        public string Avatar { get; set; } = "";
         public string Username { get; set; }
         public DateTime RegistrationDate { get; set; }
         public DateTime RecentLoginDate { get; set; }

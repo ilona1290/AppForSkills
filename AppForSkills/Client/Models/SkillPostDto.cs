@@ -3,6 +3,7 @@
     public class SkillPostDto
     {
         public int Id { get; set; }
+        public string Avatar { get; set; }
         public string Username { get; set; }
         public string AddressOfPhotoOrVideo { get; set; }
         public string Title { get; set; }

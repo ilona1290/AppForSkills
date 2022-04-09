@@ -1,4 +1,5 @@
 using Blazored.Modal;
+using MudBlazor.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,7 +34,7 @@ namespace AppForSkills.Client
             builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>().CreateClient("api"));
 
             builder.Services.AddBlazoredModal();
-
+            builder.Services.AddMudServices();
 
             await builder.Build().RunAsync();
         }

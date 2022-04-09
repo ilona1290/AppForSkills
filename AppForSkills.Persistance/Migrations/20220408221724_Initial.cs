@@ -52,6 +52,7 @@ namespace AppForSkills.Persistance.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StatusId = table.Column<int>(type: "int", nullable: false),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RecentLoginDate = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -107,6 +108,35 @@ namespace AppForSkills.Persistance.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FromWhoId = table.Column<int>(type: "int", nullable: true),
+                    ToWhoId = table.Column<int>(type: "int", nullable: true),
+                    When = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsRead = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notifications_Users_FromWhoId",
+                        column: x => x.FromWhoId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Notifications_Users_ToWhoId",
+                        column: x => x.ToWhoId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,10 +281,11 @@ namespace AppForSkills.Persistance.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    User = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostInDiscussionId = table.Column<int>(type: "int", nullable: true),
                     DiscussionId = table.Column<int>(type: "int", nullable: true),
-                    CommentId = table.Column<int>(type: "int", nullable: true),
-                    User = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    CommentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -314,15 +345,15 @@ namespace AppForSkills.Persistance.Migrations
             migrationBuilder.InsertData(
                 table: "Discussions",
                 columns: new[] { "Id", "Created", "CreatedBy", "FirstPost", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "StatusId" },
-                values: new object[] { 1, new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(5664), "Podróżnik", "Jaki kraj chcielibyście odwiedzić?", null, null, null, null, 1 });
+                values: new object[] { 1, new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(8568), "Podróżnik", "Jaki kraj chcielibyście odwiedzić?", null, null, null, null, 1 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "RecentLoginDate", "RegistrationDate", "StatusId", "Username" },
+                columns: new[] { "Id", "Avatar", "RecentLoginDate", "RegistrationDate", "StatusId", "Username" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 4, 2, 23, 31, 59, 576, DateTimeKind.Local).AddTicks(480), new DateTime(2022, 4, 2, 23, 31, 59, 576, DateTimeKind.Local).AddTicks(255), 1, "Podróżnik" },
-                    { 2, new DateTime(2022, 4, 2, 23, 31, 59, 576, DateTimeKind.Local).AddTicks(681), new DateTime(2022, 4, 2, 23, 31, 59, 576, DateTimeKind.Local).AddTicks(675), 1, "Turysta12" }
+                    { 1, "", new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(3448), new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(3202), 1, "Podróżnik" },
+                    { 2, "", new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(3670), new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(3662), 1, "Turysta12" }
                 });
 
             migrationBuilder.InsertData(
@@ -347,11 +378,11 @@ namespace AppForSkills.Persistance.Migrations
 
             migrationBuilder.InsertData(
                 table: "Likes",
-                columns: new[] { "Id", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
+                columns: new[] { "Id", "Avatar", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
                 values: new object[,]
                 {
-                    { 3, null, 1, null, "Podróżnik" },
-                    { 4, null, 1, null, "Turysta12" }
+                    { 3, "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg", null, 1, null, "Podróżnik" },
+                    { 4, null, null, 1, null, "Turysta12" }
                 });
 
             migrationBuilder.InsertData(
@@ -359,48 +390,48 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "Id", "Created", "CreatedBy", "DiscussionId", "Inactivated", "InactivatedBy", "MainParentPostId", "Modified", "ModifiedBy", "ParentPostId", "PostText", "Reported", "StatusId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(7133), "Turysta12", 1, null, null, null, null, null, null, "Australia", false, 1, null },
-                    { 2, new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(7150), "Podróżnik", 1, null, null, 1, null, null, 1, "Dlaczego?", false, 1, null },
-                    { 3, new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(7568), "Turysta12", 1, null, null, 1, null, null, 2, "@Podróżnik Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).", false, 1, null }
+                    { 1, new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(9729), "Turysta12", 1, null, null, null, null, null, null, "Australia", false, 1, null },
+                    { 2, new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(9745), "Podróżnik", 1, null, null, 1, null, null, 1, "Dlaczego?", false, 1, null },
+                    { 3, new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(189), "Turysta12", 1, null, null, 1, null, null, 2, "@Podróżnik Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).", false, 1, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "SkillPosts",
                 columns: new[] { "Id", "Address", "Created", "CreatedBy", "Description", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "StatusId", "Title", "UserId" },
-                values: new object[] { 1, "https://app.blob.core.windows.net/upload-container/Eiffel_Tower.jpg", new DateTime(2022, 4, 2, 23, 31, 59, 568, DateTimeKind.Local).AddTicks(5687), "Podróżnik", "Cześć. Autorskie zdjęcie wieży Eiffla", null, null, null, null, 1, "Wieża Eiffla", 1 });
+                values: new object[] { 1, "https://appforskills1.blob.core.windows.net/upload-container/Eiffel_Tower.jpg", new DateTime(2022, 4, 9, 0, 17, 23, 932, DateTimeKind.Local).AddTicks(5784), "Podróżnik", "Cześć. Autorskie zdjęcie wieży Eiffla", null, null, null, null, 1, "Wieża Eiffla", 1 });
 
             migrationBuilder.InsertData(
                 table: "Comments",
                 columns: new[] { "Id", "CommentText", "Created", "CreatedBy", "Inactivated", "InactivatedBy", "MainParentCommentId", "Modified", "ModifiedBy", "ParentCommentId", "SkillPostId", "StatusId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Wow! Super zdjęcie.", new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(1599), "Turysta12", null, null, null, null, null, null, 1, 1, 2 },
-                    { 2, "Dzięki.", new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(2134), "Podróżnik", null, null, 1, null, null, 1, 1, 1, 1 }
+                    { 1, "Wow! Super zdjęcie.", new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(3943), "Turysta12", null, null, null, null, null, null, 1, 1, 2 },
+                    { 2, "Dzięki.", new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(4531), "Podróżnik", null, null, 1, null, null, 1, 1, 1, 1 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Likes",
-                columns: new[] { "Id", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
+                columns: new[] { "Id", "Avatar", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
                 values: new object[,]
                 {
-                    { 5, null, null, 1, "Podróżnik" },
-                    { 6, null, null, 3, "Podróżnik" }
+                    { 5, "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg", null, null, 1, "Podróżnik" },
+                    { 6, "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg", null, null, 3, "Podróżnik" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Ratings",
                 columns: new[] { "Id", "Created", "CreatedBy", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "SkillPostId", "StatusId", "UserId", "Value" },
-                values: new object[] { 1, new DateTime(2022, 4, 2, 23, 31, 59, 575, DateTimeKind.Local).AddTicks(3039), "Turysta12", null, null, null, null, 1, 1, 2, 5 });
+                values: new object[] { 1, new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(5599), "Turysta12", null, null, null, null, 1, 1, 2, 5 });
 
             migrationBuilder.InsertData(
                 table: "Likes",
-                columns: new[] { "Id", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
-                values: new object[] { 1, 1, null, null, "Podróżnik" });
+                columns: new[] { "Id", "Avatar", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
+                values: new object[] { 1, "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg", 1, null, null, "Podróżnik" });
 
             migrationBuilder.InsertData(
                 table: "Likes",
-                columns: new[] { "Id", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
-                values: new object[] { 2, 2, null, null, "Turysta12" });
+                columns: new[] { "Id", "Avatar", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
+                values: new object[] { 2, null, 2, null, null, "Turysta12" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AchievementUser_UsersWithAchivementId",
@@ -438,6 +469,16 @@ namespace AppForSkills.Persistance.Migrations
                 column: "PostInDiscussionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Notifications_FromWhoId",
+                table: "Notifications",
+                column: "FromWhoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notifications_ToWhoId",
+                table: "Notifications",
+                column: "ToWhoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PostsInDiscussion_DiscussionId",
                 table: "PostsInDiscussion",
                 column: "DiscussionId");
@@ -473,6 +514,9 @@ namespace AppForSkills.Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "Likes");
+
+            migrationBuilder.DropTable(
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "Ratings");

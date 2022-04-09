@@ -8,7 +8,7 @@ namespace AppForSkills.Persistance.Configurations
     {
         public void Configure(EntityTypeBuilder<Like> builder)
         {
-            builder.Property(p => p.User).HasMaxLength(50).IsRequired();
+            builder.Property(p => p.User).IsRequired();
         }
     }
 }

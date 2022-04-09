@@ -3,6 +3,7 @@
     public class DiscussionDto
     {
         public int Id { get; set; }
+        public string Avatar { get; set; }
         public string Username { get; set; }
         public string FirstPost { get; set; }
         public int Posts { get; set; }

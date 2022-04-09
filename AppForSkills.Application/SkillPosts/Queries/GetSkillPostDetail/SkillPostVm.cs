@@ -9,6 +9,7 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
     public class SkillPostVm : IMapFrom<SkillPost>
     {
         public int Id { get; set; }
+        public string Avatar { get; set; }
         public string Username { get; set; }
         public DateTime PublishingDate { get; set; }
         public string AddressOfPhotoOrVideo { get; set; }
@@ -22,7 +23,11 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
             profile.CreateMap<SkillPost, SkillPostVm>()
                 .ForMember(s => s.Username, map => map.MapFrom(src => src.CreatedBy))
                 .ForMember(s => s.PublishingDate, map => map.MapFrom(src => src.Created))
-                .ForMember(s => s.Rating, map => map.Ignore());
+                .ForMember(s => s.Rating, map => map.Ignore())
+                .IncludeMembers(u => u.User);
+
+            profile.CreateMap<User, SkillPostVm>()
+                .ForMember(s => s.Avatar, map => map.MapFrom(src => src.Avatar));
         }
     }
 }

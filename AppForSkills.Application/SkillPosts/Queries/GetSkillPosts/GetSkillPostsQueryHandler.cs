@@ -22,7 +22,6 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPosts
         {
             var skillPosts = _context.SkillPosts.Where(a => a.StatusId == 1).OrderByDescending(s => s.Created);
             var skillPostDtos = await skillPosts.ProjectTo<SkillPostDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
-
             var skillPostsVm = new SkillPostsVm
             {
                 SkillPosts = skillPostDtos

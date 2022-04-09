@@ -7,7 +7,9 @@
 <div class="page">
     <AuthorizeView>
         <Authorized Context="Auth">
-            <a class="btn btn-info" href="/skillPosts/AddSkillPost">Dodaj post</a><br /><br />
+            <MudTooltip Text="Dodaj">
+                <a href="/skillPosts/AddSkillPost"><MudFab Color="Color.Success" StartIcon="@Icons.Material.Filled.Add" Size="Size.Large" /></a>
+            </MudTooltip>
             <Skills SkillPosts="@skillPosts" User="@user"></Skills>
         </Authorized>
         <NotAuthorized>
