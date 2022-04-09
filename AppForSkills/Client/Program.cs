@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using MudBlazor;
 
 namespace AppForSkills.Client
 {
@@ -34,7 +35,11 @@ namespace AppForSkills.Client
             builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>().CreateClient("api"));
 
             builder.Services.AddBlazoredModal();
-            builder.Services.AddMudServices();
+            builder.Services.AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
+                config.SnackbarConfiguration.VisibleStateDuration = 1000;
+            });
 
             await builder.Build().RunAsync();
         }

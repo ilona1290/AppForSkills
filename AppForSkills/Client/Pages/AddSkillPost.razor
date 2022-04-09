@@ -4,6 +4,7 @@
 @using System.Text.Json
 @inject HttpClient Http
 @inject NavigationManager Navigation
+@inject ISnackbar Snackbar
 
 <AuthorizeView>
     <Authorized Context="Auth">
@@ -22,26 +23,54 @@
                 <ValidationMessage For="@(() => model.Description)" />
             </div>
             <br />
-            <p>Zdjęcie lub video Twojego Skilla: </p>
             <div>
-                <InputFile OnChange="@HandleSelected" />
-                @if (FileUrl != null)
-                {
-                    <br /><br />
-                    <div>
-                        @if (FileType == "image/png" || FileType == "image/jpg")
+                <InputFile id="fileInput" OnChange="@HandleSelected" hidden multiple />
+                <MudButton HtmlTag="label"
+                           Variant="Variant.Filled"
+                           Color="Color.Success"
+                           StartIcon="@Icons.Filled.Image"
+                           for="fileInput">
+                    @name plik
+                </MudButton>
+                <ValidationMessage For="@(() => model.Skill)" />
+                <br /><br />
+                <div>
+                    @if (DoSent)
+                    {
+                        @if (FileUrl == null)
                         {
-                            <img src="@FileUrl" style="display: block; max-width: 550px; height: auto;" />
+                            <MudCard Style="width: 500px; background: linear-gradient(90deg, rgba(9,122,227,0.9) 46%, rgba(4,170,242,1) 100%);">
+                                <MudSkeleton SkeletonType="SkeletonType.Rectangle" />
+                                <MudCardContent>
+                                    <MudSkeleton Width="30%" Height="42px;" />
+                                    <MudSkeleton Width="80%" />
+                                    <MudSkeleton Width="100%" />
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+                                    <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+                                </MudCardActions>
+                                <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
+                                    <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+                                </MudOverlay>
+                            </MudCard>
                         }
-                        else if (FileType == "video/mp4")
+                        else
                         {
-                            <video preload="auto" autoplay controls="controls" width="800" height="400">
-                                <source src=@FileUrl type="video/mp4" />
-                            </video>
-                        }
 
-                    </div>
-                }
+                            @if (FileUrl.EndsWith(".png") || FileUrl.EndsWith(".jpg"))
+                            {
+                                <img src="@FileUrl" style="display: block; max-width: 500px; height: auto;" />
+                            }
+                            else if (FileUrl.EndsWith(".mp4"))
+                            {
+                                <video preload="auto" autoplay controls="controls" width="500">
+                                    <source src=@FileUrl type="video/mp4" />
+                                </video>
+                            }
+                        }
+                    }
+                </div>
             </div>
             <br /><br />
             <button type="submit" class="btn btn-primary">Zatwierdź</button>
@@ -59,6 +88,9 @@
     public string FileType { get; set; }
     private SkillPostForm model = new SkillPostForm();
     private EditContext editContext;
+    private bool isVisible = false;
+    private bool DoSent = false;
+    private string name = "Dodaj";
 
     protected override void OnInitialized()
     {
@@ -71,16 +103,23 @@
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync("api/posts", content);
         Navigation.NavigateTo("/skillPosts");
+        Snackbar.Add("SkillPost został pomyślnie dodany");
     }
 
     private void HandleReset()
     {
         model = new SkillPostForm();
         editContext = new EditContext(model);
+        FileUrl = null;
+        DoSent = false;
+        name = "Dodaj";
     }
 
     private async Task HandleSelected(InputFileChangeEventArgs e)
     {
+        DoSent = true;
+        name = "Zmień";
+        FileUrl = null;
         var file = e.File;
         FileType = file.ContentType;
         if (file == null)

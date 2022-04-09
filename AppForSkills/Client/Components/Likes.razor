@@ -4,15 +4,22 @@
 
 @foreach (var like in likes)
 {
-    @if(like.Avatar == "")
-     {
-        <MudAvatar Color="Color.Primary">@like.Username.Substring(0,1).ToUpper()</MudAvatar>
-    }
-    else
-    { 
-        <MudAvatar Image="@like.Avatar"/>
-    }
-    <div class="autorLik">@like.Username</div><br />
+    <a style="text-decoration: none" href="users/@like.Username">
+        <MudCard Style="width:200px;">
+            <MudCardHeader>
+                @if (like.Avatar == "")
+                {
+                    <MudAvatar Color="Color.Error">@like.Username.Substring(0, 1).ToUpper()</MudAvatar>
+                }
+                else
+                {
+                    <MudAvatar Image="@like.Avatar" />
+                }
+                <MudText Style="margin-left: 12px;">@like.Username</MudText>
+            </MudCardHeader>
+        </MudCard>
+    </a>
+    <br />
 }
 
 @code {

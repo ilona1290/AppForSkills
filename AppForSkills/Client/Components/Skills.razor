@@ -33,7 +33,16 @@
                 </CardHeaderActions>
             </MudCardHeader>
             <a href="skillPosts/@skillPost.Id" style="text-decoration: none;">
-                <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 500px; height: auto; " />
+                @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
+                 {
+                    <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 500px; height: auto; " />
+                 }
+                 else if (skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
+                 {
+                     <video preload="auto" controls="controls" width="500">
+                        <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
+                     </video>
+                 }
                 <MudCardActions>
                     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Filled.Star" Style="margin-right: 12px" Color="Color.Success">@skillPost.Rating</MudButton>
                     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Filled.Comment" Color="Color.Warning">@skillPost.Comment</MudButton>

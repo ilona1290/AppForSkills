@@ -74,11 +74,22 @@
                     if (Comments.Contains(comment))
                     {
                         <div class="comments">
+                            <div style="display: inline-block">
+                                @if (comment.Avatar == "")
+                                {
+                                    <MudAvatar Style="height:35px; width:35px; font-size: 15px" Color="Color.Error">@comment.Username.Substring(0, 1).ToUpper()</MudAvatar>
+                                }
+                                else
+                                {
+                                    <MudAvatar Style="height:35px; width:35px; font-size: 15px" Image="@comment.Avatar" />
+                                }
+                            </div>
                             <a href="/users/@comment.Username" class="link"><div class="autorCom">@comment.Username </div></a>
                             <div class="dateCom">@comment.Date</div>
+                            
                             @if (comment.StatusId == 1)
                             {
-                                <div>@comment.CommentText</div>
+                                <div style="margin-top: 12px">@comment.CommentText</div>
                                 @if (IfUserGaveLike(comment) == null)
                                 {
                                     <input type="checkbox" @onclick="() => Like(comment)" />
