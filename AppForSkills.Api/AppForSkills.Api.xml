@@ -199,6 +199,11 @@
             Update user login date.
             </summary>
         </member>
+        <member name="M:AppForSkills.Api.Controllers.UsersController.UpdateAvatar(AppForSkills.Application.Users.Commands.UpdateAvatar.UpdateAvatarCommand)">
+            <summary>
+            Updates Avatar. 
+            </summary>
+        </member>
         <member name="M:AppForSkills.Api.Controllers.UsersController.GetAllInformation(System.String)">
             <summary>
             Returns general information about user.

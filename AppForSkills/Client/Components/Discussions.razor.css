@@ -29,7 +29,6 @@
     background: none !important;
     border: none;
     padding: 0 !important;
-    cursor: pointer;
 }
 
 .numlikes {
@@ -45,4 +44,8 @@
 .numUsers {
     display: inline-block;
     padding-right: 1%;
+}
+
+.edit{
+    margin-left: 5%;
 }

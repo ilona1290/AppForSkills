@@ -6,6 +6,7 @@
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject HttpClient Http
+@inject ISnackbar Snackbar
 
 <div class="page">
     <AuthorizeView>
@@ -16,35 +17,42 @@
             }
             else
             {
-                <h3>Użytkownik: @user.Username</h3>
+                @if (currentUser == user.Username)
+                {
+                    <InputFile id="fileInput" OnChange="@HandleSelected" hidden multiple />
+                    <MudButton HtmlTag="label"
+                               Variant="Variant.Filled"
+                               Color="Color.Success"
+                               StartIcon="@Icons.Filled.Image"
+                               for="fileInput">
+                        Zmień Awatar
+                    </MudButton>
+                }
+                <MudCardHeader>
+                    @if (user.Avatar == "")
+                    {
+                        <MudAvatar Style="height: 120px; width: 120px; font-size: 55px" Color="Color.Error">@user.Username.Substring(0, 1).ToUpper()</MudAvatar>
+                    }
+                    else
+                    {
+                        <MudAvatar Style="height: 120px; width: 120px;" Image="@user.Avatar" />
+                    }
+                    <MudText Style="margin-left: 12px;"><h3>@user.Username<br /></h3></MudText>
+                </MudCardHeader>
+
                 <h6>Data rejestracji: @user.RegistrationDate</h6>
                 <h6>Data ostatniego logowania: @user.RecentLoginDate</h6>
-                <div class="mainRow">
-                    <div class="stats">
-                        <button class="btn btn-success" @onclick="() => WhichShow(1)"> @user.UserSkills Skills</button>
-                    </div>
-                    <div class="stats">
-                        <button class="btn btn-success" @onclick="() => WhichShow(2)"> @userCommentsToSkills.Count Komentarzy do Skill Posts</button>
-                    </div>
-                    <div class="stats">
-                        <button class="btn btn-success" @onclick="() => WhichShow(3)"> @userAnswersToComments.Count Odpowiedzi do komentarzy</button>
-                    </div>
-                    <div class="stats">
-                        <button class="btn btn-success" @onclick="() => WhichShow(4)"> @user.GavedRatings Wystawionych ocen</button>
-                    </div>
-                    <div class="stats">
-                        <button class="btn btn-success" @onclick="() => WhichShow(5)"> @user.Discussions Dyskusji</button>
-                    </div>
-                    <div class="stats">
-                        <button class="btn btn-success" @onclick="() => WhichShow(6)"> @userPostsToDiscussionTopic.Count Odpowiedzi do tematu dyskusji</button>
-                    </div>
-                    <div class="stats">
-                        <button class="btn btn-success" @onclick="() => WhichShow(7)"> @userAnswersToPosts.Count Odpowiedzi do innych postów w dyskusji</button>
-                    </div>
-                    <div class="stats">
-                        <button class="btn btn-success" @onclick="() => WhichShow(8)"> @userAchievements.Count Osiągnięć</button>
-                    </div>
-                </div>
+
+                <MudTabs Style="width: 1200px" Elevation="4" Rounded="true" Color="@Color.Primary" AlwaysShowScrollButtons="true" PanelClass="pa-6">
+                    <MudTabPanel Text=@NumberOfSkills OnClick="() => WhichShow(1)" />
+                    <MudTabPanel Text=@NumberOfCommentsToSkills OnClick="() => WhichShow(2)" />
+                    <MudTabPanel Text=@NumberOfAnswerComments OnClick="() => WhichShow(3)" />
+                    <MudTabPanel Text=@NumberOfRatings OnClick="() => WhichShow(4)" />
+                    <MudTabPanel Text=@NumberOfDiscussions OnClick="() => WhichShow(5)" />
+                    <MudTabPanel Text=@NumberOfAnswersToDiscussionTopics OnClick="() => WhichShow(6)" />
+                    <MudTabPanel Text=@NumberOfAnswersToDiscussionPosts OnClick="() => WhichShow(7)" />
+                    <MudTabPanel Text=@NumberOfAchievements OnClick="() => WhichShow(8)" />
+                </MudTabs>
 
                 @switch (action)
                 {
@@ -70,7 +78,7 @@
                         <UserAnswersToPosts Posts="@userAnswersToPosts"></UserAnswersToPosts>
                         break;
                     case 8:
-                        <Achievements Achievements="@userAchievements"></Achievements>
+                        <Achievements achievements="@userAchievements"></Achievements>
                         break;
                 }
             }
@@ -84,6 +92,10 @@
     [Parameter]
     public string Username { get; set; }
     private UserInformationVm user;
+    private string currentUser { get; set; }
+    public string FileUrl { get; set; }
+    public string FileType { get; set; }
+    UpdateAvatar model = new UpdateAvatar();
     private List<SkillPostDto> skillPosts { get; set; } = new List<SkillPostDto>();
     private List<UserCommentDto> comments { get; set; } = new List<UserCommentDto>();
     private List<UserDiscussionPostDto> posts { get; set; } = new List<UserDiscussionPostDto>();
@@ -95,14 +107,26 @@
     private List<UserDiscussionPostDto> userAnswersToPosts = new List<UserDiscussionPostDto>();
     private List<AchievementDto> userAchievements = new List<AchievementDto>();
     private int action = 1;
+    private string NumberOfSkills;
+    private string NumberOfCommentsToSkills;
+    private string NumberOfAnswerComments;
+    private string NumberOfRatings;
+    private string NumberOfDiscussions;
+    private string NumberOfAnswersToDiscussionTopics;
+    private string NumberOfAnswersToDiscussionPosts;
+    private string NumberOfAchievements;
 
     protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        currentUser = authState.User.Identity.Name;
+
         user = await Http.GetFromJsonAsync<UserInformationVm>($"api/users/{Username}");
 
         ListSkillPosts skills = new ListSkillPosts();
         skills = await Http.GetFromJsonAsync<ListSkillPosts>($"api/users/{Username}/skills");
         skillPosts = skills.SkillPosts.ToList();
+        NumberOfSkills = skillPosts.Count + " Skills";
 
         ListUserComments userCom = new ListUserComments();
         userCom = await Http.GetFromJsonAsync<ListUserComments>($"api/users/{Username}/comments");
@@ -111,10 +135,11 @@
         ListGavedRatings listRatings = new ListGavedRatings();
         listRatings = await Http.GetFromJsonAsync<ListGavedRatings>($"api/users/{Username}/ratings");
         userRatings = listRatings.Ratings.ToList();
+        NumberOfRatings = userRatings.Count + " Wystawionych ocen";
 
         foreach (var com in comments)
         {
-            if(com.MainParentCommentId == null)
+            if (com.MainParentCommentId == null)
             {
                 userCommentsToSkills.Add(com);
             }
@@ -123,10 +148,13 @@
                 userAnswersToComments.Add(com);
             }
         }
+        NumberOfCommentsToSkills = userCommentsToSkills.Count + " Komentarzy do Skill Posts";
+        NumberOfAnswerComments = userAnswersToComments.Count + " Odpowiedzi do komentarzy";
 
         ListDiscussions listDiscs = new ListDiscussions();
         listDiscs = await Http.GetFromJsonAsync<ListDiscussions>($"api/users/{Username}/discussions");
         discs = listDiscs.Discussions.ToList();
+        NumberOfDiscussions = discs.Count + " Dyskusji";
 
         ListUserDiscussionPosts userPosts = new ListUserDiscussionPosts();
         userPosts = await Http.GetFromJsonAsync<ListUserDiscussionPosts>($"api/users/{Username}/discussionPosts");
@@ -144,14 +172,42 @@
             }
         }
 
+        NumberOfAnswersToDiscussionTopics = userPostsToDiscussionTopic.Count + " Odpowiedzi do tematu dyskusji";
+        NumberOfAnswersToDiscussionPosts = userAnswersToPosts.Count + " Odpowiedzi do innych postów w dyskusji";
+
         ListAchievements achievements = new ListAchievements();
         achievements = await Http.GetFromJsonAsync<ListAchievements>($"api/users/{Username}/achievements");
         userAchievements = achievements.Achievements.ToList();
         userAchievements.OrderBy(a => a.Category);
+        NumberOfAchievements = userAchievements.Count + " Osiągnięć";
     }
 
     private void WhichShow(int num)
     {
         action = num;
+    }
+
+    private async Task HandleSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        FileType = file.ContentType;
+        if (file == null)
+            return;
+        using (var ms = file.OpenReadStream(file.Size))
+        {
+            var content = new MultipartFormDataContent();
+            content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+            content.Add(new StreamContent(ms, Convert.ToInt32(file.Size)), FileType, file.Name);
+            var response = await Http.PostAsync("api/upload/avatar", content);
+            FileUrl = await response.Content.ReadAsStringAsync();
+            user.Avatar = FileUrl;
+            Snackbar.Add("Avatar został zmieniony pomyślnie");
+
+            model.Username = user.Username;
+            model.Avatar = user.Avatar;
+            var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+            var content1 = new StringContent(modelJson, Encoding.UTF8, "application/json");
+            await Http.PutAsync("api/users/update-avatar", content1);
+        }
     }
 }

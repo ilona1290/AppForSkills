@@ -89,7 +89,7 @@
                             
                             @if (comment.StatusId == 1)
                             {
-                                <div style="margin-top: 12px">@comment.CommentText</div>
+                                <div style="margin-top: 8px; margin-bottom: 5px; font-size: 18px">@comment.CommentText</div>
                                 @if (IfUserGaveLike(comment) == null)
                                 {
                                     <input type="checkbox" @onclick="() => Like(comment)" />

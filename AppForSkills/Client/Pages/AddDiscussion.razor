@@ -7,11 +7,10 @@
 
 <AuthorizeView>
     <Authorized Context="Auth">
-        <h3>Rozpocznij dyskusję<br /></h3>
         <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
             <DataAnnotationsValidator />
             <div class="form-row">
-                <label>Temat</label>
+                <label style="font-size: 20px;">Temat</label>
                 <InputText @bind-Value="@model.FirstPost" class="form-control" />
                 <ValidationMessage For="@(() => model.FirstPost)" />
             </div>
