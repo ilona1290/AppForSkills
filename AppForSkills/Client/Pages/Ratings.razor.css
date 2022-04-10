@@ -8,7 +8,18 @@
     border-top-right-radius: 10px;
     background-image: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(37,126,208,0.4875700280112045) 15%, rgba(0,212,255,0.2578781512605042) 100%);
     margin-right: 45%;
-    padding-left: 1%;
+    padding-top: 0.5%;
+    padding: 0.5%;
+}
+
+.avatar {
+    float: left;
+    width: 3%;
+}
+
+.content {
+    float: left;
+    width: 40%;
 }
 
 .autorRat {
@@ -19,7 +30,7 @@
 }
 
 .dateRat {
-    font-size: 13px;
+    font-size: 14px;
     display: inline-block;
 }
 

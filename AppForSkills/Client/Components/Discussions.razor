@@ -5,6 +5,7 @@
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IDialogService DialogService
+@inject ISnackbar Snackbar
 
 @foreach (var discussion in discussions)
 {
@@ -79,6 +80,7 @@
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PutAsync($"api/discussions/{modelToEdit.DiscussionId}", content);
         NavigationManager.NavigateTo("/discussions", forceLoad: true);
+        Snackbar.Add("Zaktualizowano temat dyskusji");
     }
 
     private void HandleReset()

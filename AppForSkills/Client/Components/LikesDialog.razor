@@ -1,0 +1,34 @@
+﻿@using System.Net
+@using System.Text
+@using AppForSkills.Client.Models
+
+<MudDialog DisableSidePadding="true" Style="background: linear-gradient(90deg, rgba(9,122,227,1) 46%, rgba(4,170,242,1) 100%); color: white">
+    <DialogContent>
+        <MudContainer Style="max-height: 300px; overflow-y: scroll">
+            @foreach (var like in likes)
+            {
+                <a style="text-decoration: none" href="users/@like.Username">
+                    <MudCard Style="width:200px;">
+                        <MudCardHeader>
+                            @if (like.Avatar == "")
+                            {
+                                <MudAvatar Color="Color.Error">@like.Username.Substring(0, 1).ToUpper()</MudAvatar>
+                            }
+                            else
+                            {
+                                <MudAvatar Image="@like.Avatar" />
+                            }
+                            <MudText Style="margin-left: 12px;">@like.Username</MudText>
+                        </MudCardHeader>
+                    </MudCard>
+                </a><br />
+            }
+
+        </MudContainer>
+    </DialogContent>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public List<LikeDto> likes { get; set; }
+}

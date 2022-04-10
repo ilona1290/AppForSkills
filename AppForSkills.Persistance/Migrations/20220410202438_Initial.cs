@@ -315,45 +315,45 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "Id", "Amount", "Category", "Description", "Logo", "Achievement", "StatusId" },
                 values: new object[,]
                 {
-                    { 1, 1, "Skills", "Dodano pierwszy SkillPost", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Początkujący Skiller", 1 },
-                    { 25, 200, "Posty w dyskusjach", "Udzielono się 200 razy w dyskusjach", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "200 postów już gotowych, milion kolejnych w drodze...", 1 },
-                    { 24, 50, "Posty w dyskusjach", "Udzielono się 50 razy w dyskusjach", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Nie zwrócimy Ci czasu jaki spędziłeś na pisaniu tych postów", 1 },
-                    { 23, 25, "Posty w dyskusjach", "Udzielono się 25 razy w dyskusjach", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Prowadzący Talk-Show", 1 },
-                    { 22, 15, "Posty w dyskusjach", "Udzielono się 15 razy w dyskusjach", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Mam coś więcej do powiedzenia niż tylko ALE", 1 },
-                    { 21, 5, "Posty w dyskusjach", "Udzielono się 5 razy w dyskusjach", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Ja tu tylko dyskutuję", 1 },
-                    { 20, 100, "Dyskusje", "Dołączono do 100 dyskusji", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Crushin' discussion", 1 },
-                    { 19, 50, "Dyskusje", "Dołączono do 50 dyskusji", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Dyskutant-Alfa", 1 },
-                    { 18, 25, "Dyskusje", "Dołączono do 25 dyskusji", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Naczelny Gaduła", 1 },
-                    { 17, 5, "Dyskusje", "Dołączono do 5 dyskusji", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Zawsze musi być jakieś ALE", 1 },
-                    { 16, 1, "Dyskusje", "Dołączono do pierwszej dyskusji", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Chcę coś oznajmić", 1 },
-                    { 15, 50, "Oceny", "Oceniono 50 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Dał/Dała tyle gwiazdek, że może nakręcić własny teledysk Shooting Stars", 1 },
-                    { 14, 25, "Oceny", "Oceniono 25 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Mamo, możemy mieć własną konstelacje w domu?", 1 },
-                    { 12, 5, "Oceny", "Oceniono 5 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Taniec z gwiazdami", 1 },
-                    { 11, 1, "Oceny", "Oceniono pierwszy SkillPost", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Dam Ci gwiazdkę z nieba", 1 },
-                    { 10, 125, "Komentarze", "Dodano 125 Komentarzy", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Mógłby/Mogłaby napisać książkę, ale pisze komentarze", 1 },
-                    { 9, 100, "Komentarze", "Dodano 100 Komentarzy", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Imperator-komentator", 1 },
-                    { 8, 50, "Komentarze", "Dodano 50 Komentarzy", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Komentator-niekoniecznie-sportowy", 1 },
-                    { 7, 25, "Komentarze", "Dodano 25 Komentarzy", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Buszujący w komentarzach", 1 },
-                    { 6, 5, "Komentarze", "Dodano 5 Komentarzy", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Coś tam sobie pomamrocze", 1 },
-                    { 5, 25, "Skills", "Dodano 25 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "SkillGod", 1 },
-                    { 4, 15, "Skills", "Dodano 15 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Co za utalentowana bestia", 1 },
-                    { 3, 10, "Skills", "Dodano 10 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "SkillMaster", 1 },
-                    { 2, 5, "Skills", "Dodano 5 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Szał umiejętności", 1 },
-                    { 13, 15, "Oceny", "Oceniono 15 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/logo1.jpg", "Mówcie mi StarLord", 1 }
+                    { 1, 1, "Skills", "Dodano pierwszy SkillPost", "https://appforskills1.blob.core.windows.net/achivement-logos/skill1.png", "Początkujący Skiller", 1 },
+                    { 25, 200, "Posty w dyskusjach", "Udzielono się 200 razy w dyskusjach", "https://appforskills1.blob.core.windows.net/achivement-logos/pwd5.png", "200 postów już gotowych, milion kolejnych w drodze...", 1 },
+                    { 24, 50, "Posty w dyskusjach", "Udzielono się 50 razy w dyskusjach", "https://appforskills1.blob.core.windows.net/achivement-logos/pwd4.png", "Nie zwrócimy Ci czasu jaki spędziłeś na pisaniu tych postów", 1 },
+                    { 23, 25, "Posty w dyskusjach", "Udzielono się 25 razy w dyskusjach", "https://appforskills1.blob.core.windows.net/achivement-logos/pwd3.png", "Prowadzący Talk-Show", 1 },
+                    { 22, 15, "Posty w dyskusjach", "Udzielono się 15 razy w dyskusjach", "https://appforskills1.blob.core.windows.net/achivement-logos/pwd2.png", "Mam coś więcej do powiedzenia niż tylko ALE", 1 },
+                    { 21, 1, "Posty w dyskusjach", "Udzielono się raz w dyskusji", "https://appforskills1.blob.core.windows.net/achivement-logos/pwd1.png", "Ja tu tylko dyskutuję", 1 },
+                    { 20, 100, "Dyskusje", "Dołączono do 100 dyskusji", "https://appforskills1.blob.core.windows.net/achivement-logos/dis5.png", "Crushin' discussion", 1 },
+                    { 19, 50, "Dyskusje", "Dołączono do 50 dyskusji", "https://appforskills1.blob.core.windows.net/achivement-logos/dis4.png", "Dyskutant-Alfa", 1 },
+                    { 18, 25, "Dyskusje", "Dołączono do 25 dyskusji", "https://appforskills1.blob.core.windows.net/achivement-logos/dis3.png", "Naczelny Gaduła", 1 },
+                    { 17, 5, "Dyskusje", "Dołączono do 5 dyskusji", "https://appforskills1.blob.core.windows.net/achivement-logos/dis2.png", "Zawsze musi być jakieś ALE", 1 },
+                    { 16, 1, "Dyskusje", "Dołączono do pierwszej dyskusji", "https://appforskills1.blob.core.windows.net/achivement-logos/dis1.png", "Chcę coś oznajmić", 1 },
+                    { 15, 50, "Oceny", "Oceniono 50 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/rat5.png", "Dał/Dała tyle gwiazdek, że może nakręcić własny teledysk Shooting Stars", 1 },
+                    { 14, 25, "Oceny", "Oceniono 25 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/rat4.png", "Mamo, możemy mieć własną konstelacje w domu?", 1 },
+                    { 12, 5, "Oceny", "Oceniono 5 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/rat2.png", "Taniec z gwiazdami", 1 },
+                    { 11, 1, "Oceny", "Oceniono pierwszy SkillPost", "https://appforskills1.blob.core.windows.net/achivement-logos/rat1.png", "Dam Ci gwiazdkę z nieba", 1 },
+                    { 10, 125, "Komentarze", "Dodano 125 Komentarzy", "https://appforskills1.blob.core.windows.net/achivement-logos/kom5.png", "Mógłby/Mogłaby napisać książkę, ale pisze komentarze", 1 },
+                    { 9, 100, "Komentarze", "Dodano 100 Komentarzy", "https://appforskills1.blob.core.windows.net/achivement-logos/kom4.png", "Imperator-komentator", 1 },
+                    { 8, 50, "Komentarze", "Dodano 50 Komentarzy", "https://appforskills1.blob.core.windows.net/achivement-logos/kom3.png", "Komentator-niekoniecznie-sportowy", 1 },
+                    { 7, 25, "Komentarze", "Dodano 25 Komentarzy", "https://appforskills1.blob.core.windows.net/achivement-logos/kom2.png", "Buszujący w komentarzach", 1 },
+                    { 6, 5, "Komentarze", "Dodano 5 Komentarzy", "https://appforskills1.blob.core.windows.net/achivement-logos/kom1.png", "Coś tam sobie pomamrocze", 1 },
+                    { 5, 25, "Skills", "Dodano 25 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/skill5.png", "SkillGod", 1 },
+                    { 4, 15, "Skills", "Dodano 15 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/skill4.png", "Co za utalentowana bestia", 1 },
+                    { 3, 10, "Skills", "Dodano 10 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/skill3.png", "SkillMaster", 1 },
+                    { 2, 5, "Skills", "Dodano 5 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/skill2.png", "Szał umiejętności", 1 },
+                    { 13, 15, "Oceny", "Oceniono 15 SkillPost'ów", "https://appforskills1.blob.core.windows.net/achivement-logos/rat3.png", "Mówcie mi StarLord", 1 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Discussions",
                 columns: new[] { "Id", "Created", "CreatedBy", "FirstPost", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "StatusId" },
-                values: new object[] { 1, new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(8568), "Podróżnik", "Jaki kraj chcielibyście odwiedzić?", null, null, null, null, 1 });
+                values: new object[] { 1, new DateTime(2022, 4, 10, 22, 24, 36, 822, DateTimeKind.Local).AddTicks(7967), "Podróżnik", "Jaki kraj chcielibyście odwiedzić?", null, null, null, null, 1 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Avatar", "RecentLoginDate", "RegistrationDate", "StatusId", "Username" },
                 values: new object[,]
                 {
-                    { 1, "", new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(3448), new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(3202), 1, "Podróżnik" },
-                    { 2, "", new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(3670), new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(3662), 1, "Turysta12" }
+                    { 1, "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg", new DateTime(2022, 4, 10, 22, 24, 36, 823, DateTimeKind.Local).AddTicks(9365), new DateTime(2022, 4, 10, 22, 24, 36, 823, DateTimeKind.Local).AddTicks(8828), 1, "Podróżnik" },
+                    { 2, "", new DateTime(2022, 4, 10, 22, 24, 36, 824, DateTimeKind.Local).AddTicks(470), new DateTime(2022, 4, 10, 22, 24, 36, 824, DateTimeKind.Local).AddTicks(448), 1, "Turysta12" }
                 });
 
             migrationBuilder.InsertData(
@@ -382,7 +382,7 @@ namespace AppForSkills.Persistance.Migrations
                 values: new object[,]
                 {
                     { 3, "https://appforskills1.blob.core.windows.net/avatars/piesek.jpg", null, 1, null, "Podróżnik" },
-                    { 4, null, null, 1, null, "Turysta12" }
+                    { 4, "", null, 1, null, "Turysta12" }
                 });
 
             migrationBuilder.InsertData(
@@ -390,23 +390,23 @@ namespace AppForSkills.Persistance.Migrations
                 columns: new[] { "Id", "Created", "CreatedBy", "DiscussionId", "Inactivated", "InactivatedBy", "MainParentPostId", "Modified", "ModifiedBy", "ParentPostId", "PostText", "Reported", "StatusId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(9729), "Turysta12", 1, null, null, null, null, null, null, "Australia", false, 1, null },
-                    { 2, new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(9745), "Podróżnik", 1, null, null, 1, null, null, 1, "Dlaczego?", false, 1, null },
-                    { 3, new DateTime(2022, 4, 9, 0, 17, 23, 937, DateTimeKind.Local).AddTicks(189), "Turysta12", 1, null, null, 1, null, null, 2, "@Podróżnik Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).", false, 1, null }
+                    { 2, new DateTime(2022, 4, 10, 22, 24, 36, 823, DateTimeKind.Local).AddTicks(908), "Podróżnik", 1, null, null, 1, null, null, 1, "Dlaczego?", false, 1, 1 },
+                    { 1, new DateTime(2022, 4, 10, 22, 24, 36, 823, DateTimeKind.Local).AddTicks(385), "Turysta12", 1, null, null, null, null, null, null, "Australia", false, 1, 2 },
+                    { 3, new DateTime(2022, 4, 10, 22, 24, 36, 823, DateTimeKind.Local).AddTicks(1800), "Turysta12", 1, null, null, 1, null, null, 2, "@Podróżnik Ponieważ zawsze podróżowałem po Europie i chciałbym czegoś nowego :).", false, 1, 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "SkillPosts",
                 columns: new[] { "Id", "Address", "Created", "CreatedBy", "Description", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "StatusId", "Title", "UserId" },
-                values: new object[] { 1, "https://appforskills1.blob.core.windows.net/upload-container/Eiffel_Tower.jpg", new DateTime(2022, 4, 9, 0, 17, 23, 932, DateTimeKind.Local).AddTicks(5784), "Podróżnik", "Cześć. Autorskie zdjęcie wieży Eiffla", null, null, null, null, 1, "Wieża Eiffla", 1 });
+                values: new object[] { 1, "https://appforskills1.blob.core.windows.net/upload-container/Eiffel_Tower.jpg", new DateTime(2022, 4, 10, 22, 24, 36, 811, DateTimeKind.Local).AddTicks(8358), "Podróżnik", "Cześć. Autorskie zdjęcie wieży Eiffla", null, null, null, null, 1, "Wieża Eiffla", 1 });
 
             migrationBuilder.InsertData(
                 table: "Comments",
                 columns: new[] { "Id", "CommentText", "Created", "CreatedBy", "Inactivated", "InactivatedBy", "MainParentCommentId", "Modified", "ModifiedBy", "ParentCommentId", "SkillPostId", "StatusId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Wow! Super zdjęcie.", new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(3943), "Turysta12", null, null, null, null, null, null, 1, 1, 2 },
-                    { 2, "Dzięki.", new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(4531), "Podróżnik", null, null, 1, null, null, 1, 1, 1, 1 }
+                    { 1, "Wow! Super zdjęcie.", new DateTime(2022, 4, 10, 22, 24, 36, 821, DateTimeKind.Local).AddTicks(6034), "Turysta12", null, null, null, null, null, null, 1, 1, 2 },
+                    { 2, "Dzięki.", new DateTime(2022, 4, 10, 22, 24, 36, 821, DateTimeKind.Local).AddTicks(7696), "Podróżnik", null, null, 1, null, null, 1, 1, 1, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -421,7 +421,7 @@ namespace AppForSkills.Persistance.Migrations
             migrationBuilder.InsertData(
                 table: "Ratings",
                 columns: new[] { "Id", "Created", "CreatedBy", "Inactivated", "InactivatedBy", "Modified", "ModifiedBy", "SkillPostId", "StatusId", "UserId", "Value" },
-                values: new object[] { 1, new DateTime(2022, 4, 9, 0, 17, 23, 936, DateTimeKind.Local).AddTicks(5599), "Turysta12", null, null, null, null, 1, 1, 2, 5 });
+                values: new object[] { 1, new DateTime(2022, 4, 10, 22, 24, 36, 822, DateTimeKind.Local).AddTicks(213), "Turysta12", null, null, null, null, 1, 1, 2, 5 });
 
             migrationBuilder.InsertData(
                 table: "Likes",
@@ -431,7 +431,7 @@ namespace AppForSkills.Persistance.Migrations
             migrationBuilder.InsertData(
                 table: "Likes",
                 columns: new[] { "Id", "Avatar", "CommentId", "DiscussionId", "PostInDiscussionId", "User" },
-                values: new object[] { 2, null, 2, null, null, "Turysta12" });
+                values: new object[] { 2, "", 2, null, null, "Turysta12" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AchievementUser_UsersWithAchivementId",

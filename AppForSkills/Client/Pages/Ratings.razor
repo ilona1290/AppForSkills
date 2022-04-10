@@ -1,50 +1,84 @@
 ﻿@page "/skillPosts/{Id:int}/ratings"
 @using AppForSkills.Client.Models
+@using AppForSkills.Client.Components
 @using System.Text.Json
 @using System.Text
 @inject HttpClient Http
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
+@inject IDialogService DialogService
 
-<div class="row">
-    <div class="col">
-        <h3>Oceny</h3>
-    </div>
-    <div class="col-3">
-        <a href="/skillPosts/@Id" class="btn btn-danger">Powrót</a>
-    </div>
-</div>
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            <div style="float: right; margin-right: 30%;">
+                <a href="/skillPosts/@Id" class="btn btn-danger">Powrót</a>
+            </div><br /><br /><br />
 
-@foreach (var rating in ratings)
- {
-    <div class="ratings">
-        <div class="autorRat">@rating.Username </div>
-        <div class="dateRat">@rating.Date</div>
-        @if (user == rating.Username)
-        {
-            <div class="buttonRat"><button class="btn btn-danger" @onclick="() => Delete(rating.Id)">Usuń</button></div>
-            @if (rating.ShowRatingButtons)
+            @foreach (var rating in ratings)
             {
-                <div class="buttonRat">
-                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 1)">1</button>
-                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 2)">2</button>
-                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 3)">3</button>
-                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 4)">4</button>
-                    <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 5)">5</button>
-                </div>
-             }
-            <div class="buttonRat"><button class="btn btn-primary" @onclick="() => Rate(rating)">Edytuj</button></div>
-        }
-        <br />
-        @for (int i = 0; i < rating.Value; i++)
-        {
-            <span>&#11088;</span>
-        }
-        <br />
-        
-    </div>
-    <br />
- }
+                <MudCard Style="width: 800px; background: linear-gradient(90deg, rgba(9,122,227,0.9) 46%, rgba(4,170,242,1) 100%); color: white ">
+                    <MudCardHeader>
+                        <CardHeaderAvatar>
+                            <a href="users/@rating.Username" style="text-decoration: none;">
+                                @if (rating.Avatar == "")
+                                {
+                                    <MudAvatar Color="Color.Error">@rating.Username.Substring(0, 1).ToUpper()</MudAvatar>
+                                }
+                                else
+                                {
+                                    <MudAvatar Image="@rating.Avatar" />
+                                }
+                            </a>
+                        </CardHeaderAvatar>
+                        <CardHeaderContent>
+                            <MudText Align="Align.Left" Typo="Typo.body1" Style="font-weight: bold">
+                                <div class="autorRat">@rating.Username </div>
+                                <div class="dateRat">@rating.Date</div>
+                                @if (user == rating.Username)
+                                {
+                                    <div class="buttonRat">
+                                        <MudTooltip Text="Usuń">
+                                            <MudFab OnClick="() => Delete(rating.Id)" Color="Color.Error" StartIcon="@Icons.Material.Filled.Delete" Size="Size.Small" />
+                                        </MudTooltip>
+                                    </div>
+                                    @if (rating.ShowRatingButtons)
+                                    {
+                                        <div class="buttonRat">
+                                            <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 1)">1</button>
+                                            <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 2)">2</button>
+                                            <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 3)">3</button>
+                                            <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 4)">4</button>
+                                            <button class="btn btn-success" @onclick="() => EditRate(rating.Id, 5)">5</button>
+                                        </div>
+                                    }
+
+                                    <div class="buttonRat">
+                                        <MudTooltip Text="Edytuj">
+                                            <MudFab OnClick="() => Rate(rating)" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Edit" Size="Size.Small" />
+                                        </MudTooltip>
+                                    </div>
+                                }
+                                <br />
+                            </MudText>
+                            <MudText Align="Align.Left" Typo="Typo.body2" Style="font-weight: bold">
+                                @for (int i = 0; i < rating.Value; i++)
+                                {
+                                    <span>&#11088;</span>
+                                }
+                                <br />
+                            </MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>         
+                </MudCard>
+                <br />
+            }
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
 
 @code {
     [Parameter]
@@ -77,9 +111,19 @@
         NavigationManager.NavigateTo($"/skillPosts/{Id}/ratings", forceLoad: true);
     }
 
-    private async void Delete(int idRat)
+    private void Delete(int idRat)
     {
-        await Http.DeleteAsync($"api/posts/{Id}/ratings/{idRat}");
-        NavigationManager.NavigateTo($"/skillPosts/{Id}/ratings", forceLoad: true);
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", "Czy naprawdę chcesz usunąć trwale tą ocenę? Po zatwierdzeniu, nie będziesz mógł(a) jej przywrócić.");
+        parameters.Add("ButtonText", "Usuń");
+        parameters.Add("Color", Color.Error);
+        parameters.Add("Category", "Rating");
+        parameters.Add("MainId", Id);
+        parameters.Add("Id", idRat);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        DialogService.Show<Dialog>("Usuń", parameters, options);
+
     }
 }

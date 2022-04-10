@@ -137,7 +137,7 @@
             var content = new MultipartFormDataContent();
             content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
             content.Add(new StreamContent(ms, Convert.ToInt32(file.Size)), FileType, file.Name);
-            var response = await Http.PostAsync("api/upload", content);
+            var response = await Http.PostAsync("api/upload/skillPost", content);
             FileUrl = await response.Content.ReadAsStringAsync();
             model.Skill = FileUrl;
         }

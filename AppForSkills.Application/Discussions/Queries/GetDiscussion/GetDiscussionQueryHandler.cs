@@ -22,7 +22,9 @@ namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
         {
             var discussion = await _context.Discussions.Where(d => d.StatusId == 1 && d.Id == request.DiscussionId)
                 .Include(d => d.Likes)
+                .Include(u => u.UsersInDiscussion)
                 .Include(p => p.PostsInDiscussion.Where(d => d.Reported == false)).ThenInclude(l => l.Likes)
+                .Include(p => p.PostsInDiscussion.Where(d => d.Reported == false)).ThenInclude(u => u.User)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (discussion == null)

@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.SignalR.Client
 @using System.Text.Json
 @using System.Text
+@inject IDialogService DialogService
 @inject IModalService modal
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -14,7 +15,21 @@
         <Authorized Context="Auth">
             @if (skillPost == null)
             {
-                <p>Wczytywanie...</p>
+                <MudCard Style="width: 1200px; height: 800px; background: linear-gradient(90deg, rgba(9,122,227,0.9) 46%, rgba(4,170,242,1) 100%);">
+                    <MudSkeleton SkeletonType="SkeletonType.Rectangle" />
+                    <MudCardContent>
+                        <MudSkeleton Width="30%" Height="42px;" />
+                        <MudSkeleton Width="80%" />
+                        <MudSkeleton Width="100%" />
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+                        <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+                    </MudCardActions>
+                    <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
+                        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+                    </MudOverlay>
+                </MudCard>
             }
             else
             {
@@ -23,7 +38,7 @@
                     <a href="/skillPosts/@skillPost.Id/ratings" class="btn btn-warning">Pokaż oceny</a>
                     @if (Rated)
                     {
-                        <button class="btn btn-danger">Już oceniono</button>
+                        <button class="btn btn-danger" disabled>Już oceniono</button>
                     }
                     else
                     {
@@ -40,14 +55,14 @@
                         }
                     </div>
                     <a href="/skillPosts" class="back">Powrót</a>
-                </div><br />
-                <br />
-                <h5>Tytuł: @skillPost.Title</h5>
-                <h5>Opis: @skillPost.Description</h5>
+                    <br />
+                </div><br /><br />
+                <h3>@skillPost.Title</h3>
+                <h5>@skillPost.Description</h5>
                 <h6>Data publikacji: @skillPost.PublishingDate</h6><br />
                 @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
                 {
-                    <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 550px; height: auto; " />
+                    <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 600px; height: auto; " />
                 }
                 else if (skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
                 {
@@ -55,7 +70,20 @@
                         <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
                     </video>
                 }
-                <a href="/users/@skillPost.Username" class="link"><h4>Autor: @skillPost.Username</h4><br /><br /></a>
+
+                <a href="/users/@skillPost.Username" class="link">
+                    <div style="display: flex; padding-top: 7px; padding-left: 5px; align-items: center;">
+                        @if (skillPost.Avatar == "")
+                        {
+                            <MudAvatar Style="height:55px; width:55px; font-size: 35px" Color="Color.Error">@skillPost.Username.Substring(0, 1).ToUpper()</MudAvatar>
+                        }
+                        else
+                        {
+                            <MudAvatar Style="height:55px; width:55px;" Image="@skillPost.Avatar" />
+                        }
+                        <h2 style="margin-left: 5px;">@skillPost.Username</h2>
+                    </div><br /><br />
+                </a>
 
                 <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
                     <DataAnnotationsValidator />
@@ -74,22 +102,21 @@
                     if (Comments.Contains(comment))
                     {
                         <div class="comments">
-                            <div style="display: inline-block">
+                            <div style="display: flex; padding-top: 7px; padding-left: 5px; align-items: center;">
                                 @if (comment.Avatar == "")
                                 {
                                     <MudAvatar Style="height:35px; width:35px; font-size: 15px" Color="Color.Error">@comment.Username.Substring(0, 1).ToUpper()</MudAvatar>
                                 }
                                 else
                                 {
-                                    <MudAvatar Style="height:35px; width:35px; font-size: 15px" Image="@comment.Avatar" />
+                                    <MudAvatar Style="height:35px; width:35px;" Image="@comment.Avatar" />
                                 }
+                                <a href="/users/@comment.Username" class="link"><div class="autorCom">@comment.Username </div></a>
+                                <div class="dateCom">@comment.Date</div>
                             </div>
-                            <a href="/users/@comment.Username" class="link"><div class="autorCom">@comment.Username </div></a>
-                            <div class="dateCom">@comment.Date</div>
-                            
                             @if (comment.StatusId == 1)
                             {
-                                <div style="margin-top: 8px; margin-bottom: 5px; font-size: 18px">@comment.CommentText</div>
+                                <div class="commentText">@comment.CommentText</div>
                                 @if (IfUserGaveLike(comment) == null)
                                 {
                                     <input type="checkbox" @onclick="() => Like(comment)" />
@@ -98,12 +125,12 @@
                                 {
                                     <input type="checkbox" checked @onclick="() => Dislike(comment, IfUserGaveLike(comment))" />
                                 }
-                                <div class="like"><button @onclick="@(() => modal.Show<Likes>("Polubienia", GetParameters(comment)))" class="link">@comment.Likes.Count</button></div>
+                                <div class="like"><button @onclick="() => OpenDialog(comment)" class="link">@comment.Likes.Count</button></div>
                                 <button @onclick="() => Answer(comment)" class="modComBut">Odpowiedz</button>
                             }
                             else
                             {
-                                <div>[Usunięto]</div>
+                                <div class="commentText">[Usunięto]</div>
                             }
                             @if (comment.Username == user)
                             {
@@ -121,7 +148,7 @@
                                     <EditForm EditContext="@contextToEditCom" OnValidSubmit="EditComment" @onreset="@HandleResetEditComment">
                                         <DataAnnotationsValidator />
                                         <br />
-                                        <div class="addComment">
+                                        <div class="addAnswerComment">
                                             <label>Edytuj:</label>
                                             <InputTextArea @bind-Value="@modelToEdit.CommentText" class="form-control" />
                                             <ValidationMessage For="@(() => modelToEdit.CommentText)" />
@@ -152,11 +179,22 @@
                             if (answerCom.MainParentCommentId == comment.Id)
                             {
                                 <div class="answerToCom">
-                                    <a href="/users/@answerCom.Username" class="link"><div class="autorCom">@answerCom.Username </div></a>
-                                    <div class="dateCom">@answerCom.Date</div><br />
+                                    <div style="display: flex; padding-top: 7px; padding-left: 5px; align-items: center;">
+                                        @if (answerCom.Avatar == "")
+                                        {
+                                            <MudAvatar Style="height:35px; width:35px; font-size: 15px" Color="Color.Error">@answerCom.Username.Substring(0, 1).ToUpper()</MudAvatar>
+                                        }
+                                        else
+                                        {
+                                            <MudAvatar Style="height:35px; width:35px; font-size: 15px" Image="@answerCom.Avatar" />
+                                        }
+                                        <a href="/users/@answerCom.Username" class="link"><div class="autorCom">@answerCom.Username </div></a>
+                                        <div class="dateCom">@answerCom.Date</div><br />
+                                    </div>
+
                                     @if (answerCom.StatusId == 1)
                                     {
-                                        <div>@answerCom.CommentText</div>
+                                        <div class="commentText">@answerCom.CommentText</div>
                                         @if (IfUserGaveLike(answerCom) == null)
                                         {
                                             <input type="checkbox" @onclick="() => Like(answerCom)" />
@@ -165,12 +203,12 @@
                                         {
                                             <input type="checkbox" checked @onclick="() => Dislike(answerCom, IfUserGaveLike(answerCom))" />
                                         }
-                                        <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(answerCom)))" class="link">@answerCom.Likes.Count</button></div>
+                                        <div class="like"><button @onclick="() => OpenDialog(answerCom)" class="link">@answerCom.Likes.Count</button></div>
                                         <button @onclick="() => Answer(answerCom)" class="modComBut">Odpowiedz</button>
                                     }
                                     else
                                     {
-                                        <div>[Usunięto]</div>
+                                        <div class="commentText">[Usunięto]</div>
                                     }
                                     @if (answerCom.Username == user)
                                     {
@@ -234,6 +272,7 @@
     private SkillPostVm skillPost;
     private List<RatingDto> ratings { get; set; } = new List<RatingDto>();
     private string user { get; set; }
+    private bool isVisible = false;
     private List<CommentDto> AnswersToComment = new List<CommentDto>();
     private List<CommentDto> Comments = new List<CommentDto>();
     private CommentForm model = new CommentForm();
@@ -251,7 +290,6 @@
     private bool Rated { get; set; } = false;
     private GiveLike giveLike = new GiveLike();
     private List<LikeDto> likes = new List<LikeDto>();
-    private ModalParameters modalParameters { get; set; } = new ModalParameters();
     private HubConnection hubConnection;
     protected override async Task OnInitializedAsync()
     {
@@ -300,10 +338,11 @@
         Console.WriteLine(Rated);
     }
 
-    private ModalParameters GetParameters(CommentDto com)
+    private void OpenDialog(CommentDto comment)
     {
-        modalParameters.Add("likes", com.Likes);
-        return modalParameters;
+        var parameters = new DialogParameters();
+        parameters.Add("likes", comment.Likes);
+        DialogService.Show<LikesDialog>("Polubienia", parameters);
     }
 
     private async void HandleValidSubmit()
@@ -469,10 +508,19 @@
         NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
     }
 
-    private async void Delete(int idCom)
+    private void Delete(int idCom)
     {
-        await Http.DeleteAsync($"api/posts/{Id}/comments/{idCom}");
-        NavigationManager.NavigateTo($"/skillPosts/{Id}", forceLoad: true);
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", "Czy naprawdę chcesz usunąć trwale ten komentarz? Po zatwierdzeniu, nie będziesz mógł(a) go przywrócić.");
+        parameters.Add("ButtonText", "Usuń");
+        parameters.Add("Color", Color.Error);
+        parameters.Add("Category", "Comment");
+        parameters.Add("MainId", Id);
+        parameters.Add("Id", idCom);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        DialogService.Show<Dialog>("Usuń", parameters, options);
     }
 
     private async void Like(CommentDto com)
@@ -484,7 +532,7 @@
         var modelJson = JsonSerializer.Serialize(giveLike, new JsonSerializerOptions { WriteIndented = true });
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PostAsync($"api/posts/{Id}/comments/likes", content);
-        if(user != com.Username)
+        if (user != com.Username)
         {
             if (IsConnected) await SendMessage(com.Username);
         }

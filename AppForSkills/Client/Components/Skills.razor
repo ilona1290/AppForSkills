@@ -7,14 +7,16 @@
         <MudCard Style="width: 500px; background: linear-gradient(90deg, rgba(9,122,227,0.9) 46%, rgba(4,170,242,1) 100%); color: white ">
             <MudCardHeader>
                 <CardHeaderAvatar>
-                    @if (skillPost.Avatar == "")
-                    {
-                        <MudAvatar Color="Color.Error">@skillPost.Username.Substring(0, 1).ToUpper()</MudAvatar>
-                    }
-                    else
-                    {
-                        <MudAvatar Image="@skillPost.Avatar" />
-                    }
+                    <a href="users/@skillPost.Username">
+                        @if (skillPost.Avatar == "")
+                        {
+                            <MudAvatar Color="Color.Error">@skillPost.Username.Substring(0, 1).ToUpper()</MudAvatar>
+                        }
+                        else
+                        {
+                            <MudAvatar Image="@skillPost.Avatar" />
+                        }
+                    </a>
                 </CardHeaderAvatar>
                 <CardHeaderContent>
                     <MudText Align="Align.Left" Typo="Typo.body1" Style="font-weight: bold">@skillPost.Username</MudText>
