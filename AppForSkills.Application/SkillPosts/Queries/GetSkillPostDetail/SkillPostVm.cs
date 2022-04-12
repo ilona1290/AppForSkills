@@ -24,10 +24,11 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
                 .ForMember(s => s.Username, map => map.MapFrom(src => src.CreatedBy))
                 .ForMember(s => s.PublishingDate, map => map.MapFrom(src => src.Created))
                 .ForMember(s => s.Rating, map => map.Ignore())
-                .IncludeMembers(u => u.User);
+                .IncludeMembers(s => s.User);
 
             profile.CreateMap<User, SkillPostVm>()
-                .ForMember(s => s.Avatar, map => map.MapFrom(src => src.Avatar));
+                .ForMember(s => s.Avatar, map => map.MapFrom(src => src.Avatar))
+                .ForAllOtherMembers(f => f.Ignore());
         }
     }
 }

@@ -21,7 +21,19 @@
         <div class="notificationItems">
             @foreach (var notification in notifications)
             {
-                <h4 class="notificationFromWho">@notification.FromWho</h4>
+                <MudCardHeader>
+                    <div style="display: inline-block">
+                        @if (notification.Avatar == "")
+                        {
+                            <MudAvatar Size="Size.Medium" Color="Color.Error">@notification.FromWho.Substring(0, 1).ToUpper()</MudAvatar>
+                        }
+                        else
+                        {
+                            <MudAvatar Size="Size.Medium" Image="@notification.Avatar" />
+                        }
+                    </div>
+                    <h4 class="notificationFromWho">@notification.FromWho</h4>
+                </MudCardHeader>
                 <div class="notificationMessage">@notification.Message</div>
                 <div class="notificationWhen">@notification.When</div>
             }

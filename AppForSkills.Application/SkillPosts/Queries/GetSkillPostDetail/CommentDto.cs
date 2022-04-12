@@ -27,7 +27,8 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail
                 .IncludeMembers(u => u.User);
 
             profile.CreateMap<User, CommentDto>()
-                .ForMember(s => s.Avatar, map => map.MapFrom(src => src.Avatar));
+                .ForMember(s => s.Avatar, map => map.MapFrom(src => src.Avatar))
+                .ForAllOtherMembers(f => f.Ignore());
         }
     }
 }

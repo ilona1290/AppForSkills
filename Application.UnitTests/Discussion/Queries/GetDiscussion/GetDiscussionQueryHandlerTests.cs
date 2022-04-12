@@ -28,14 +28,14 @@ namespace Application.UnitTests.Discussion.Queries.GetDiscussion
         public async Task CanGetDiscussionDetailById()
         {
             var handler = new GetDiscussionQueryHandler(_context, _mapper);
-            var discussionId = 2;
+            var discussionId = 1;
 
             var result = await handler.Handle(new GetDiscussionQuery { DiscussionId = discussionId }, CancellationToken.None);
 
             result.ShouldBeOfType<DiscussionVm>();
             result.Posts.ShouldBeOfType<List<PostInDiscussionDto>>();
-            result.Posts.Count.ShouldBe(0);
-            result.FirstPost.ShouldBe("Jakie sporty uprawiacie?");
+            result.Posts.Count.ShouldBe(4);
+            result.FirstPost.ShouldBe("Jaki kraj chcielibyście odwiedzić?");
         }
 
         [Fact]

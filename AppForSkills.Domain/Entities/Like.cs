@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string User { get; set; }
-        public string Avatar { get; set; }
+        public string Avatar { get; set; } = "";
         public int? PostInDiscussionId { get; set; }
         public PostInDiscussion PostInDiscussion { get; set; }
         public int? DiscussionId { get; set; }

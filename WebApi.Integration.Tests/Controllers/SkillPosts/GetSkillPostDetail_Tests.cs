@@ -28,7 +28,7 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
 
             var vm = await Utilities.GetResponseContent<SkillPostVm>(response);
             vm.ShouldNotBeNull();
-            vm.AddressOfPhotoOrVideo.ShouldBe("https://app.blob.core.windows.net/upload-container/Eiffel_Tower.jpg");
+            vm.AddressOfPhotoOrVideo.ShouldBe("https://appforskills1.blob.core.windows.net/upload-container/Eiffel_Tower.jpg");
         }
 
         [Fact]

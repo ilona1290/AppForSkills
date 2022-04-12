@@ -19,12 +19,40 @@
 
     [Parameter] public Color Color { get; set; }
 
+    [Parameter] public string Category { get; set; }
+
+    [Parameter] public int MainId { get; set; }
+
     [Parameter] public int Id { get; set; }
 
     private async void Submit()
     {
-        await Http.DeleteAsync($"api/posts/{Id}");
-        NavigationManager.NavigateTo($"/skillPosts", forceLoad: true);
+        if(Category == "SkillPost")
+        {
+            await Http.DeleteAsync($"api/posts/{Id}");
+            NavigationManager.NavigateTo($"/skillPosts", forceLoad: true);
+        }
+        else if(Category == "Discussion")
+        {
+            await Http.DeleteAsync($"api/discussions/{Id}");
+            NavigationManager.NavigateTo($"/discussions", forceLoad: true);
+        }
+        else if(Category == "Comment")
+        {
+            await Http.DeleteAsync($"api/posts/{MainId}/comments/{Id}");
+            NavigationManager.NavigateTo($"/skillPosts/{MainId}", forceLoad: true);
+        }
+        else if(Category == "Rating")
+        {
+            await Http.DeleteAsync($"api/posts/{MainId}/ratings/{Id}");
+            NavigationManager.NavigateTo($"/skillPosts/{MainId}/ratings", forceLoad: true);
+        }
+        else if(Category == "DiscussionPost")
+        {
+            await Http.DeleteAsync($"api/discussions/{MainId}/posts/{Id}");
+            NavigationManager.NavigateTo($"/discussions/{MainId}", forceLoad: true);
+        }
+
     }
     private void Cancel() => MudDialog.Cancel();
 }

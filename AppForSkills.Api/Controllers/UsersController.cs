@@ -6,6 +6,7 @@ using AppForSkills.Application.SkillPosts.Commands.EditSkillPost;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPostDetail;
 using AppForSkills.Application.SkillPosts.Queries.GetSkillPosts;
 using AppForSkills.Application.Users.Commands.CreateUser;
+using AppForSkills.Application.Users.Commands.UpdateAvatar;
 using AppForSkills.Application.Users.Commands.UpdateLoginDate;
 using AppForSkills.Application.Users.Queries.GetUserAchievements;
 using AppForSkills.Application.Users.Queries.GetUserComments;
@@ -47,6 +48,22 @@ namespace AppForSkills.Api.Controllers
         [AllowAnonymous]
 
         public async Task<ActionResult> UpdateLoginDate(UpdateLoginDateCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Updates Avatar. 
+        /// </summary>
+        [Route("update-avatar")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> UpdateAvatar(UpdateAvatarCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);

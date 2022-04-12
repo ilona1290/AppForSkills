@@ -23,9 +23,9 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
             var client = await _factory.GetAuthenticatedClientAsync();
             var discussion = new EditDiscussionCommand
             {
-                DiscussionId = 2,
-                FirstPost = "Jakie sporty uprawiacie? " +
-                "Macie jakieś sukcesy?"
+                DiscussionId = 1,
+                FirstPost = "Jaki kraj chcielibyście odwiedzić? " +
+                "A jakie odwiedziliście?"
             };
 
             var response = await client.PutAsync($"/api/discussions/{discussion.DiscussionId}",

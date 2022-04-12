@@ -1,23 +1,31 @@
-﻿@page "/"
-
-@*<h1>App For Skills</h1>*@
+﻿@using AppForSkills.Client.Components
+@inject NavigationManager NavigationManager
+@page "/"
 
 <AuthorizeView>
     <Authorized>
-        <div class="welcome">
-            <h3>
-                W zakładce Strona Główna możesz przejrzeć SkillPosty. W zakładce Forum możesz udział wziąć w różnorakich
-                dyskusjach, albo stworzyć nową.
-            </h3>
-        </div>
+        @if (true)
+        {
+            NavigateToMainPage();
+        }
     </Authorized>
     <NotAuthorized>
-        <div class="welcome">
-            <h3>
-                Aby mieć dostęp do pozostałych zakładek musisz się zalogować, a jeżeli nie masz konta, zarejestruj się.
-                Przycisk do rejestracji jest dostępny po kliknięciu w przycisk zaloguj. 
-            </h3>
-        </div>
+        @if(true)
+        {
+            NavigateToStartPage();
+        }
     </NotAuthorized>
 </AuthorizeView>
+
+@code{
+    private void NavigateToStartPage()
+    {
+        NavigationManager.NavigateTo("/start");
+    }
+
+    private void NavigateToMainPage()
+    {
+        NavigationManager.NavigateTo("/skillPosts");
+    }
+}
 

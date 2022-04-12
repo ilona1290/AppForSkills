@@ -95,7 +95,7 @@
 .notificationItems {
     height: 300px;
     overflow-y: scroll;
-    background-color: rgba(0,163,255);
+    background: linear-gradient(90deg, rgba(9,122,227,1) 46%, rgba(4,170,242,1) 100%);
 }
 
 .singleNotificationDiv{

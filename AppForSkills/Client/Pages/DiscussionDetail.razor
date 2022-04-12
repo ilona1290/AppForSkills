@@ -8,6 +8,7 @@
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject HttpClient Http
+@inject IDialogService DialogService
 
 
 <div class="page">
@@ -15,14 +16,42 @@
         <Authorized Context="Auth">
             @if (discussion == null)
             {
-                <p>Wczytywanie...</p>
+                <MudCard Style="width: 1200px; height: 800px; background: linear-gradient(90deg, rgba(9,122,227,0.9) 46%, rgba(4,170,242,1) 100%);">
+                    <MudSkeleton SkeletonType="SkeletonType.Rectangle" />
+                    <MudCardContent>
+                        <MudSkeleton Width="30%" Height="42px;" />
+                        <MudSkeleton Width="80%" />
+                        <MudSkeleton Width="100%" />
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+                        <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+                    </MudCardActions>
+                    <MudOverlay Visible="isVisible" DarkBackground="true" Absolute="true">
+                        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+                    </MudOverlay>
+                </MudCard>
             }
             else
             {
-                <div class="firstRow">
-                    <h4 class="topic">Użytkownik <a class="link" href="/users/@discussion.Username">@@@discussion.Username </a> rozpoczyna temat: @discussion.FirstPost</h4>
-                    <div class="back"><a class="btn btn-success" href="discussions">Powrót</a></div>
-                </div>
+                <div class="back"><a class="btn btn-success" href="discussions">Powrót</a></div>
+                <div style="display: flex; padding-top: 7px; padding-left: 5px; align-items: center;">
+                    <a class="link" href="/users/@discussion.Username">
+                        <div style="display: flex; padding-top: 7px; padding-left: 5px; align-items: center;">
+                            @if (discussion.Avatar == "")
+                            {
+                                <MudAvatar Style="height:55px; width:55px; font-size: 35px" Color="Color.Error">@discussion.Username.Substring(0, 1).ToUpper()</MudAvatar>
+                            }
+                            else
+                            {
+                                <MudAvatar Style="height:55px; width:55px;" Image="@discussion.Avatar" />
+                            }
+                            <h2 style="margin-left: 5px;">@discussion.Username</h2>
+                        </div>
+                    </a>
+
+                </div><br />
+                <h4>@discussion.FirstPost</h4>
                 <h6>Data publikacji: @discussion.PublishingDate</h6><br />
                 @if (IfUserGaveLikeToDiscussion(discussion) == null)
                 {
@@ -32,7 +61,7 @@
                 {
                     <input type="checkbox" checked @onclick="() => DislikeDiscussion(discussion, IfUserGaveLikeToDiscussion(discussion))" />
                 }
-                <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParametersDiscussion(discussion)))" class="link">@discussion.Likes.Count</button></div>
+                <div class="like"><button @onclick="() => OpenDialogDisc(discussion)" class="link">@discussion.Likes.Count</button></div>
                 <EditForm EditContext="@editContextPost" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
                     <DataAnnotationsValidator />
                     <div class="addPost">
@@ -50,11 +79,21 @@
                     if (Posts.Contains(post))
                     {
                         <div class="posts">
-                            <a href="/users/@post.Username" class="link"><div class="autorPost">@post.Username </div></a>
-                            <div class="datePost">@post.Date</div>
+                            <div style="display: flex; padding-top: 7px; padding-left: 5px; align-items: center;">
+                                @if (post.Avatar == "")
+                                {
+                                    <MudAvatar Style="height:35px; width:35px; font-size: 15px" Color="Color.Error">@post.Username.Substring(0, 1).ToUpper()</MudAvatar>
+                                }
+                                else
+                                {
+                                    <MudAvatar Style="height:35px; width:35px;" Image="@post.Avatar" />
+                                }
+                                <a href="/users/@post.Username" class="link"><div class="autorPost">@post.Username </div></a>
+                                <div class="datePost">@post.Date</div>
+                            </div>
                             @if (post.StatusId == 1)
                             {
-                                <div>@post.PostText</div>
+                                <div class="postText">@post.PostText</div>
                                 @if (IfUserGaveLikeToPost(post) == null)
                                 {
                                     <input type="checkbox" @onclick="() => LikePost(post)" />
@@ -63,12 +102,12 @@
                                 {
                                     <input type="checkbox" checked @onclick="() => DislikePost(post, IfUserGaveLikeToPost(post))" />
                                 }
-                                <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParametersPost(post)))" class="link">@post.Likes.Count</button></div>
+                                <div class="like"><button @onclick="() => OpenDialogPost(post)" class="link">@post.Likes.Count</button></div>
                                 <button @onclick="() => Answer(post)" class="modPostBut">Odpowiedz</button>
                             }
                             else
                             {
-                                <div>[Usunięto]</div>
+                                <div class="postText">[Usunięto]</div>
                             }
                             @if (post.Username == user)
                             {
@@ -117,11 +156,21 @@
                             @if (answerPost.MainParentPostId == post.Id)
                             {
                                 <div class="answerToPost">
-                                    <a href="/users/@answerPost.Username" class="link"><div class="autorPost">@answerPost.Username </div></a>
-                                    <div class="datePost">@answerPost.Date</div><br />
+                                    <div style="display: flex; padding-top: 7px; padding-left: 5px; align-items: center;">
+                                        @if (answerPost.Avatar == "")
+                                        {
+                                            <MudAvatar Style="height:35px; width:35px; font-size: 15px" Color="Color.Error">@answerPost.Username.Substring(0, 1).ToUpper()</MudAvatar>
+                                        }
+                                        else
+                                        {
+                                            <MudAvatar Style="height:35px; width:35px; font-size: 15px" Image="@answerPost.Avatar" />
+                                        }
+                                        <a href="/users/@answerPost.Username" class="link"><div class="autorPost">@answerPost.Username </div></a>
+                                        <div class="datePost">@answerPost.Date</div><br />
+                                    </div>
                                     @if (answerPost.StatusId == 1)
                                     {
-                                        <div>@answerPost.PostText</div>
+                                        <div class="postText">@answerPost.PostText</div>
                                         @if (IfUserGaveLikeToPost(answerPost) == null)
                                         {
                                             <input type="checkbox" @onclick="() => LikePost(answerPost)" />
@@ -130,12 +179,12 @@
                                         {
                                             <input type="checkbox" checked @onclick="() => DislikePost(answerPost, IfUserGaveLikeToPost(answerPost))" />
                                         }
-                                        <div class="like"><button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParametersPost(answerPost)))" class="link">@answerPost.Likes.Count</button></div>
+                                        <div class="like"><button @onclick="() => OpenDialogPost(answerPost)" class="link">@answerPost.Likes.Count</button></div>
                                         <button @onclick="() => Answer(answerPost)" class="modPostBut">Odpowiedz</button>
                                     }
                                     else
                                     {
-                                        <div>[Usunięto]</div>
+                                        <div class="postText">[Usunięto]</div>
                                     }
                                     @if (answerPost.Username == user)
                                     {
@@ -195,6 +244,7 @@
     public int Id { get; set; }
     private DiscussionVm discussion;
     private string user { get; set; }
+    private bool isVisible = false;
     private List<PostInDiscussionDto> Posts = new List<PostInDiscussionDto>();
     private List<PostInDiscussionDto> AnswersToPost = new List<PostInDiscussionDto>();
     private PostForm modelPost = new PostForm();
@@ -209,7 +259,6 @@
     private EditContext contextToEditAnswerPost;
     private GiveLike giveLike = new GiveLike();
     private List<LikeDto> likes { get; set; } = new List<LikeDto>();
-    private ModalParameters modalParameters { get; set; } = new ModalParameters();
     private HubConnection hubConnection;
     protected override async Task OnInitializedAsync()
     {
@@ -239,16 +288,18 @@
         user = authState.User.Identity.Name;
     }
 
-    private ModalParameters GetParametersDiscussion(DiscussionVm discussion)
+    private void OpenDialogDisc(DiscussionVm disc)
     {
-        modalParameters.Add("likes", discussion.Likes);
-        return modalParameters;
+        var parameters = new DialogParameters();
+        parameters.Add("likes", disc.Likes);
+        DialogService.Show<LikesDialog>("Polubienia", parameters);
     }
 
-    private ModalParameters GetParametersPost(PostInDiscussionDto post)
+    private void OpenDialogPost(PostInDiscussionDto post)
     {
-        modalParameters.Add("likes", post.Likes);
-        return modalParameters;
+        var parameters = new DialogParameters();
+        parameters.Add("likes", post.Likes);
+        DialogService.Show<LikesDialog>("Polubienia", parameters);
     }
 
     private async void HandleValidSubmit()
@@ -396,8 +447,17 @@
 
     private async void Delete(int idPost)
     {
-        await Http.DeleteAsync($"api/discussions/{Id}/posts/{idPost}");
-        NavigationManager.NavigateTo($"/discussions/{Id}", forceLoad: true);
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", "Czy naprawdę chcesz usunąć trwale ten post? Po zatwierdzeniu, nie będziesz mógł(a) go przywrócić.");
+        parameters.Add("ButtonText", "Usuń");
+        parameters.Add("Color", Color.Error);
+        parameters.Add("Category", "DiscussionPost");
+        parameters.Add("MainId", Id);
+        parameters.Add("Id", idPost);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        DialogService.Show<Dialog>("Usuń", parameters, options);
     }
 
     private async void LikeDiscussion(DiscussionVm discussion)

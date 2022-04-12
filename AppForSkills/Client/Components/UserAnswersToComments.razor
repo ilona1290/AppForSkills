@@ -1,5 +1,6 @@
 ﻿@using AppForSkills.Client.Models
 @inject IModalService modal
+@inject IDialogService DialogService
 
 @foreach (var comment in Comments)
 {
@@ -14,18 +15,18 @@
             <div class="dateCom">@comment.Date</div><br />
             <div>@comment.CommentText</div>
         </a>
-        <div>&#10084;&#65039; <button @onclick="@(()=>modal.Show<Likes>("Polubienia", GetParameters(comment)))" class="linkLike">@comment.Likes.Count</button></div>
+        <div>&#10084;&#65039; <button @onclick="()=> OpenDialog(comment)" class="linkLike">@comment.Likes.Count</button></div>
     </div><br /><br />
 }
 
 @code {
     [Parameter]
     public List<UserCommentDto> Comments { get; set; } = new List<UserCommentDto>();
-    private ModalParameters modalParameters { get; set; } = new ModalParameters();
 
-    private ModalParameters GetParameters(UserCommentDto com)
+    private void OpenDialog(UserCommentDto comment)
     {
-        modalParameters.Add("likes", com.Likes);
-        return modalParameters;
+        var parameters = new DialogParameters();
+        parameters.Add("likes", comment.Likes);
+        DialogService.Show<LikesDialog>("Polubienia", parameters);
     }
 }

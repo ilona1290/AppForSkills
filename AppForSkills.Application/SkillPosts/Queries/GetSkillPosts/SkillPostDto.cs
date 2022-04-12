@@ -13,7 +13,6 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPosts
         public string Username { get; set; }
         public string AddressOfPhotoOrVideo { get; set; }
         public string Title { get; set; }
-        public int Views { get; set; }
         public int Comment { get; set; }
         public int Rating { get; set; }
 
@@ -26,7 +25,8 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetSkillPosts
                 .IncludeMembers(s => s.User);
 
             profile.CreateMap<User, SkillPostDto>()
-                .ForMember(s => s.Avatar, map => map.MapFrom(src => src.Avatar));
+                .ForMember(s => s.Avatar, map => map.MapFrom(src => src.Avatar))
+                .ForAllOtherMembers(f => f.Ignore());
         }
     }
 }

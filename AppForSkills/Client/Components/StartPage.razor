@@ -1,0 +1,39 @@
+﻿@page "/start"
+@layout EmptyLayout
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {
+                background-image: url(https://appforskills1.blob.core.windows.net/background/StartPage.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            section {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-right: -50%;
+                transform: translate(-50%, -50%)
+            }
+        </style>
+    </head>
+    <body>
+        <section>
+            <MudCard Style="background-color: black; color: white; width: 600px; text-align: center">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h4">App For Skills</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText Typo="Typo.h6">Pokaż nam co potrafisz!</MudText><br />
+                    <a href="authentication/login"><MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary">Dołącz</MudButton></a>
+                </MudCardContent>
+            </MudCard>
+        </section>    
+                
+    </body>
+</html>
+

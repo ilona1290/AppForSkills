@@ -7,14 +7,16 @@
         <MudCard Style="width: 500px; background: linear-gradient(90deg, rgba(9,122,227,0.9) 46%, rgba(4,170,242,1) 100%); color: white ">
             <MudCardHeader>
                 <CardHeaderAvatar>
-                    @if (skillPost.Avatar == "")
-                    {
-                        <MudAvatar Color="Color.Error">@skillPost.Username.Substring(0, 1).ToUpper()</MudAvatar>
-                    }
-                    else
-                    {
-                        <MudAvatar Image="@skillPost.Avatar" />
-                    }
+                    <a href="users/@skillPost.Username">
+                        @if (skillPost.Avatar == "")
+                        {
+                            <MudAvatar Color="Color.Error">@skillPost.Username.Substring(0, 1).ToUpper()</MudAvatar>
+                        }
+                        else
+                        {
+                            <MudAvatar Image="@skillPost.Avatar" />
+                        }
+                    </a>
                 </CardHeaderAvatar>
                 <CardHeaderContent>
                     <MudText Align="Align.Left" Typo="Typo.body1" Style="font-weight: bold">@skillPost.Username</MudText>
@@ -33,7 +35,16 @@
                 </CardHeaderActions>
             </MudCardHeader>
             <a href="skillPosts/@skillPost.Id" style="text-decoration: none;">
-                <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 500px; height: auto; " />
+                @if (skillPost.AddressOfPhotoOrVideo.EndsWith(".png") || skillPost.AddressOfPhotoOrVideo.EndsWith(".jpg"))
+                 {
+                    <img src=@skillPost.AddressOfPhotoOrVideo style="display: block; max-width: 500px; height: auto; " />
+                 }
+                 else if (skillPost.AddressOfPhotoOrVideo.EndsWith(".mp4"))
+                 {
+                     <video preload="auto" controls="controls" width="500">
+                        <source src=@skillPost.AddressOfPhotoOrVideo type="video/mp4" />
+                     </video>
+                 }
                 <MudCardActions>
                     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Filled.Star" Style="margin-right: 12px" Color="Color.Success">@skillPost.Rating</MudButton>
                     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Filled.Comment" Color="Color.Warning">@skillPost.Comment</MudButton>
@@ -56,6 +67,7 @@
         parameters.Add("ContentText", "Czy naprawdę chcesz usunąć trwale ten SkillPost? Po zatwierdzeniu, nie będziesz mógł(a) go przywrócić.");
         parameters.Add("ButtonText", "Usuń");
         parameters.Add("Color", Color.Error);
+        parameters.Add("Category", "SkillPost");
         parameters.Add("Id", idSkill);
 
         var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };

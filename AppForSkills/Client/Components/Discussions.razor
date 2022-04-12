@@ -4,18 +4,27 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
 
 @foreach (var discussion in discussions)
 {
     <div class="discussions">
-        <a href="/users/@discussion.Username" class="link"><h4 class="font-weight-bold"> Rozpoczynający dyskusję: @discussion.Username</h4></a>
+        <a href="/users/@discussion.Username" class="link" style="text-decoration: none"><h4 class="font-weight-bold"> Rozpoczynający dyskusję: @discussion.Username</h4></a>
         @if (user == discussion.Username)
         {
-            <div class="buttonDisc"><button class="btn btn-danger" @onclick="() => Delete(discussion.Id)">Usuń</button></div>
-            <div class="buttonDisc"><button class="btn btn-primary" @onclick="() => CreateModelEdit(discussion)">Edytuj</button></div>
+            <div class="buttonDisc">
+                <MudTooltip Text="Usuń">
+                    <MudFab OnClick="() => Delete(discussion.Id)" Color="Color.Error" StartIcon="@Icons.Material.Filled.Delete" Size="Size.Medium" />
+                </MudTooltip>
+            </div>
+            <div class="buttonDisc">
+                <MudTooltip Text="Edytuj">
+                    <MudFab Color="Color.Primary" OnClick="() => CreateModelEdit(discussion)" StartIcon="@Icons.Material.Filled.Edit" Size="Size.Medium" Style="margin-right: 12px" />
+                </MudTooltip>
+            </div>
         }
-        <div class="buttonDisc"><a class="btn btn-success" href="discussions/@discussion.Id">Dołącz</a></div>
-        <a href="discussions/@discussion.Id" class="link">
+        <a href="discussions/@discussion.Id" class="link" style="text-decoration: none">
             <h4>@discussion.FirstPost</h4>
             <h4 class="numlikes">&#128077; @discussion.Likes</h4>
             <h4 class="numPosts">&#128488; @discussion.Posts</h4>
@@ -27,8 +36,8 @@
         <EditForm EditContext="@editContext" OnValidSubmit="EditDiscussion" @onreset="@HandleReset">
             <DataAnnotationsValidator />
             <br />
-            <div class="addAnswerComment">
-                <label>Edytuj:</label>
+            <div class="edit">
+                <label style="font-size: 20px">Edytuj:</label>
                 <InputTextArea @bind-Value="@modelToEdit.FirstPost" class="form-control" />
                 <ValidationMessage For="@(() => modelToEdit.FirstPost)" />
                 <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
@@ -71,6 +80,7 @@
         var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
         await Http.PutAsync($"api/discussions/{modelToEdit.DiscussionId}", content);
         NavigationManager.NavigateTo("/discussions", forceLoad: true);
+        Snackbar.Add("Zaktualizowano temat dyskusji");
     }
 
     private void HandleReset()
@@ -79,9 +89,17 @@
         editContext = new EditContext(modelToEdit);
     }
 
-    private async void Delete(int idDisc)
+    private void Delete(int idDisc)
     {
-        await Http.DeleteAsync($"api/discussions/{idDisc}");
-        NavigationManager.NavigateTo("/discussions", forceLoad: true);
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", "Czy naprawdę chcesz usunąć trwale tą dyskusję? Po zatwierdzeniu, nie będziesz mógł(a) jej przywrócić.");
+        parameters.Add("ButtonText", "Usuń");
+        parameters.Add("Color", Color.Error);
+        parameters.Add("Category", "Discussion");
+        parameters.Add("Id", idDisc);
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        DialogService.Show<Dialog>("Usuń", parameters, options);
     }
 }

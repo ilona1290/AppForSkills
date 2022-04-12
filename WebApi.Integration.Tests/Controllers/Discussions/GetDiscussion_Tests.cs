@@ -22,13 +22,13 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 
-            string id = "2";
+            string id = "1";
             var response = await client.GetAsync($"/api/discussions/{id}");
             response.EnsureSuccessStatusCode();
 
             var vm = await Utilities.GetResponseContent<DiscussionVm>(response);
             vm.ShouldNotBeNull();
-            vm.FirstPost.ShouldBe("Jakie sporty uprawiacie?");
+            vm.FirstPost.ShouldBe("Jaki kraj chcielibyście odwiedzić?");
         }
 
         [Fact]

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AppForSkills.Api.Controllers
 {
-    [Route("api/upload")]
+    [Route("api/upload/{category}")]
     [ApiController]
     public class UploadController : ControllerBase
     {
@@ -19,16 +19,24 @@ namespace AppForSkills.Api.Controllers
             _azureConnectionString = configuration.GetConnectionString("AzureConnectionString");
         }
         [HttpPost]
-        public async Task<IActionResult> Upload()
+        public async Task<IActionResult> Upload(string category)
         {
             try
             {
                 var formCollection = await Request.ReadFormAsync();
                 var file = formCollection.Files.First();
 
+                BlobContainerClient container;
                 if (file.Length > 0)
                 {
-                    var container = new BlobContainerClient(_azureConnectionString, "upload-container");
+                    if(category == "avatar")
+                    {
+                        container = new BlobContainerClient(_azureConnectionString, "avatars");
+                    }
+                    else
+                    {
+                        container = new BlobContainerClient(_azureConnectionString, "upload-container");
+                    }
                     var createResponse = await container.CreateIfNotExistsAsync();
                     if (createResponse != null && createResponse.GetRawResponse().Status == 201)
                         await container.SetAccessPolicyAsync(Azure.Storage.Blobs.Models.PublicAccessType.Blob);

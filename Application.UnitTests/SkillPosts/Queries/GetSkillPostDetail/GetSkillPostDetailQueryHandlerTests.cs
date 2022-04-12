@@ -35,7 +35,7 @@ namespace Application.UnitTests.SkillPosts.Queries.GetSkillPostDetail
             result.ShouldBeOfType<SkillPostVm>();
             result.Comments.ShouldBeOfType<List<CommentDto>>();
             result.Comments.Count.ShouldBe(2);
-            result.AddressOfPhotoOrVideo.ShouldBe("https://app.blob.core.windows.net/upload-container/Eiffel_Tower.jpg");
+            result.AddressOfPhotoOrVideo.ShouldBe("https://appforskills1.blob.core.windows.net/upload-container/Eiffel_Tower.jpg");
             result.Rating.ShouldBe(4, 5);
         }
 
