@@ -1,6 +1,12 @@
+body {
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(58,122,199,1) 40%, rgba(0,198,255,1) 100%);
+    color: white;
+}
+
 .body-container {
-  margin-top: 60px;
-  padding-bottom: 40px; }
+    margin-top: 60px;
+    padding-bottom: 40px;
+}
 
 .welcome-page li {
   list-style: none;
@@ -11,9 +17,25 @@
   width: 0;
   height: 0; }
 
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background: none;
+    color: white;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+}
+
 .grants-page .card {
-  margin-top: 20px;
-  border-bottom: 1px solid lightgray; }
+    margin-top: 20px;
+    border-bottom: 1px solid lightgray;
+}
   .grants-page .card .card-title {
     font-size: 120%;
     font-weight: bold; }
