@@ -21,7 +21,8 @@ namespace AppForSkills.Application.SkillPosts.Queries.GetRatingsToSkillPost
                 .IncludeMembers(u => u.User);
 
             profile.CreateMap<User, RatingPostDto>()
-                .ForMember(s => s.Avatar, map => map.MapFrom(src => src.Avatar));
+                .ForMember(s => s.Avatar, map => map.MapFrom(src => src.Avatar))
+                .ForAllOtherMembers(f => f.Ignore());
         }
     }
 }

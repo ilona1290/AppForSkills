@@ -30,29 +30,11 @@ namespace WebApi.Integration.Tests.Common
         }
         public static void InitiliazeDbForTests(AppForSkillsDbContext context)
         {
-            var discussion = new AppForSkills.Domain.Entities.Discussion()
-            {
-                Id = 2,
-                FirstPost = "Jakie sporty uprawiacie?",
-                StatusId = 1
-            };
-            context.Discussions.Add(discussion);
-
-            var postInDiscussion = new AppForSkills.Domain.Entities.PostInDiscussion()
-            {
-                Id = 4,
-                DiscussionId = 1,
-                PostText = "Francję",
-                StatusId = 1,
-                CreatedBy = "user"
-            };
-            context.PostsInDiscussion.Add(postInDiscussion);
-
-
             var user = new AppForSkills.Domain.Entities.User()
             {
                 Id = 3,
                 Username = "user",
+                Avatar = "",
                 RegistrationDate = new DateTime(1999, 12, 29),
                 RecentLoginDate = new DateTime(2000, 1, 1),
                 StatusId = 1
@@ -63,11 +45,31 @@ namespace WebApi.Integration.Tests.Common
             {
                 Id = 4,
                 Username = "alice",
+                Avatar = "",
                 RegistrationDate = new DateTime(1999, 12, 29),
                 RecentLoginDate = new DateTime(2000, 1, 1),
                 StatusId = 1
             };
             context.Users.Add(alice);
+            var discussion = new AppForSkills.Domain.Entities.Discussion()
+            {
+                Id = 2,
+                FirstPost = "Jakie sporty uprawiacie?",
+                StatusId = 1,
+                CreatedBy = "user"
+            };
+            context.Discussions.Add(discussion);
+
+            var postInDiscussion = new AppForSkills.Domain.Entities.PostInDiscussion()
+            {
+                Id = 4,
+                DiscussionId = 1,
+                PostText = "Francję",
+                StatusId = 1,
+                CreatedBy = "user",
+                UserId = 3
+            };
+            context.PostsInDiscussion.Add(postInDiscussion);
 
             context.SaveChanges();
         }

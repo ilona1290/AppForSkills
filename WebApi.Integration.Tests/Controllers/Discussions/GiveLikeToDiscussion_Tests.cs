@@ -24,8 +24,8 @@ namespace WebApi.Integration.Tests.Controllers.Discussions
         public async Task GivenLikeToDiscussion()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            var like = new GiveLikeCommand { DiscussionId = 2, User = "user12" };
-            string id = "2";
+            var like = new GiveLikeCommand { DiscussionId = 1, User = "user" };
+            string id = "1";
 
             var response = await client.PostAsync($"/api/discussions/{id}/likes",
                 await Utilities.SendObjectAsContent(like));

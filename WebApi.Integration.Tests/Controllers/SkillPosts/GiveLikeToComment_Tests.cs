@@ -24,8 +24,8 @@ namespace WebApi.Integration.Tests.Controllers.SkillPosts
         public async Task GivenLikeToComment()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-            var like = new GiveLikeCommand { CommentId = 1, User = "user12" };
-            string id = "2";
+            var like = new GiveLikeCommand { CommentId = 1, User = "user" };
+            string id = "1";
 
             var response = await client.PostAsync($"/api/posts/{id}/comments/likes",
                 await Utilities.SendObjectAsContent(like));

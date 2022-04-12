@@ -27,25 +27,6 @@ namespace Application.UnitTests.Common
 
             context.Database.EnsureCreated();
 
-            var discussion = new AppForSkills.Domain.Entities.Discussion()
-            {
-                Id = 2,
-                FirstPost = "Jakie sporty uprawiacie?",
-                StatusId = 1
-            };
-            context.Discussions.Add(discussion);
-
-            var postInDiscussion = new AppForSkills.Domain.Entities.PostInDiscussion()
-            {
-                Id = 4,
-                DiscussionId = 1,
-                PostText = "Francję",
-                StatusId = 1,
-                CreatedBy = "user"
-            };
-            context.PostsInDiscussion.Add(postInDiscussion);
-
-
             var user = new AppForSkills.Domain.Entities.User()
             {
                 Id = 3,
@@ -55,6 +36,29 @@ namespace Application.UnitTests.Common
                 StatusId = 1
             };
             context.Users.Add(user);
+
+            var discussion = new AppForSkills.Domain.Entities.Discussion()
+            {
+                Id = 2,
+                FirstPost = "Jakie sporty uprawiacie?",
+                StatusId = 1,
+                CreatedBy = "user"
+            };
+            context.Discussions.Add(discussion);
+
+            var postInDiscussion = new AppForSkills.Domain.Entities.PostInDiscussion()
+            {
+                Id = 4,
+                DiscussionId = 1,
+                PostText = "Francję",
+                StatusId = 1,
+                CreatedBy = "user",
+                UserId = 3
+            };
+            context.PostsInDiscussion.Add(postInDiscussion);
+
+
+            
 
             context.SaveChanges();
             return mock;

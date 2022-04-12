@@ -30,7 +30,7 @@ namespace Application.UnitTests.Likes.Commands.GiveLike
         {
             var command = new GiveLikeCommand()
             {
-                User = "user1",
+                User = "user",
                 PostInDiscussionId = 1
             };
 
@@ -49,7 +49,7 @@ namespace Application.UnitTests.Likes.Commands.GiveLike
         {
             var command = new GiveLikeCommand()
             {
-                User = "user1",
+                User = "user",
                 DiscussionId = 1
             };
 
@@ -68,7 +68,7 @@ namespace Application.UnitTests.Likes.Commands.GiveLike
         {
             var command = new GiveLikeCommand()
             {
-                User = "user1",
+                User = "user",
                 CommentId = 1
             };
 

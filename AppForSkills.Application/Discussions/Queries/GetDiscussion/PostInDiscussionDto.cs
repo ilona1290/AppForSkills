@@ -27,7 +27,8 @@ namespace AppForSkills.Application.Discussions.Queries.GetDiscussion
                 .IncludeMembers(u => u.User);
 
             profile.CreateMap<User, PostInDiscussionDto>()
-                .ForMember(s => s.Avatar, map => map.MapFrom(src => src.Avatar));
+                .ForMember(s => s.Avatar, map => map.MapFrom(src => src.Avatar))
+                .ForAllOtherMembers(f => f.Ignore());
         }
     }
 }
